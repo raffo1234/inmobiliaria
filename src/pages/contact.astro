@@ -1,0 +1,130 @@
+---
+import { Icon } from "astro-icon/components";
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import me from "../assets/rafael.png";
+import MenuAndTitle from "../components/MenuAndTitle.astro";
+import Logo from "../components/Logo.astro";
+---
+
+<Logo />
+<Layout pageTitle="Get in touch">
+  <MenuAndTitle title="Contact" />
+  <div
+    transition:name="contact"
+    class="max-w-[1250px] px-4 md:px-20 py-16 mx-auto h-full flex justify-center items-center relative w-full"
+  >
+    <div class="w-full">
+      <div class="mb-6">
+        <div class="flex items-center mb-6 space-x-5">
+          <h1
+            class="font-cinzel text-green-800"
+            style="font-size:clamp(18px, 4vw + 1rem, 60px)"
+          >
+            Get in touch
+          </h1>
+        </div>
+      </div>
+
+      <div
+        class="grid gap-4 w-full"
+        style={{
+          gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+        }}
+      >
+        <div
+          class="overflow-hidden box-js flex delay-500 opacity-0 translate-y-96 transition-all duration-700 ease-in-out aspect-square rounded-[30px] relative w-full items-center justify-between"
+        >
+          <Image
+            src={me}
+            class="absolute object-cover object-top w-full h-full"
+            alt="Rafael Meza"
+          />
+          <p
+            class="absolute text-white opacity-60 text-[40px] text-nowrap -mb-8 bottom-4 font-cinzel"
+          >
+            Available
+          </p>
+        </div>
+        <a
+          href="mailto:rafaelmezac@gmail.com"
+          target="_blank"
+          rel="noreferrer"
+          title="Email | Rafael Meza | rafaelmezac@gmail.com"
+          class="group text-white hover:text-purple bg-green-800 text-xl box-js delay-500 opacity-0 translate-y-96 transition-all duration-700 drop-shadow-xl hover:drop-shadow-2xl ease-in-out overflow-hidden aspect-square flex items-center justify-center rounded-[30px] relative"
+        >
+          <span> EMAIL </span>
+          <Icon
+            name="material-symbols-light:mark-email-read-outline"
+            size="48"
+            class="text-orange transition-colors duration-700 absolute left-2 bottom-2"
+          />
+          <Icon
+            name="material-symbols-light:arrow-back-rounded"
+            size="48"
+            class="text-orange transition-colors duration-700 ease-in-out absolute right-0 top-0 rotate-[135deg]"
+          />
+        </a>
+        <a
+          href="https://github.com/raffo1234"
+          target="_blank"
+          rel="noreferrer"
+          title="Github | Rafael Meza | raffo1234"
+          class="group text-white bg-green-800 text-xl box-js delay-500 opacity-0 translate-y-96 transition duration-700 drop-shadow-xl hover:drop-shadow-2xl ease-in-out aspect-square rounded-[30px] relative w-full flex items-center justify-center overflow-hidden"
+        >
+          <span> GITHUB </span>
+          <Icon
+            name="material-symbols-light:code-blocks-outline"
+            size="48"
+            class="transition-colors duration-700 absolute left-3 bottom-3"
+          />
+          <Icon
+            name="material-symbols-light:arrow-back-rounded"
+            size="48"
+            class="transition-colors duration-700 absolute right-0 top-0 rotate-[135deg]"
+          />
+        </a>
+        <a
+          href="https://wa.me/+51997258592"
+          title="Whatsapp | Rafael Meza | +51 997258592"
+          target="_blank"
+          rel="noreferrer"
+          class="group text-white bg-green-800 text-xl box-js delay-500 opacity-0 translate-y-96 transition duration-700 drop-shadow-xl hover:drop-shadow-2xl ease-in-out aspect-square rounded-[30px] relative w-full flex items-center justify-center overflow-hidden"
+        >
+          <span> WHATSAPP </span>
+          <Icon
+            name="material-symbols-light:mark-unread-chat-alt-outline"
+            size="48"
+            class="transition-colors duration-700 absolute left-3 bottom-3"
+          />
+          <Icon
+            name="material-symbols-light:arrow-back-rounded"
+            size="48"
+            class="group-hover:text-purple transition-colors duration-700 absolute right-0 top-0 rotate-[135deg]"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script is:inline>
+  document.addEventListener("keyup", function (event) {
+    if (event.key === "Escape") {
+      window.location.href = "/";
+    }
+  });
+
+  document.addEventListener("astro:page-load", () => {
+    const classes = ["!opacity-100", "!translate-y-0"];
+
+    const boxes = document.querySelectorAll(".box-js");
+    if (!boxes.length === 0) return;
+
+    boxes.forEach((box, index) => {
+      setTimeout(() => {
+        box.classList.add(...classes);
+      }, index * 85);
+    });
+  });
+</script>

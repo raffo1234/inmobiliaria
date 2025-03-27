@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <title>Alignet</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="author" content="">
+        <meta name="description" content="">
+        <meta name="robots" content="all, index, follow">
+        <meta name="googlebot" content="all, index, follow">
+        <meta name="google-site-verification" content="" />
+        <link rel="canonical" href="" />
+
+        <link href="" rel="shortcut icon" type="image/x-icon">
+        <link rel="stylesheet" href="assets/css/owl.carousel.css">
+        <link rel="stylesheet" href="assets/css/styles.css">
+
+        <!--[if lt IE 9]>
+                <script src="assets/js/html5shiv.js"></script>
+                <script src="assets/js/respond.min.js"></script>
+        <![endif]-->	
+        
+        
+        <!--[if !IE]><!--> <link rel="stylesheet" type="text/css" href="assets/css/no-ie-5-9.css" /> <!--<![endif]-->
+    </head>
+
+    <body class="background_tono_bajo">
+        <div class="top logueado_2 con_menu_responsivo">
+            <div class="container">
+                <div class="display-table">
+                    <div class="top_left display-table-cell top_img">
+                        <a href="#" class="logo_1">
+                            <img src="assets/images/logo.png" alt="" width="190" />
+                        </a>
+                    </div>
+                    <div class="top_right display-table-cell top_img">
+                        <div class="right">
+                            <a href="#" class="logo_2">
+                                <img src="assets/images/img_payme.png" alt="" width="95" />
+                            </a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="menu_mobile left">
+                <a href="javascript:void(0);" class="menu_mobile_js left">
+                    <i class="icon-th-list"></i>
+                </a>
+                <div class="clearfix"></div>
+            </div>
+            <div class="bienvenido right login_fuera">
+                <p class="margin_bottom_0"><i class="icon-user"></i>&nbsp;&nbsp; <span class="roboto-light">Bienvenido</span> <span class="roboto-medium">César Berrocal</span> </p>
+            </div>
+            <div class="clearfix"></div>
+            <div class="box">
+                <form action="flujo_pago_7.html" method="post" id="formulario_datos_tarjeta">
+                    <div class="box_left left">
+                        <div class="wrapper_box closed">
+                            <div class="box_header gris_alto">
+                                <h2><span class="icon_number">1</span>Datos de la Tarjeta <span class="w_icon_editable"><span class="icon_texto"><span>Editar &nbsp;</span> <i class="icon-editar"></i></span> </span></h2>
+                            </div>
+                            <div class="box_body gris">
+                                <div class="campos_iniciales">
+                                    <div class="rotulo"><h3>Tipo de Tarjeta</h3></div>
+                                    <div class="row">
+                                        <div class="row_left"></div>
+                                        <div class="radiobutton display_inline radiobutton_tipo_tarjeta_js">
+                                            <input type="hidden" name="tarjeta" value="1"  class="radiobutton_hidden"  />
+                                            <div class="wrapper_check radiobutton_tarjetas_js wrapper_check_visa_mastercard  checked display-inline" data-value="1">
+                                                <div class="icon_nocheck icon_check display-inline" ></div>
+                                                <img src="assets/images/img_visa.png" class="display-inline check_visa" width="78" alt="Visa" />
+                                            </div>
+                                            <div class="wrapper_check radiobutton_tarjetas_js wrapper_check_visa_mastercard  display-inline" data-value="2">
+                                                <div class="icon_checked icon_check display-inline" ></div>
+                                                <img src="assets/images/img_martercard.png" class="display-inline check_mastercard" width="60" alt="Mastercard" />
+                                            </div>
+                                        </div>
+                                        <div class="row_right"></div>
+                                    </div>
+                                    <div class="rotulo">
+                                        <h3>Número de la Tarjeta</h3>
+                                    </div>
+                                    <div class="row">
+                                        <div class="row_left"><img src="assets/icons/img_visa_white.png" class="img_tipo_tarjeta" width="29" alt="" /></div>
+                                        <input type="text" name="tarjeta_numero" onkeypress="return isNumberKey(event)" class="input input_large input_grupo" value="" />
+                                        <div class="row_right"></div>
+                                    </div>
+                                    <div class="rotulo">
+                                        <h3>Código de seguridad</h3>
+                                    </div>
+                                    <div class="row">
+                                        <div class="row_small left"> 
+                                            <div class="row_left"><img src="assets/icons/icon_codig_seguridad.png" width="27" alt="" /></div>
+                                            <input type="text" name="codigo_seguridad" onkeypress="return isNumberKey(event)" class="input input_small input_grupo" value="" />
+
+                                            <div class="clearfix"></div>
+                                            <div class="row_right">
+
+                                            </div>
+                                        </div>
+                                        <div class="row_small row_right" style="padding-top: 10px; text-align: left; z-index: 999;">
+                                            <a href="javascript:void(0);" class="tooltip transition">
+                                                <i class="icon-help-circled"></i>
+                                            </a>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="rotulo">
+                                        <h3>Fecha de Expiración</h3>
+                                    </div>
+                                    <div class="row">
+                                        <div class="row_left"><img src="assets/icons/icon_fecha_expiracion.png" width="24" alt="" /></div>
+                                        <div class="w_input left">
+                                            <div class="w_select_nativo">
+                                                <select name="mes" id="mes" class="select_nativo input_grupo" >
+                                                    <option value="Mes">Mes</option>
+                                                    <option value="1">Enero</option>
+                                                    <option value="2">Febrero</option>
+                                                    <option value="3">Marzo</option>
+                                                    <option value="4">Abril</option>
+                                                    <option value="5">Mayo</option>
+                                                    <option value="6">Junio</option>
+                                                    <option value="7">Julio</option>
+                                                    <option value="8">Agosto</option>
+                                                    <option value="9">Septiembre</option>
+                                                    <option value="10">Octubre</option>
+                                                    <option value="11">Noviembre</option>
+                                                    <option value="12">Diciembre</option>
+                                                </select>
+                                                <i class="icon_input active icon-down-micro"></i>
+                                            </div>
+
+                                        </div>
+                                        <div class="w_input right">
+                                            <div class="w_select_nativo">
+                                                <select name="anio" id="anio" class="select_nativo input_grupo" >
+                                                    <option value="Año">Año</option>
+                                                    <option value="1">2014</option>
+                                                    <option value="2">2015</option>
+                                                    <option value="3">2016</option>
+                                                </select>
+                                                <i class="icon_input active icon-down-micro"></i>
+                                            </div>
+                                        </div>
+
+                                        <div class="clearfix"></div>
+                                        <div class="row_right"></div>
+                                    </div>
+                                </div>
+                                <div class="campos_finales">
+                                    <div class="rotulo margin_bottom_10">
+                                        <h3>Número de la Tarjeta</h3>
+                                    </div>
+                                    <div class="row">
+                                        <div class="row_left row_left_sin_line_height"><img src="assets/icons/icon_numero_tarjeta.png" width="29" alt="" /></div>
+                                        <p class="">xxx xxx xxx 3456</p>
+                                    </div>
+                                    <div class="row">
+                                        <span style="color: #414141;" class="roboto-bold"><img src="assets/icons/icon_manito.png" style="vertical-align: middle" width="20">&nbsp;&nbsp; Deseo pagar con otra tarjeta</span>
+                                    </div>
+                                    <div class="rotulo">
+                                        <h3>Código de seguridad</h3>
+                                    </div>
+                                    <div class="row">
+                                        <div class="row_small left"> 
+                                            <div class="row_left"><img src="assets/icons/icon_codig_seguridad.png" width="27" alt="" /></div>
+                                            <input type="text" name="codigo_seguridad_2" class="input input_small" onkeypress="return isNumberKey(event)" value="" />
+
+                                            <div class="clearfix"></div>
+                                            <div class="row_right">
+
+                                            </div>
+                                        </div>
+                                        <div class="row_small row_right" style="padding-top: 10px; text-align: left; z-index: 999;">
+                                            <a href="javascript:void(0);" class="tooltip transition">
+                                                <i class="icon-help-circled"></i>
+                                            </a>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="rotulo">
+                                        <h3>Fecha de expiración</h3>
+                                    </div>
+                                    <div class="row">
+                                        <div class="row_left row_left_sin_line_height"><img src="assets/icons/icon_fecha_expiracion.png" width="24" alt="" /></div>
+                                        <p class="lineheight_1_7">Febrero 2014</p>
+                                        <div class="row_right"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wrapper_box closed">
+                            <div class="box_header gris_alto">
+                                <h2><span class="icon_number">2</span>Titular de la tarjeta <span class="w_icon_editable"><span class="icon_texto"><span>Editar &nbsp;</span> <i class="icon-editar"></i></span> </span></h2>
+                            </div>
+                            <div class="box_body gris">
+                                <div class="campos_iniciales">
+                                    <div class="row">
+                                        <div class="row_left">
+                                            <div class="w_img">
+                                                <img src="assets/icons/icon_user.png" width="16" alt="" />
+                                            </div>
+                                        </div>
+                                        <div class="row_small left">
+                                            <h3>Nombre</h3>
+                                            <input type="text" name="nombre" value="César" class="input input_small left input_grupo " />
+                                        </div>
+                                        <div class="row_small right">
+                                            <h3>Apellido</h3>
+                                            <input type="text" name="apellido" value="Berrocal" class="input input_small left input_grupo " />
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="rotulo">
+                                        <h3>Correo electrónico</h3>
+                                    </div>
+                                    <div class="row">
+                                        <div class="row_left"><img src="assets/icons/icon_email.png" width="23" alt="" /></div>
+                                        <input type="text" name="correo" id="correo_1" value="cesarberrocal@gmail.com" class="input input_large left input_grupo " />
+                                        <div class="clearfix"></div>
+                                        <div class="row_right"></div>
+                                    </div>
+                                    <div class="rotulo">
+                                        <h3>Verificar Correo electrónico</h3>
+                                    </div>
+                                    <div class="row">
+                                        <div class="row_left"><img src="assets/icons/icon_email_confirm.png" width="27" style="margin-left: 4px;" alt="" /></div>
+                                        <input type="text" name="recorreo" value="cesarberrocal@gmail.com" class="input input_large left input_grupo " />
+                                        <div class="clearfix"></div>
+                                        <div class="row_right"></div>
+                                    </div>
+                                </div>
+                                <div class="campos_finales">
+                                    <div class="row">
+                                        <div class="row_left row_left_sin_line_height"><img src="assets/icons/icon_user.png" width="16" alt="" /></div>
+                                        <p class="roboto-bold">César Berrocal</p>
+                                        <div class="row_right"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="row_left row_left_sin_line_height"><img src="assets/icons/icon_email.png" width="23" alt="" /></div>
+                                        <p >cesarberrocal@gmail.com</p>
+                                        <div class="row_right"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wrapper_box closed">
+                            <div class="box_header gris_alto">
+                                <h2><span class="icon_number">3</span>Residencia del Titular <span class="w_icon_editable"><span class="icon_texto"><span>Editar &nbsp;</span> <i class="icon-editar"></i></span> </span></h2>
+                            </div>
+                            <div class="box_body gris">
+                                <div class="campos_iniciales">
+                                    <div class="row">
+                                        <div class="row_small left">
+                                            <h3>País</h3>
+                                            <div class="w_input left">
+                                                <div class="w_select_nativo">
+                                                    <select name="pais" id="pais" class="select_nativo input_grupo" >
+                                                        <option value="País">País</option>
+                                                        <option value="1">Enero</option>
+                                                        <option value="2">Febrero</option>
+                                                        <option value="3">Marzo</option>
+                                                        <option value="4">Abril</option>
+                                                        <option value="5">Mayo</option>
+                                                        <option value="6">Junio</option>
+                                                        <option value="7">Julio</option>
+                                                        <option value="8">Agosto</option>
+                                                        <option value="9">Septiembre</option>
+                                                        <option value="10">Octubre</option>
+                                                        <option value="11">Noviembre</option>
+                                                        <option value="12">Diciembre</option>
+                                                    </select>
+                                                    <i class="icon_input active icon-down-micro"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row_small right">
+                                            <h3>Departamento</h3>
+                                            <div class="w_input left">
+                                                <div class="w_select_nativo">
+                                                    <select name="departamento" id="departamento" class="select_nativo input_grupo" >
+                                                        <option value="Departamento">Depart...</option>
+                                                        <option value="1">Enero</option>
+                                                        <option value="2">Febrero</option>
+                                                        <option value="3">Marzo</option>
+                                                        <option value="4">Abril</option>
+                                                        <option value="5">Mayo</option>
+                                                        <option value="6">Junio</option>
+                                                        <option value="7">Julio</option>
+                                                        <option value="8">Agosto</option>
+                                                        <option value="9">Septiembre</option>
+                                                        <option value="10">Octubre</option>
+                                                        <option value="11">Noviembre</option>
+                                                        <option value="12">Diciembre</option>
+                                                    </select>
+                                                    <i class="icon_input active icon-down-micro"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="row_small left">
+                                            <h3>Ciudad</h3>
+                                            <div class="w_input">
+                                                <div class="w_select_nativo">
+                                                    <select name="ciudad" id="ciudad" class="select_nativo input_grupo" >
+                                                        <option value="Ciudad">Ciudad</option>
+                                                        <option value="1">Enero</option>
+                                                        <option value="2">Febrero</option>
+                                                        <option value="3">Marzo</option>
+                                                        <option value="4">Abril</option>
+                                                        <option value="5">Mayo</option>
+                                                        <option value="6">Junio</option>
+                                                        <option value="7">Julio</option>
+                                                        <option value="8">Agosto</option>
+                                                        <option value="9">Septiembre</option>
+                                                        <option value="10">Octubre</option>
+                                                        <option value="11">Noviembre</option>
+                                                        <option value="12">Diciembre</option>
+                                                    </select>
+                                                    <i class="icon_input active icon-down-micro"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row_small right">
+                                            <h3>Distrito</h3>
+                                            <div class="w_input">
+                                                <div class="w_select_nativo">
+                                                    <select name="distrito" id="distrito" class="select_nativo input_grupo" >
+                                                        <option value="Distrito">Distrito</option>
+                                                        <option value="1">Enero</option>
+                                                        <option value="2">Febrero</option>
+                                                        <option value="3">Marzo</option>
+                                                        <option value="4">Abril</option>
+                                                        <option value="5">Mayo</option>
+                                                        <option value="6">Junio</option>
+                                                        <option value="7">Julio</option>
+                                                        <option value="8">Agosto</option>
+                                                        <option value="9">Septiembre</option>
+                                                        <option value="10">Octubre</option>
+                                                        <option value="11">Noviembre</option>
+                                                        <option value="12">Diciembre</option>
+                                                    </select>
+                                                    <i class="icon_input active icon-down-micro"></i>
+                                                </div>
+                                            </div>
+                                            <div class="row_right">
+                                                <div class="w_img">
+                                                    <a href="javascript:void(0);" class="tooltip transition">
+                                                        <i class="icon-help-circled"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="rotulo">
+                                        <h3>Dirección</h3>
+                                    </div>
+                                    <div class="row">
+                                        <div class="row_left"><img src="assets/icons/icon_marker.png" width="18" alt="" /></div>
+                                        <input type="text" name="direccion" class="input input_grupo input_large " value="" />
+                                        <div class="row_right"></div>
+                                    </div>
+                                </div>
+                                <div class="campos_finales">
+                                    <div class="row">
+                                        <div class="row_left row_left_sin_line_height"><img src="assets/icons/icon_marker.png" width="18" alt="" /></div>
+                                        <p >Las Oropéndolas 123 <br />
+                                            Benavides - San Isidro <br />
+                                            Lima 27 <br />
+                                            Perú</p>
+                                        <div class="row_right"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wrapper_box">
+                            <button type="submit" class="btn btn-full btn_azul roboto-black transition rounded">PAGAR <i class="icon-right icon-ok-circled"></i></button>
+                        </div>
+                    </div>
+                    <div class="box_right box_right_responsivo box_right_responsivo_js right">
+                        <div class="box_header gris_bajo">
+                            <h2>Datos de la compra</h2>
+                        </div>
+                        <div class="box_body sin_padding">
+                            <div class="row_list">
+                                <p>
+                                    <span class="left roboto-bold font_small_light"><strong>Nro de Orden.</strong></span>
+                                    <span class="right">79075</span>
+                                </p>
+                            </div>
+                            <div class="row_list">
+                                <p>
+                                    <span class="left roboto-bold font_small_light"><strong>Comercio.</strong></span>
+                                    <span class="right">GRUPON</span>
+                                </p>
+                            </div>
+                            <div class="row_list">
+                                <p>
+                                    <span class="left roboto-bold font_small_light"><strong>Producto.</strong></span>
+                                    <span class="right">1 Viaje a Cusco</span>
+                                </p>
+                            </div>
+                            <div class="row_list">
+                                <p>
+                                    <span class="left roboto-bold font_small_light"><strong>Moneda.</strong></span>
+                                    <span class="right">PERU NEW SOL</span>
+                                </p>
+                            </div>
+                            <div class="row_list result">
+                                <p>
+                                    <span class="left roboto-bold font_small_light"><strong>Monto.</strong></span>
+                                    <span class="right roboto-bold">S/. 1,000.00</span>
+                                </p>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <a href="#" class="right link roboto-bold transition">Retornar al comercio&nbsp;&nbsp;<i class="icon-link-exerno"></i></a>
+                        <div class="clearfix"></div>
+                        <br />
+                        <br />
+                        <div class="box_pci">
+                            <div class="box_pci_items wrapper_slider_js owl-carousel owl-theme" >
+                                <div class="box_pci_item">
+                                    <div class="box_pci_header ">
+                                        <img src="assets/images/img_pcidss.png" class="" style="width: 110px;" width="110" alt="" />
+                                    </div>
+                                    <div class="box_pci_body_top"></div>
+                                    <div class="box_pci_body">
+                                        <p class="link_large title roboto-bold"><i class="icon-lock"></i> Está en un entorno seguro</p>
+                                        <p class="font_small_light">Este sitio cumple con los
+                                            estándares de seguridad de la
+                                            industria de medio de pago
+                                            <strong>PCi DSS</strong> para proteger su
+                                            información personal y la de su
+                                            información personal y la de su
+                                            tarjeta. <br />
+                                            Revise en su página el simbolo
+                                            del candado (SSL) que garantiza
+                                            la autencidad de nuestro servicio
+                                            de pago.</p>
+                                    </div>
+                                </div>
+                                <div class="box_pci_item">
+                                    <div class="box_pci_header ">
+                                        <img src="assets/images/img_pcidss.png" class="" style="width: 110px;" width="110" alt="" />
+                                    </div>
+                                    <div class="box_pci_body_top"></div>
+                                    <div class="box_pci_body">
+                                        <p class="link_large title roboto-bold"><i class="icon-lock"></i> Está en un entorno seguro</p>
+                                        <p class="font_small_light">Este sitio cumple con los
+                                            estándares de seguridad de la
+                                            industria de medio de pago
+                                            <strong>PCi DSS</strong> para proteger su
+                                            información personal y la de su
+                                            información personal y la de su
+                                            tarjeta. <br />
+                                            Revise en su página el simbolo
+                                            del candado (SSL) que garantiza
+                                            la autencidad de nuestro servicio
+                                            de pago.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                    <div class="clearfix"></div>
+                    <br />
+                    <br />
+                    <footer>
+                        <div class="left">
+                            <p><strong>Pay-Me</strong> ® es un motor de pagos en línea operado por ALIGNET S.A.C.</p>
+                        </div>
+                        <div class="right">
+                            <p>Copyright © 2014</p>
+                        </div>
+                        <div class="clearfix"></div>
+                    </footer>
+                </form>
+            </div>
+
+        </div>
+        <br />
+        <br />
+
+        <script src="assets/js/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="assets/js/TweenMax.min.js"></script>
+        <script type="text/javascript" src="assets/js/jquery.gsap.min.js"></script>
+        <script src="assets/js/owl.carousel.min.js"></script>
+        <script src="assets/js/jquery.validate.min.js"></script>
+        <script src="assets/js/scripts.js"></script>
+
+    </body>
+
+</html>

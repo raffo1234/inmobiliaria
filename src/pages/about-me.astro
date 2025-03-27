@@ -1,0 +1,74 @@
+---
+import { Icon } from "astro-icon/components";
+import Layout from "../layouts/Layout.astro";
+import Container from "../components/Container.astro";
+---
+
+<Layout pageTitle="About Me">
+  <Container>
+    <div
+      transition:name="about"
+      class="max-w-[1250px] p-4 bg-purple w-full mx-auto rounded-[32px] lg:rounded-[52px] flex justify-center items-center relative"
+    >
+      <a
+        href="/"
+        id="close-button-js"
+        class="opacity-0 translate-y-2 transition duration-700 tran w-[62px] h-[62px] flex items-center justify-center text-white top-[30px] right-[30px] bg-orange absolute rounded-full"
+      >
+        <Icon
+          name="material-symbols-light:arrow-back-rounded"
+          size="62"
+          class="-rotate-45"
+        />
+      </a>
+      <div
+        id="logo-js"
+        class="opacity-0 translate-y-4 transition-all duration-700"
+      >
+        <div class="flex items-center mb-6 space-x-5">
+          <Icon
+            name="material-symbols-light:award-star-rounded"
+            size="96"
+            class="text-orange"
+          />
+          <h1
+            class="text-orange font-nixie-one"
+            style="font-size:clamp(18px, 4vw + 1rem, 60px)"
+          >
+            RAFAEL MEZA
+          </h1>
+        </div>
+      </div>
+    </div>
+  </Container>
+</Layout>
+
+<script is:inline>
+  document.addEventListener("keyup", function (event) {
+    if (event.key === "Escape") {
+      const closeButton = document.getElementById("close-button-js");
+      if (closeButton) {
+        closeButton.click();
+      }
+    }
+  });
+
+  document.addEventListener("keyup", function (event) {
+    if (event.key === "Escape") {
+      window.location.href = "/";
+    }
+  });
+
+  document.addEventListener("astro:page-load", () => {
+    const closeButton = document.getElementById("close-button-js");
+    if (closeButton) {
+      const classes = ["!opacity-100", "!translate-y-0"];
+      setTimeout(() => closeButton.classList.add(...classes), 300);
+    }
+
+    const sliderContainer = document.getElementById("logo-js");
+    if (!sliderContainer) return;
+    const classes = ["!translate-y-0", "!opacity-100"];
+    sliderContainer.classList.add(...classes);
+  });
+</script>

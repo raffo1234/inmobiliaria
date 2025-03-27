@@ -1,0 +1,199 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import tiger from "../assets/portfolio/tiger.png";
+import renta2014 from "../assets/portfolio/renta-2014.png";
+import travelmax from "../assets/portfolio/travelmax.png";
+import yachay from "../assets/portfolio/yachay.png";
+import grupon from "../assets/portfolio/grupon.png";
+import laive from "../assets/portfolio/laive.png";
+import rafael from "../assets/portfolio/rafael.png";
+import yachayDashboard from "../assets/portfolio/dashboard-yachay.png";
+import cancino from "../assets/portfolio/cancino.png";
+import goldenpalace from "../assets/portfolio/goldenpalace.png";
+import libertad from "../assets/portfolio/libertad.png";
+import MenuAndTitle from "../components/MenuAndTitle.astro";
+import Logo from "../components/Logo.astro";
+
+const images = [
+  {
+    src: libertad,
+    year: 2024,
+    alt: "Libertad",
+    focus: "Focus on: TailwindCSS, Javascript, GSAP, AstroJS",
+    href: "https://libertad-six.vercel.app/",
+    buttonText: "View Online",
+  },
+  {
+    src: rafael,
+    year: 2025,
+    alt: "Rafael Meza",
+    focus: "Focus on: AstroJS, Supabase, TailwindCSS, Javascript, GSAP ",
+    href: "https://github.com/raffo1234/rafael",
+    buttonText: "View on Github",
+  },
+  {
+    src: tiger,
+    year: 2015,
+    alt: "Tiger",
+    focus: "Focus on: CSS, Javascript, GSAP",
+    href: "https://rafaelmeza.com/portfolio/tiger/index.html",
+    buttonText: "View Online",
+  },
+  {
+    src: cancino,
+    year: 2016,
+    alt: "Cancino",
+    focus: "Focus on: CSS, Javascript, GSAP",
+    href: "https://rafaelmeza.com/portfolio/cancino/index.html",
+    buttonText: "View Online",
+  },
+  {
+    src: renta2014,
+    year: 2014,
+    alt: "SUNAT Renta 2014",
+    focus: "Focus on: CSS, Javascript, GSAP",
+    buttonText: "View Online",
+  },
+  {
+    src: travelmax,
+    year: 2016,
+    alt: "TravelMax",
+    focus: "Focus on: CSS, Javascript, GSAP, Jquery",
+    href: "https://rafaelmeza.com/portfolio/travelmax/index.html",
+    buttonText: "View Online",
+  },
+  {
+    src: yachay,
+    year: 2016,
+    alt: "Yachay",
+    focus: "Focus on: CSS, Javascript, GSAP, Angular",
+    buttonText: "View Online",
+  },
+  {
+    src: grupon,
+    year: 2015,
+    alt: "Grupon",
+    focus: "Focus on: CSS, Javascript, GSAP, Jquery",
+    href: "https://rafaelmeza.com/portfolio/alignet/flujo_pago_1.html",
+    buttonText: "View Online",
+  },
+  {
+    src: laive,
+    year: 2015,
+    alt: "Laive",
+    focus: "Focus on: CSS, Javascript, GSAP, Jquery",
+    href: "https://rafaelmeza.com/portfolio/laive/index.html",
+    buttonText: "View Online",
+  },
+  {
+    src: yachayDashboard,
+    year: 2016,
+    alt: "Yachay Dashboard",
+    focus: "Focus on: CSS, Javascript, GSAP, Angular",
+    buttonText: "View Online",
+  },
+  {
+    src: goldenpalace,
+    year: 2015,
+    alt: "Golden Palace",
+    focus: "Focus on: CSS, Javascript, GSAP",
+    href: "https://rafaelmeza.com/portfolio/goldenpalace/index.html",
+    buttonText: "View Online",
+  },
+];
+---
+
+<Logo />
+<Layout pageTitle="Projects">
+  <MenuAndTitle title="Portfolio" />
+  <section
+    id="smooth-wrapper"
+    class="w-full projects overflow-hidden min-h-lvh p-4 md:p-6 flex flex-col lg:block"
+  >
+    {
+      images.map(({ src, focus, alt, href, year, buttonText }, index) => {
+        return (
+          <article
+            class={`w-full h-lvh project project${index + 1} flex flex-col md:flex-row relative`}
+          >
+            <Image
+              src={src}
+              class={`project-image  project-${index}-image ${index === 0 ? "!opacity-100" : ""} w-[80%] md:w-1/2 max-w-full md:aspect-square transition-all ease-in-out duration-700 object-contain mx-auto`}
+              alt={`${alt} - Rafael Meza | Portfolio`}
+            />
+            <div
+              class={`relative project-info project-${index}-info md:opacity-0 transition-all duration-700 ease-in-out w-full md:w-0 relative md:h-full flex items-center`}
+            >
+              <div class="md:w-[300px] md:absolute left-0 top-1/2 md:-translate-y-1/2">
+                <p class="text-white bg-green-800 p-2 rounded-sm text-xs inline-block">
+                  {year}
+                </p>
+                <h2
+                  class="font-cinzel leading-tight nowrap mb-6"
+                  style={{
+                    fontSize: "clamp(20px, 3vw + .4rem, 80px)",
+                  }}
+                >
+                  {alt}
+                </h2>
+                <p class="text-sm md:text-xl lg:text-2xl font-nixie-one leading-relaxed">
+                  {focus}
+                </p>
+                {href ? (
+                  <a
+                    target="_blank"
+                    title="Portfolio - View Online - Rafael Meza"
+                    rel="noopener noreferrer"
+                    href={href}
+                    class="font-cinzel group mt-12 inline-block"
+                    style={{
+                      fontSize: "clamp(16px, 2vw + .4rem, 24px)",
+                    }}
+                  >
+                    {buttonText}
+                    <span class="h-[2px] transition-all duration-700 ease-in-out mt-2 group-hover:w-full w-12 bg-black block" />
+                  </a>
+                ) : null}
+              </div>
+            </div>
+          </article>
+        );
+      })
+    }
+  </section>
+</Layout>
+
+<style>
+  .active {
+    .project-image {
+      scale: 1.2;
+      transform: translateX(2%);
+    }
+
+    .project-info {
+      opacity: 1 !important;
+      width: 33.33334% !important;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const nodelist = document.querySelectorAll(".project");
+
+  Array.from(nodelist).map((element, index) => {
+    gsap.to(element, {
+      scrollTrigger: {
+        trigger: `.project${index + 1}`,
+        start: "top 50%",
+        end: "bottom 80%",
+        toggleClass: "active",
+      },
+    });
+  });
+</script>

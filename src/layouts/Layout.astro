@@ -1,0 +1,74 @@
+---
+import "@fontsource/quicksand";
+import "@fontsource/raleway";
+import "@fontsource/lobster";
+import "@fontsource/bebas-neue";
+import "@fontsource-variable/cinzel";
+import "@fontsource/nixie-one";
+import "@fontsource-variable/inter";
+import { ClientRouter } from "astro:transitions";
+
+const { pageTitle } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="author" content="Rafael Meza" />
+    <meta
+      name="keywords"
+      content="Web developer, Frontend developer, Expert in web layout, React.js developer, Responsive web development, HTML/CSS layout, Web design, Professional web layout, Custom web development, React programmer, Expert frontend developer, Interactive web design, UI/UX developer, Interface developer, Website optimization, React.js, Advanced JavaScript, HTML5 layout, CSS3 and Sass, Responsive design with React, React hooks, Redux for React, Reusable React components, React and Next.js, Frontend frameworks, Modern web development, Frontend with React, Professional website creation, Web application development, Web layout services, Fast and scalable website development, Custom user interface development, Web development for businesses, React.js consulting, Custom frontend design and development, Optimized website development, Freelance web developer, Web developer in Lima, Peru, Freelance programmer in Lima, Peru, React.js consulting in Lima, Peru"
+    />
+    <meta
+      name="description"
+      content="Rafael Meza - Web Developer specializing in ReactJS. Building modern, scalable, and efficient web applications. Turn your ideas into reality with custom tech solutions. Expert in front-end development and JavaScript frameworks."
+    />
+    <meta name="robots" content="index, follow " />
+    <link rel="canonical" href="https://www.rafaelmeza.com/" />
+    <meta property="og:title" content="Rafael Meza" />
+    <meta
+      property="og:description"
+      content="Rafael Meza is a skilled web developer specializing in responsive web design, advanced CSS techniques, and building powerful user interfaces with React.js and JavaScript. Offering custom web development solutions that are fast, scalable, and tailored to your needs."
+    />
+    <meta property="og:image" content="https://www.rafaelmeza.com/rafael.png" />
+    <title>
+      {pageTitle}
+      {pageTitle ? " | " : ""}
+      Rafael Meza | Web Developer
+    </title>
+    <ClientRouter />
+  </head>
+  <body
+    id="app"
+    class="opacity-0 bg-[#FEF8DD] transition-opacity duration-700 ease-in-out"
+  >
+    <slot />
+
+    <script is:inline>
+      document.addEventListener("astro:page-load", () => {
+        const app = document.getElementById("app");
+        if (app) {
+          app.classList.remove("opacity-0");
+        }
+
+        document.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", (event) => {
+            if (event.currentTarget.getAttribute("target") !== "_blank") {
+              event.preventDefault();
+              const path = event.currentTarget.getAttribute("href");
+
+              document.body.classList.add("opacity-0");
+              setTimeout(() => {
+                window.location.href = path;
+              }, 700);
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

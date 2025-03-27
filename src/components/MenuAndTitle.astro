@@ -1,0 +1,173 @@
+---
+import Navigation from "./Navigation.astro";
+
+const { title, description } = Astro.props;
+const titleArray = title.split("");
+---
+
+<button
+  id="menu-button-js"
+  type="button"
+  class="flex transition-all duration-500 ease-in-out flex-col space-y-2 w-12 h-12 group justify-center fixed right-6 top-6 z-50"
+>
+  <span
+    class="w-12 group-hover:w-9 transition-all duration-500 ease-in-out h-0.5 block bg-black"
+  ></span>
+  <span
+    class="w-9 h-0.5 group-hover:w-12 transition-all duration-500 ease-in-out block bg-black"
+  ></span>
+</button>
+<Navigation />
+<div class="p-6 w-full min-h-lvh flex justify-center items-center">
+  <div>
+    <h1
+      id="title-js"
+      class="opacity-0 h-full transition-opacity duration-500 ease-in-out w-full overflow-hidden flex space-x-1 justify-center text-green-800 font-cinzel items-center leading-tight"
+      style={{
+        fontSize: "clamp(20px, 13vw + .5rem, 200px)",
+      }}
+    >
+      {
+        titleArray.map((title: string) => {
+          if (title === "") return " ";
+          return (
+            <span class="opacity-0 block translate-y-96 transition-all duration-700 ease-in-out -ml-[2px] md:-ml-1">
+              {title}
+            </span>
+          );
+        })
+      }
+    </h1>
+    {
+      description ? (
+        <p class="text-center text-2xl max-w-lg mx-auto mt-4 text-gray-800 font-nixie-one leading-relaxed">
+          {description}
+        </p>
+      ) : null
+    }
+  </div>
+</div>
+
+<script is:inline>
+  document.addEventListener("astro:page-load", () => {
+    const classes = ["!opacity-100", "!translate-y-0"];
+
+    const title = document.getElementById("title-js");
+
+    if (title) {
+      title.classList.add("!opacity-100");
+
+      const letters = document.querySelectorAll("h1 span");
+      letters.forEach((letter, index) => {
+        setTimeout(() => {
+          letter.classList.add(...classes);
+        }, index * 85);
+      });
+    }
+
+    const menuButton = document.getElementById("menu-button-js");
+    if (menuButton) {
+      menuButton.addEventListener("click", () => {
+        const menu = document.getElementById("menu-js");
+        const lines = menuButton.querySelectorAll("span");
+        const letters = document.querySelectorAll("h1 span");
+        const menuPortfolio = document.getElementById("option-portfolio");
+        const portfolioLetters = menuPortfolio.querySelectorAll("span");
+        const menuContact = document.getElementById("option-contact");
+        const contactLetters = menuContact.querySelectorAll("span");
+
+        if (!menuButton.classList.contains("active")) {
+          setTimeout(() => {
+            menuButton.classList.add("hover:scale-150");
+            menuButton.classList.add("active");
+            lines.forEach((line) => {
+              line.classList.add("bg-yellow-100");
+              line.classList.add("!w-12");
+            });
+            lines[0].classList.add("rotate-45");
+            lines[0].classList.add("translate-y-[4.5px]");
+            lines[1].classList.add("-rotate-45");
+            lines[1].classList.add("-translate-y-[4.5px]");
+          }, 700);
+
+          letters.forEach((letter, index) => {
+            setTimeout(() => {
+              letter.classList.remove("!opacity-100");
+              letter.classList.remove("!translate-y-0");
+              letter.classList.remove("translate-y-96");
+              letter.classList.add("-translate-y-96");
+            }, index * 85);
+          });
+
+          menu.classList.add("!h-full");
+
+          if (portfolioLetters) {
+            portfolioLetters.forEach((letter, index) => {
+              setTimeout(() => {
+                letter.classList.add("!opacity-100");
+                letter.classList.add("!translate-y-0");
+              }, index * 85);
+            });
+          }
+
+          if (contactLetters) {
+            contactLetters.forEach((letter, index) => {
+              setTimeout(
+                () => {
+                  letter.classList.add("!opacity-100");
+                  letter.classList.add("!translate-y-0");
+                },
+                index * 100 + 1200
+              );
+            });
+          }
+        } else {
+          if (contactLetters) {
+            contactLetters.forEach((letter, index) => {
+              setTimeout(() => {
+                letter.classList.remove("!opacity-100");
+                letter.classList.remove("!translate-y-0");
+              }, index * 100);
+            });
+          }
+
+          if (portfolioLetters) {
+            portfolioLetters.forEach((letter, index) => {
+              setTimeout(() => {
+                letter.classList.remove("!opacity-100");
+                letter.classList.remove("!translate-y-0");
+              }, index * 100);
+            });
+          }
+
+          setTimeout(() => menu.classList.remove("!h-full"), 500);
+
+          letters.forEach((letter, index) => {
+            setTimeout(
+              () => {
+                letter.classList.add("!opacity-100");
+                letter.classList.add("!translate-y-0");
+                letter.classList.add("translate-y-96");
+                letter.classList.remove("-translate-y-96");
+              },
+              index * 85 + 700
+            );
+          });
+
+          setTimeout(() => {
+            menuButton.classList.remove("hover:scale-150");
+            menuButton.classList.remove("active");
+            lines.forEach((line) => {
+              line.classList.remove("bg-yellow-100");
+              line.classList.remove("!w-12");
+            });
+            lines[0].classList.remove("rotate-45");
+            lines[0].classList.remove("translate-y-[4.5px]");
+            lines[1].classList.remove("-rotate-45");
+            lines[1].classList.remove("-translate-y-[4.5px]");
+          }, 1000);
+        }
+      });
+    }
+  });
+</script>

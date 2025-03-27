@@ -1,0 +1,102 @@
+---
+import { Icon } from "astro-icon/components";
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import tiger from "../assets/portfolio/tiger.png";
+import renta2014 from "../assets/portfolio/renta-2014.png";
+import travelmax from "../assets/portfolio/travelmax.png";
+import yachay from "../assets/portfolio/yachay.png";
+import grupon from "../assets/portfolio/grupon.png";
+import laive from "../assets/portfolio/laive.png";
+import yachayDashboard from "../assets/portfolio/dashboard-yachay.png";
+import cancino from "../assets/portfolio/cancino.png";
+import goldenpalace from "../assets/portfolio/goldenpalace.png";
+import Container from "../components/Container.astro";
+
+const images = [
+  cancino,
+  tiger,
+  renta2014,
+  travelmax,
+  yachay,
+  grupon,
+  laive,
+  yachayDashboard,
+  goldenpalace,
+];
+---
+
+<Layout pageTitle="Hobbies & Interests">
+  <Container>
+    <div
+      transition:name="hobbies-interests"
+      class="w-full max-w-[1250px] bg-orange mx-auto rounded-[32px] lg:rounded-[52px] flex relative"
+    >
+      <div
+        class="relative opacity-0 transition-all translate-y-4 ease-in-out duration-700 flex w-full"
+        id="slider-container-js"
+      >
+        <a
+          href="/"
+          id="close-button-js"
+          class="opacity-0 translate-y-2 transition duration-700 w-[62px] flex items-center justify-center h-[62px] absolute rounded-full top-[30px] z-20 right-[30px] bg-purple"
+        >
+          <Icon
+            name="material-symbols-light:arrow-insert-rounded"
+            size="62"
+            class="text-orange -rotate-90"
+          />
+        </a>
+        {
+          images.map((image, index) => {
+            return (
+              <Image
+                src={image}
+                class={`${index === 0 ? "!opacity-100" : ""}  slide-js opacity-0 transition-opacity ease-in-out duration-1000 absolute left-1/2 -translate-x-1/2 -translate-y-1/2 top-1/2 object-contain w-[95%] h-[95%]`}
+                alt="Rafael Meza | Portfolio"
+              />
+            );
+          })
+        }
+      </div>
+    </div>
+  </Container>
+</Layout>
+
+<script is:inline>
+  document.addEventListener("keyup", function (event) {
+    if (event.key === "Escape") {
+      window.location.href = "/";
+    }
+  });
+
+  document.addEventListener("astro:page-load", () => {
+    const sliderContainer = document.getElementById("slider-container-js");
+    if (!sliderContainer) return;
+    const classes = ["!translate-y-0", "!opacity-100"];
+    sliderContainer.classList.add(...classes);
+
+    let currentSlide = 0;
+
+    const showNextSlide = (slides) => {
+      for (const el of slides) {
+        el.classList.remove("!opacity-100");
+      }
+      slides[currentSlide].classList.add("!opacity-100");
+      currentSlide = (currentSlide + 1) % slides.length;
+    };
+
+    const slides = document.querySelectorAll(".slide-js");
+    if (slides.length > 0) {
+      setInterval(showNextSlide, 1200, slides);
+    }
+  });
+
+  document.addEventListener("astro:page-load", () => {
+    const closeButton = document.getElementById("close-button-js");
+    if (closeButton) {
+      const classes = ["!opacity-100", "!translate-y-0"];
+      setTimeout(() => closeButton.classList.add(...classes), 300);
+    }
+  });
+</script>
