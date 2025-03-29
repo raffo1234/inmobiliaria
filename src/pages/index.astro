@@ -47,16 +47,15 @@ import PropertiesList from "../components/PropertiesList";
   <div class="h-lvh w-full relative z-10 mb-20">
     <Image src={hero} class="h-full w-full object-cover object-top" alt="" />
   </div>
-  <div class="max-w-[1816px] grid gap-6 flex-wrap mx-auto mb-20">
-    <h2 class="text-3xl font-semibold">Free Real Estate Photos</h2>
-  </div>
-
-  <section
-    class="max-w-[1816px] grid gap-6 flex-wrap mx-auto pb-20"
-    style={{
-      gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
-    }}
-  >
-    <PropertiesList client:load />
-  </section>
+  <main class="max-w-[1816px] mx-auto pb-20 px-4">
+    <h2 class="text-3xl font-semibold mb-10">Free Real Estate Photos</h2>
+    <section
+      class="grid gap-6"
+      style={{
+        gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+      }}
+    >
+      <PropertiesList client:load />
+    </section>
+  </main>
 </Layout>
