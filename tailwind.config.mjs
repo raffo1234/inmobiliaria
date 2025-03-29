@@ -11,6 +11,7 @@ export default {
       lobster: ["Lobster", "sans-serif"],
       "nixie-one": ["Nixie One", "sans-serif"],
       inter: ["Inter Variable", "sans-serif"],
+      "inter-tight": ["Inter Tight Variable", "sans-serif"],
     },
     extend: {
       animation: {

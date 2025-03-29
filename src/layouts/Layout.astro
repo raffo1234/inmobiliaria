@@ -6,6 +6,7 @@ import "@fontsource/bebas-neue";
 import "@fontsource-variable/cinzel";
 import "@fontsource/nixie-one";
 import "@fontsource-variable/inter";
+import "@fontsource-variable/inter-tight";
 import { ClientRouter } from "astro:transitions";
 
 const { pageTitle } = Astro.props;
@@ -42,13 +43,10 @@ const { pageTitle } = Astro.props;
     </title>
     <ClientRouter />
   </head>
-  <body
-    id="app"
-    class="opacity-0 bg-[#FEF8DD] transition-opacity duration-700 ease-in-out"
-  >
+  <body id="app" class="font-inter-tight">
     <slot />
 
-    <script is:inline>
+    <!-- <script is:inline>
       document.addEventListener("astro:page-load", () => {
         const app = document.getElementById("app");
         if (app) {
@@ -69,6 +67,6 @@ const { pageTitle } = Astro.props;
           });
         });
       });
-    </script>
+    </script> -->
   </body>
 </html>

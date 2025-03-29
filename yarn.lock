@@ -622,6 +622,11 @@
   resolved "https://registry.npmjs.org/@fontsource-variable/cinzel/-/cinzel-5.2.5.tgz"
   integrity sha512-h3IcwaWgbCeylbOMRYUmqrEGK2jluuY0VSqFsg3vzt2DKcyBDPcirkNegho1H+qfboEZnkJo0sjfQ+URIHdaVw==
 
+"@fontsource-variable/inter-tight@^5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@fontsource-variable/inter-tight/-/inter-tight-5.2.5.tgz#dc4b173d6376ec97080bf9f6cafc4a62682cfe24"
+  integrity sha512-f7WqR3BQ7YmWT+3i1bR1mqQ1FoIDCfmwKRTENEARFRtkhhR4JPxzF+rB3T75AjZ+dTjIx/nO47LOQDLFWAwJWA==
+
 "@fontsource-variable/inter@^5.2.5":
   version "5.2.5"
   resolved "https://registry.yarnpkg.com/@fontsource-variable/inter/-/inter-5.2.5.tgz#10f44952c460d8145fd9eac7133e0012ca17d252"

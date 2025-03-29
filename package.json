@@ -17,6 +17,7 @@
     "@emotion/react": "^11.14.0",
     "@fontsource-variable/cinzel": "^5.2.5",
     "@fontsource-variable/inter": "^5.2.5",
+    "@fontsource-variable/inter-tight": "^5.2.5",
     "@fontsource/bebas-neue": "^5.2.5",
     "@fontsource/lobster": "^5.1.1",
     "@fontsource/manrope": "^5.1.1",

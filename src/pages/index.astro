@@ -1,13 +1,62 @@
 ---
-import Logo from "../components/Logo.astro";
-import MenuAndTitle from "../components/MenuAndTitle.astro";
 import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import hero from "../assets/hero.jpg";
+import logo from "../assets/logo.png";
+import PropertiesList from "../components/PropertiesList";
 ---
 
-<Logo />
 <Layout>
-  <MenuAndTitle
-    title="Rafael Meza"
-    description="Skilled web developer in responsive design, advanced CSS, and React.js. Delivers fast, scalable, custom solutions."
-  />
+  <header class="fixed left-0 top-0 w-full bg-white z-20 mb-12">
+    <nav
+      class="max-w-[1816px] w-full mx-auto px-4 py-2 justify-between flex items-center"
+    >
+      <ul class="flex items-center gap-4">
+        <li>
+          <a href="/" class="block">
+            <Image
+              src={logo}
+              class="w-20 object-cover object-top"
+              alt="Inmobiliaria"
+            />
+          </a>
+        </li>
+        <li>
+          <input
+            type="search"
+            name="search"
+            class="bg-gray-100 w-[600px] rounded-2xl py-4 px-5 placeholder:text-gray-400 border-transparent border-2 focus:outline-none focus:border-gray-300"
+            placeholder="Buscar ..."
+          />
+        </li>
+      </ul>
+      <ul class="flex gap-3">
+        <li class="block">
+          <a href="/" class="block px-5 py-2 hover:bg-gray-100 rounded-full"
+            >Home</a
+          >
+        </li>
+        <li class="block">
+          <a href="/" class="block px-5 py-2 hover:bg-gray-100 rounded-full">
+            Blog
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <div class="h-lvh w-full relative z-10 mb-20">
+    <Image src={hero} class="h-full w-full object-cover object-top" alt="" />
+  </div>
+  <div class="max-w-[1816px] grid gap-6 flex-wrap mx-auto mb-20">
+    <h2 class="text-3xl font-semibold">Free Real Estate Photos</h2>
+  </div>
+
+  <section
+    class="max-w-[1816px] grid gap-6 flex-wrap mx-auto pb-20"
+    style={{
+      gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+    }}
+  >
+    <PropertiesList client:load />
+  </section>
 </Layout>
