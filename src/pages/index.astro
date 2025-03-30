@@ -51,14 +51,12 @@ import Property from "../components/Property";
   <main class="max-w-[1816px] mx-auto pb-20 px-4">
     <h2 class="text-3xl font-semibold mb-10">Free Real Estate Photos</h2>
     <section
-      class="grid gap-6"
+      class="grid gap-8"
       style={{
-        gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+        gridTemplateColumns: "repeat(auto-fit, minmax(336px, 1fr))",
       }}
     >
       <PropertiesList client:load />
     </section>
   </main>
 </Layout>
-
-<Property client:only />

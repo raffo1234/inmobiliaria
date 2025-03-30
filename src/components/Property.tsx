@@ -10,29 +10,15 @@ export default function Property({
 }: {
   property: Property | undefined;
 }) {
-  // const [showDetail, setShowDetail] = useState(false);
-  // const currentState = window.history.state;
-
-  // const newUrl = "/new-page";
-
-  // const newState = { page: "new-page" };
-
-  // const newTitle = "New Page Title";
-
-  // const toggleShowDetail = () => setShowDetail((prev) => !prev);
-
-  // const onClick = () => {
-  //   const app = document.getElementById("app");
-  //   app?.classList.add("overflow-hidden");
-  //   toggleShowDetail();
-  //   console.log("URL pushed to:", window.location.pathname);
-  //   window.history.pushState(newState, newTitle, newUrl);
-  // };
+  const onClick = () => {
+    window.history.back();
+  };
 
   if (!property) return null;
 
   return (
-    <>
+    <main className="relative">
+      <button onClick={onClick}>Close</button>
       <div className="flex items-start">
         <div className="w-1/2">
           <img src={hero.src} alt="Property" className="w-full" />
@@ -42,6 +28,6 @@ export default function Property({
           <h2>{property.title}</h2>
         </section>
       </div>
-    </>
+    </main>
   );
 }
