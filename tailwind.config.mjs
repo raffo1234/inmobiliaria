@@ -20,14 +20,17 @@ export default {
           "100%": { opacity: 0 },
         },
         slideUp: {
-          "0%": { opacity: "0.5", transform: "translate(0, 30%)" },
+          "0%": {
+            opacity: "0.5",
+            transform: "translate(0, 30%)",
+          },
           "50%": { opacity: 1 },
           "100%": { transform: "translate(0, 0)" },
         },
       },
       animation: {
         fadeOut: "fadeOut 1s ease-in-out",
-        slideUp: "slideUp .35s ease-in-out",
+        slideUp: "slideUp .3s ease-in-out",
       },
       colors: {
         yellow: {

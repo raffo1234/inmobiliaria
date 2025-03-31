@@ -4,6 +4,7 @@ import hero from "../assets/hero.jpg";
 import { Skeleton } from "antd";
 import { useState } from "react";
 import Property from "./Property";
+import { CloseOutlined } from "@ant-design/icons";
 
 const fetcher = async () => {
   const { data, error } = await supabase
@@ -65,17 +66,23 @@ export default function PropertiesList() {
   return (
     <>
       {showDetail ? (
-        <div className="bg-black bg-opacity-40 fixed z-50 top-0 left-0 h-full w-full p-6 overflow-auto">
-          <div className="animate-slideUp max-w-[1224px] w-full mx-auto relative delay-50 transform-all w-[calc(100% - 16px)] mx-auto rounded-lg bg-white h-[200%]">
-            <button
-              className="absolute right-6 top-6 text-white rounded-full w-12 h-12 bg-black flex justify-center items-center"
-              onClick={onClose}
-            >
-              X
-            </button>
-            <Property property={propertyValue} />
+        <>
+          <div
+            onClick={onClose}
+            className="bg-black transition-opacity z-30 bg-opacity-40 fixed top-0 left-0 h-full w-full"
+          ></div>
+          <div className="fixed z-40 top-0 left-0 w-full h-full overflow-auto p-6">
+            <div className="animate-slideUp max-w-[1224px] w-full mx-auto relative delay-50 transform-all w-[calc(100% - 16px)] mx-auto rounded-lg bg-white h-[200%]">
+              <Property property={propertyValue} />
+              <button
+                className="absolute right-6 top-6 text-white rounded-full w-12 h-12 bg-black flex justify-center items-center"
+                onClick={onClose}
+              >
+                <CloseOutlined />
+              </button>
+            </div>
           </div>
-        </div>
+        </>
       ) : null}
       {properties.map((property) => {
         const { id, title } = property;

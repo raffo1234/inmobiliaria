@@ -9,6 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@ant-design/icons": "^6.0.0",
     "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@astrojs/db": "^0.14.8",
     "@astrojs/react": "^4.2.2",

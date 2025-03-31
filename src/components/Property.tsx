@@ -35,7 +35,7 @@ export default function Property({
           <Image src={hero.src} alt="Property" />
         </div>
         <section>
-          <form className="mb-6 flex flex-col gap-6">
+          <form className="mb-6 flex flex-col gap-4">
             <fieldset>
               <label className="inline-block font-semibold text-sm mb-3">
                 Nombres
