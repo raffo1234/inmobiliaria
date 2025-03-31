@@ -14,32 +14,20 @@ export default {
       "inter-tight": ["Inter Tight Variable", "sans-serif"],
     },
     extend: {
-      animation: {
-        fadeOut: "fadeOut 1s ease-out forwards",
-      },
       keyframes: {
         fadeOut: {
           "0%": { opacity: 100 },
           "100%": { opacity: 0 },
         },
-      },
-      animation: {
-        fadeIn: "fadeIn .4s linear",
-      },
-      keyframes: {
-        fadeIn: {
-          "0%": { opacity: 0 },
-          "100%": { opacity: 1 },
+        slideUp: {
+          "0%": { opacity: "0.5", transform: "translate(0, 30%)" },
+          "50%": { opacity: 1 },
+          "100%": { transform: "translate(0, 0)" },
         },
       },
       animation: {
-        fadeInTranslate: "fadeInTranslate .4s",
-      },
-      keyframes: {
-        fadeInTranslate: {
-          "0%": { opacity: 0, transform: "translate(0, 20px)" },
-          "100%": { opacity: 1, transform: "translate(0,0)" },
-        },
+        fadeOut: "fadeOut 1s ease-in-out",
+        slideUp: "slideUp .35s ease-in-out",
       },
       colors: {
         yellow: {
