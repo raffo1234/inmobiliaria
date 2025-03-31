@@ -58,19 +58,22 @@ export default function PropertiesList() {
     window.history.pushState(newState, newTitle, newUrl);
   };
 
+  const onClose = () => {
+    window.history.back();
+  };
+
   return (
     <>
       {showDetail ? (
         <div className="bg-black bg-opacity-40 fixed z-50 top-0 left-0 h-full w-full p-6 overflow-auto">
-          <div className="animate-slideUp relative delay-100 transform-all w-[calc(100% - 16px)] mx-auto rounded-lg bg-white h-[200%]">
+          <div className="animate-slideUp max-w-[1224px] w-full mx-auto relative delay-50 transform-all w-[calc(100% - 16px)] mx-auto rounded-lg bg-white h-[200%]">
+            <button
+              className="absolute right-6 top-6 text-white rounded-full w-12 h-12 bg-black flex justify-center items-center"
+              onClick={onClose}
+            >
+              X
+            </button>
             <Property property={propertyValue} />
-            <h3 className="mb-6">Details</h3>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Veritatis unde sapiente corrupti voluptates recusandae quos
-              repudiandae soluta obcaecati totam qui magnam, libero ducimus
-              atque neque quidem omnis voluptate natus aperiam?
-            </p>
           </div>
         </div>
       ) : null}
