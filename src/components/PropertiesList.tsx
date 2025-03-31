@@ -1,8 +1,8 @@
 import { supabase } from "../lib/supabase";
 import useSWR from "swr";
 import hero from "../assets/hero.jpg";
-import { Skeleton } from "antd";
-import { useState } from "react";
+import { Button, Skeleton } from "antd";
+import { useEffect, useState } from "react";
 import Property from "./Property";
 import { CloseOutlined } from "@ant-design/icons";
 
@@ -40,49 +40,80 @@ export default function PropertiesList() {
     isLoading,
   } = useSWR("properties", fetcher);
 
-  const toggleShowDetail = () => setShowDetail((prev) => !prev);
-
   const onClick = (
     event: React.MouseEvent<HTMLAnchorElement>,
     property: Property
   ) => {
     event.preventDefault();
 
+    setShowDetail(true);
     setPropertyValue(property);
     const newUrl = `inmueble/${property.id}`;
-    const newState = { page: property.id };
+    const newState = { page: "property" };
     const newTitle = property.title;
     const app = document.getElementById("app") as HTMLElement;
     app.classList.add("overflow-hidden");
-    toggleShowDetail();
 
     window.history.pushState(newState, newTitle, newUrl);
   };
 
-  const onClose = () => {
-    window.history.back();
+  const handleClose = () => {
+    setPropertyValue(undefined);
+    const newUrl = "/";
+    const newState = { page: "Home" };
+    const newTitle = "Inmobiliaria";
+    const app = document.getElementById("app") as HTMLElement;
+    app.classList.remove("overflow-hidden");
+    setShowDetail(false);
+
+    window.history.pushState(newState, newTitle, newUrl);
   };
+
+  const onClose = (event?: React.MouseEvent<HTMLElement>) => {
+    if (event) {
+      if (event.target === event.currentTarget) {
+        handleClose();
+      }
+    } else {
+      handleClose();
+    }
+  };
+
+  const handleEscape = (event: KeyboardEvent) => {
+    if (event.key === "Escape") {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keyup", function (event) {
+      handleEscape(event);
+    });
+
+    return () => {
+      document.removeEventListener("keyup", function (event) {
+        handleEscape(event);
+      });
+    };
+  }, [showDetail]);
 
   return (
     <>
       {showDetail ? (
-        <>
-          <div
-            onClick={onClose}
-            className="bg-black transition-opacity z-30 bg-opacity-40 fixed top-0 left-0 h-full w-full"
-          ></div>
-          <div className="fixed z-40 top-0 left-0 w-full h-full overflow-auto p-6">
-            <div className="animate-slideUp max-w-[1224px] w-full mx-auto relative delay-50 transform-all w-[calc(100% - 16px)] mx-auto rounded-lg bg-white h-[200%]">
-              <Property property={propertyValue} />
-              <button
-                className="absolute right-6 top-6 text-white rounded-full w-12 h-12 bg-black flex justify-center items-center"
-                onClick={onClose}
-              >
-                <CloseOutlined />
-              </button>
-            </div>
+        <div
+          onClick={onClose}
+          className="bg-black fixed z-40 top-0 cursor-pointer left-0 w-full h-full overflow-auto p-6 bg-opacity-40"
+        >
+          <div className="animate-slideUp max-w-[1224px] w-full cursor-default mx-auto relative delay-50 transform-all rounded-lg bg-white min-h-lvh">
+            <Property property={propertyValue} />
+            <Button
+              className="absolute right-6 top-6 rounded-full w-12 h-12 flex justify-center items-center"
+              onClick={() => onClose()}
+            >
+              <CloseOutlined className="text-xl" />
+            </Button>
           </div>
-        </>
+        </div>
       ) : null}
       {properties.map((property) => {
         const { id, title } = property;
