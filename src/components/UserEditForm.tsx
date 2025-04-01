@@ -95,7 +95,7 @@ export default function UserEditForm({ userId }: { userId: string }) {
       </div>
       <footer className="mt-10">
         <a
-          href="/users"
+          href="/admin/users"
           className="inline-block py-2 px-10 flex-grow font-semibold text-lg bg-white border-gray-200 border-[1px] rounded-md"
         >
           Cancel

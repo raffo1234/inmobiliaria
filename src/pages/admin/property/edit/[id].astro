@@ -1,7 +1,7 @@
 ---
-import UserEditForm from "../../../components/UserEditForm";
-import Dashboard from "../../../layouts/Dashboard.astro";
-import { supabase } from "../../../lib/supabase";
+import UserEditForm from "../../../../components/UserEditForm";
+import Dashboard from "../../../../layouts/Dashboard.astro";
+import { supabase } from "../../../../lib/supabase";
 
 export async function getStaticPaths() {
   const { data: users, error } = await supabase.from("user").select("id");

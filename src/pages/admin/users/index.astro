@@ -1,11 +1,6 @@
 ---
-import Dashboard from "../../layouts/Dashboard.astro";
-import { supabase } from "../../lib/supabase";
-
-let { data } = await supabase
-  .from("user")
-  .select("*")
-  .order("created_at", { ascending: false });
+import UsersTable from "../../../components/UsersTable";
+import Dashboard from "../../../layouts/Dashboard.astro";
 ---
 
 <Dashboard pageTitle="Users">
@@ -44,26 +39,19 @@ let { data } = await supabase
       </nav>
     </section>
     <main class="flex-grow bg-white min-h-lvh">
-      <section class="max-w-lg w-full mx-auto py-6 px-4">
-        <h1 class="text-2xl font-bebas-neue mb-6">Users</h1>
-
-        <a
-          href="/admin/users/add"
-          class="inline-block px-6 py-2 bg-blue-500 text-white rounded-md"
-          >Add User
-        </a>
-        <section>
-          {
-            data?.map((user) => {
-              return (
-                <div>
-                  <h1>Username: {user.username}</h1>
-                  <p>Email: {user.email}</p>
-                </div>
-              );
-            })
-          }
-        </section>
+      <header class="border-neutral-200 border-b p-5">
+        <h1 class="text-4xl font-semibold">Users</h1>
+      </header>
+      <section class="w-full mx-auto p-5">
+        <div class="flex justify-between mb-10">
+          <h2 class="font-semibold text-2xl">Title</h2>
+          <a
+            href="/admin/users/add"
+            class="inline-block px-6 py-2 bg-blue-500 text-white rounded-md"
+            >Add User
+          </a>
+        </div>
+        <UsersTable client:load />
       </section>
     </main>
   </div>

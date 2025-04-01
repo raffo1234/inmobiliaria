@@ -1,6 +1,6 @@
 ---
-import Dashboard from "../../layouts/Dashboard.astro";
-import { supabase } from "../../lib/supabase";
+import Dashboard from "../../../layouts/Dashboard.astro";
+import { supabase } from "../../../lib/supabase";
 
 interface User {
   username: string;
@@ -76,7 +76,7 @@ if (Astro.request.method === "POST") {
         <h1 class="text-4xl font-semibold">Add User</h1>
       </header>
       <section class="w-full mx-auto p-5">
-        <form method="post" action="/users/add">
+        <form method="post" action="/admin/users/add">
           <div class="flex flex-col gap-4 mt-16">
             <fieldset>
               <label for="username" class="block font-bold mb-2 font-manrope"
@@ -137,7 +137,7 @@ if (Astro.request.method === "POST") {
           }
           <footer class="mt-10">
             <a
-              href="/users"
+              href="/admin/users"
               class="inline-block text-center font-bold text-sm flex-grow px-6 py-2 border-gray-200 bg-white border-width-2 border rounded-md"
               >Cancel</a
             >
