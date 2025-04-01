@@ -32,7 +32,7 @@ if (Astro.request.method === "POST") {
   insertResult = await insertData(newUser);
 
   if (insertResult.success) {
-    return Astro.redirect("/users");
+    return Astro.redirect("/admin/users");
   }
 }
 ---

@@ -1,4 +1,6 @@
 ---
+const currentPath = Astro.url.pathname;
+
 const pages = [
   {
     href: "/admin/users",
@@ -30,14 +32,14 @@ const pages = [
     </div>
   </header>
   <nav>
-    <ul class="flex flex-col gap-2 text-sm">
+    <ul class="flex flex-col gap-[1px] text-sm">
       {
         pages.map(({ href, title }) => (
           <li>
             <a
               href={href}
               title={title}
-              class="hover:bg-white rounded-md block px-3 py-2"
+              class={`${href === currentPath ? "bg-white hover:bg-white" : "hover:bg-opacity-50"} hover:bg-gray-100 rounded-md block px-3 py-3`}
             >
               {title}
             </a>
