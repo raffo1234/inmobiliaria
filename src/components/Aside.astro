@@ -1,0 +1,49 @@
+---
+const pages = [
+  {
+    href: "/admin/users",
+    title: "Usuarios",
+  },
+  {
+    href: "/admin/projects",
+    title: "Projectos",
+  },
+  {
+    href: "/admin/property",
+    title: "Propiedades",
+  },
+];
+---
+
+<section class="w-[280px] bg-neutral-200 p-5">
+  <header class="mb-20">
+    <div class="flex gap-2">
+      <img
+        src=""
+        alt="Jhon Doe"
+        class="w-11 h-11 rounded-full bg-neutral-700"
+      />
+      <div>
+        <p class="text-sm leading-3">Welcome back</p>
+        <h3 class="font-bold text-lg">Jhon Doe</h3>
+      </div>
+    </div>
+  </header>
+  <nav>
+    <ul class="flex flex-col gap-2 text-sm">
+      {
+        pages.map(({ href, title }) => (
+          <li>
+            <a
+              href={href}
+              title={title}
+              class="hover:bg-white rounded-md block px-3 py-2"
+            >
+              {title}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</section>
