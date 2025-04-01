@@ -56,7 +56,7 @@ export default function PropertiesList() {
 
     window.history.pushState(newState, newTitle, newUrl);
   };
-
+  
   const handleClose = () => {
     setPropertyValue(undefined);
     const newUrl = "/";
