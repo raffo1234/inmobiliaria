@@ -1,8 +1,7 @@
 ---
-import Aside from "../../../../components/Aside.astro";
-import UserEditForm from "../../../../components/UserEditForm";
-import Dashboard from "../../../../layouts/Dashboard.astro";
-import { supabase } from "../../../../lib/supabase";
+import UserEditForm from "@components/UserEditForm";
+import Dashboard from "@layouts/Dashboard.astro";
+import { supabase } from "@lib/supabase";
 
 export async function getStaticPaths() {
   const { data: users, error } = await supabase.from("user").select("id");
@@ -28,40 +27,9 @@ if (error || !user) {
   return { notFound: true };
 }
 
-const { id } = Astro.params;
-
-if (!id || !user) {
+if (!user) {
   return Astro.redirect("/404");
 }
-
-// async function updateData(data: User, userId: string) {
-//   const { data: updatedUser, error } = await supabase
-//     .from("user")
-//     .update(data)
-//     .eq("id", userId)
-//     .select()
-//     .single();
-
-//   if (error) {
-//     console.error("Error updating data:", error);
-//     return { data, success: false, error: error.message };
-//   }
-//   return { data: updatedUser, success: true };
-// }
-
-// if (Astro.request.method === "POST") {
-//   const formData = await Astro.request.formData();
-//   const newUser: User = {
-//     username: formData.get("username") as string,
-//     email: formData.get("email") as string,
-//   };
-
-//   const response = await updateData(newUser, id);
-
-//   if (response.success) {
-//     return Astro.redirect("/admin/users");
-//   }
-// }
 ---
 
 <Dashboard pageTitle="Add User">

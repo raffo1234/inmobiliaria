@@ -1,5 +1,5 @@
-import FormSkeleton from "./FormSkeleton";
-import { supabase } from "../lib/supabase";
+import FormSkeleton from "@components/FormSkeleton";
+import { supabase } from "@lib/supabase";
 import useSWR, { mutate } from "swr";
 import { useEffect, useMemo, useState } from "react";
 import { Modal, message } from "antd";

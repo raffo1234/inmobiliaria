@@ -1,6 +1,6 @@
 import { supabase } from "../lib/supabase";
 import useSWR from "swr";
-import hero from "../assets/hero.jpg";
+import hero from "@assets/hero.jpg";
 import { Button, Skeleton } from "antd";
 import { useEffect, useState } from "react";
 import Property from "./Property";
@@ -56,7 +56,7 @@ export default function PropertiesList() {
 
     window.history.pushState(newState, newTitle, newUrl);
   };
-  
+
   const handleClose = () => {
     setPropertyValue(undefined);
     const newUrl = "/";

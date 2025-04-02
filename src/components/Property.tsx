@@ -1,4 +1,4 @@
-import hero from "../assets/hero.jpg";
+import hero from "@assets/hero.jpg";
 import { useState } from "react";
 import { Button, Input } from "antd";
 

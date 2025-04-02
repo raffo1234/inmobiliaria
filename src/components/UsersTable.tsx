@@ -1,7 +1,7 @@
-import { supabase } from "../lib/supabase";
-import DeleteUser from "./DeleteUser";
-import EditUser from "./EditUser";
-import TableSkeleton from "./TableSkeleton";
+import { supabase } from "@lib/supabase";
+import DeleteUser from "@components//DeleteUser";
+import EditUser from "@components/EditUser";
+import TableSkeleton from "@components/TableSkeleton";
 import useSWR from "swr";
 
 const fetchUsers = async () => {

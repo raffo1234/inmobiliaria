@@ -1,8 +1,8 @@
 import { message } from "antd";
-import { supabase } from "../lib/supabase";
+import { supabase } from "@lib/supabase";
 import { mutate } from "swr";
 import { useState } from "react";
-import Modal from "../components/Modal";
+import Modal from "@components/Modal";
 import { Button } from "antd";
 export default function DeleteUser({ userId }: { userId: string }) {
   const [messageApi, contextHolder] = message.useMessage();
