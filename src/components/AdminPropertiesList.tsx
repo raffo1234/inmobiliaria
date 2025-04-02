@@ -3,10 +3,9 @@ import useSWR from "swr";
 import hero from "@assets/hero.jpg";
 import { Skeleton } from "antd";
 import { useState } from "react";
-import { ArrowUpOutlined } from "@ant-design/icons";
+import { ArrowUpOutlined, PlusOutlined } from "@ant-design/icons";
 import EditProperty from "@components/EditProperty";
 import { PropertyState } from "@types/propertyState";
-import PropertyType from "./PropertyType";
 
 const PropertyItem = ({ id }: { id: string }) => {
   const [hover, setHover] = useState(false);
@@ -31,7 +30,6 @@ const PropertyItem = ({ id }: { id: string }) => {
         }}
       >
         <div className="absolute bottom-0 left-0 w-full p-5 flex gap-5 text-white">
-          <PropertyType id={id} />
           <EditProperty id={id} />
           <a href={`../inmueble/${id}`} target="_blank" className="">
             <ArrowUpOutlined className="rotate-45 text-3xl" />
@@ -81,6 +79,12 @@ export default function PropertiesList() {
         gridTemplateColumns: "repeat(auto-fit, minmax(336px, 1fr))",
       }}
     >
+      <a
+        href="/admin/property/add"
+        className="h-[320px] flex justify-center items-center rounded-lg bg-gray-100 hover:bg-gray-200 active:bg-gray-300 transition-colors"
+      >
+        <PlusOutlined className="text-xl" />
+      </a>
       {properties.map((property) => {
         const { id, title, state } = property;
         if (error) console.error(error);
