@@ -6,6 +6,8 @@ import { useState } from "react";
 import { ArrowUpOutlined } from "@ant-design/icons";
 import EditProperty from "@components/EditProperty";
 import { PropertyState } from "@types/propertyState";
+import PropertyType from "./PropertyType";
+
 const PropertyItem = ({ id }: { id: string }) => {
   const [hover, setHover] = useState(false);
   return (
@@ -29,6 +31,7 @@ const PropertyItem = ({ id }: { id: string }) => {
         }}
       >
         <div className="absolute bottom-0 left-0 w-full p-5 flex gap-5 text-white">
+          <PropertyType id={id} />
           <EditProperty id={id} />
           <a href={`../inmueble/${id}`} target="_blank" className="">
             <ArrowUpOutlined className="rotate-45 text-3xl" />
@@ -50,8 +53,11 @@ const fetcher = async () => {
       location,
       state,
       type (
+        property_id,
         id,
-        name
+        name,
+        size,
+        image
       )
     `
     )
