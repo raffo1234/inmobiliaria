@@ -2,7 +2,7 @@ import { supabase } from "@lib/supabase";
 import { Skeleton } from "antd";
 import hero from "@assets/hero.jpg";
 import useSWR from "swr";
-import { PlusOutlined } from "@ant-design/icons";
+import { Icon } from "@iconify/react";
 import { useState } from "react";
 import InsertPropertyType from "./InsertPropertyType";
 
@@ -14,8 +14,12 @@ const fetcherType = async (propertyId: string) => {
       id,
       property_id,
       name,
+      bathroom_count,
+      bedroom_count,
       price,
-      size
+      size,
+      floor,
+      stock
     `
     )
     .eq("property_id", propertyId)
@@ -27,6 +31,7 @@ const fetcherType = async (propertyId: string) => {
 
 export default function PropertyTypes({ id }: { id: string }) {
   const [displayAddform, setDisplayAddForm] = useState(false);
+  const [lastCreatedId, setLastCreatedId] = useState();
   const { data: types = [], isLoading } = useSWR(`${id}-types`, () =>
     fetcherType(id)
   );
@@ -39,6 +44,7 @@ export default function PropertyTypes({ id }: { id: string }) {
         <InsertPropertyType
           propertyId={id}
           setDisplayAddForm={setDisplayAddForm}
+          setLastCreatedId={setLastCreatedId}
         />
       ) : (
         <section
@@ -50,20 +56,77 @@ export default function PropertyTypes({ id }: { id: string }) {
         >
           <button
             onClick={() => setDisplayAddForm(true)}
-            className="hover:bg-gray-200 transition-colors active:bg-gray-300 h-[260px] bg-gray-100 rounded-lg"
+            className="hover:bg-gray-200 transition-colors active:bg-gray-300 h-[260px] bg-gray-100 rounded-lg flex justify-center items-center"
           >
-            <PlusOutlined className="text-xl" />
+            <Icon
+              icon="material-symbols-light:add-2-rounded"
+              className="text-xl"
+            />
           </button>
-          {types.map(({ id, name }) => {
-            return (
-              <img
-                key={id}
-                src={hero.src}
-                className="w-full h-[260px] object-cover object-top rounded-lg mb-4"
-                alt={name}
-              />
-            );
-          })}
+          {types.map(
+            ({
+              id,
+              name,
+              size,
+              floor,
+              stock,
+              bedroom_count,
+              bathroom_count,
+            }) => {
+              return (
+                <div key={id}>
+                  <img
+                    src={hero.src}
+                    className={`${lastCreatedId === id ? "opacity-50" : ""} w-full h-[260px] object-cover object-top rounded-lg mb-4`}
+                    alt={name}
+                  />
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-5 h-5 bg-black rounded-full"></div>
+                      <p>{name}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Icon
+                        icon="material-symbols-light:bedroom-parent-outline"
+                        className="text-2xl"
+                      />
+                      <p>
+                        {size} m<sup>2</sup>
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Icon
+                        icon="material-symbols-light:shower-outline"
+                        className="text-2xl"
+                      />
+                      <p>Banos: {bathroom_count}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Icon
+                        icon="material-symbols-light:bedroom-parent-outline"
+                        className="text-2xl"
+                      />
+                      <p>Dormitorios: {bedroom_count}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Icon
+                        icon="material-symbols-light:elevator-outline"
+                        className="text-2xl"
+                      />
+                      <p>Pisos: {floor}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Icon
+                        icon="material-symbols-light:production-quantity-limits"
+                        className="text-2xl"
+                      />
+                      <p>Disponibles: {stock}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+          )}
         </section>
       )}
     </>

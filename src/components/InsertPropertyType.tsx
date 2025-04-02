@@ -1,7 +1,7 @@
 import FormSkeleton from "@components/FormSkeleton";
 import { supabase } from "@lib/supabase";
 import useSWR, { mutate } from "swr";
-import { useState } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import { Button, Modal, Skeleton, message } from "antd";
 import { useForm } from "react-hook-form";
 
@@ -34,9 +34,11 @@ const fetcherType = async (propertyId: string) => {
 export default function InsertPropertyType({
   propertyId,
   setDisplayAddForm,
+  setLastCreatedId,
 }: {
   propertyId: string;
   setDisplayAddForm: (value: boolean) => void;
+  setLastCreatedId: Dispatch<SetStateAction<undefined>>;
 }) {
   const { data: types = [], isLoading } = useSWR(`${propertyId}-types`, () =>
     fetcherType(propertyId)
@@ -48,9 +50,14 @@ export default function InsertPropertyType({
   async function insertData(data: TypeInputs) {
     const { error, data: insertedData } = await supabase
       .from("type")
-      .insert([{ ...data, property_id: propertyId }]);
+      .insert([{ ...data, property_id: propertyId }])
+      .select()
+      .single();
 
     await mutate(`${propertyId}-types`);
+    if (insertedData) {
+      await setLastCreatedId(insertedData.id);
+    }
     reset();
     setDisplayAddForm(false);
 
@@ -66,50 +73,55 @@ export default function InsertPropertyType({
   return (
     <>
       <form onSubmit={handleSubmit(insertData)} id="addPropertyType">
-        <fieldset>
-          <label htmlFor="name" className="block font-bold mb-2 font-manrope">
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            {...register("name")}
-            required
-            className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-          />
+        <fieldset className="flex flex-col gap-4">
+          <div>
+            <label htmlFor="name" className="block font-bold mb-2 font-manrope">
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              {...register("name")}
+              required
+              className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <div>
+            <label htmlFor="size" className="block font-bold mb-2 font-manrope">
+              Size
+            </label>
+            <input
+              type="text"
+              id="size"
+              {...register("size")}
+              required
+              className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="price"
+              className="block font-bold mb-2 font-manrope"
+            >
+              Price
+            </label>
+            <input
+              type="text"
+              id="price"
+              {...register("price")}
+              required
+              className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <footer className="flex items-center gap-2 pt-4 mt-4 justify-end">
+            <Button htmlType="button" onClick={() => setDisplayAddForm(false)}>
+              Cancel
+            </Button>
+            <Button htmlType="submit" type="primary">
+              Guardar
+            </Button>
+          </footer>
         </fieldset>
-        <fieldset>
-          <label htmlFor="size" className="block font-bold mb-2 font-manrope">
-            Size
-          </label>
-          <input
-            type="text"
-            id="size"
-            {...register("size")}
-            required
-            className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-          />
-        </fieldset>
-        <fieldset>
-          <label htmlFor="price" className="block font-bold mb-2 font-manrope">
-            Price
-          </label>
-          <input
-            type="text"
-            id="price"
-            {...register("price")}
-            required
-            className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-          />
-        </fieldset>
-        <footer className="flex items-center gap-2 pt-4 mt-4 justify-end">
-          <Button htmlType="button" onClick={() => setDisplayAddForm(false)}>
-            Cancel
-          </Button>
-          <Button htmlType="submit" type="primary">
-            Guardar
-          </Button>
-        </footer>
       </form>
     </>
   );
