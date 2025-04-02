@@ -1,8 +1,10 @@
 ---
 import Dashboard from "@layouts/Dashboard.astro";
 import { supabase } from "@lib/supabase";
+import { PropertyState } from "@types/propertyState";
 
 interface Property {
+  state: string;
   title: string;
   description: string;
   location: string;
@@ -24,6 +26,7 @@ let insertResult;
 if (Astro.request.method === "POST") {
   const formData = await Astro.request.formData();
   const newData: Property = {
+    state: PropertyState.PENDING,
     title: formData.get("title") as string,
     description: formData.get("description") as string,
     location: formData.get("location") as string,

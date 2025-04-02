@@ -1,4 +1,6 @@
 export enum PropertyState {
-  Draft = 0,
-  Active,
+  DRAFT = "DRAFT",
+  PENDING = "PENDING",
+  ACTIVE = "ACTIVE",
+  
 }

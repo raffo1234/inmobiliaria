@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Modal, message } from "antd";
 import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
+import { PropertyState } from "@types/propertyState";
 
 async function fetcher(id: string) {
   const { data, error } = await supabase
@@ -20,6 +21,7 @@ type Inputs = {
   title: string;
   description: string;
   location: string;
+  state: boolean;
 };
 
 export default function EditUser({ id }: { id: string }) {
@@ -102,6 +104,24 @@ export default function EditUser({ id }: { id: string }) {
         ) : (
           <form onSubmit={handleSubmit(onSubmit)} id="editProperty">
             <div className="flex flex-col gap-4">
+              <fieldset>
+                <label
+                  htmlFor="state"
+                  className="block font-bold mb-2 font-manrope"
+                >
+                  State
+                </label>
+                <select
+                  id="state"
+                  {...register("state")}
+                  required
+                  className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option>{PropertyState.DRAFT}</option>
+                  <option>{PropertyState.PENDING}</option>
+                  <option>{PropertyState.ACTIVE}</option>
+                </select>
+              </fieldset>
               <fieldset>
                 <label
                   htmlFor="title"

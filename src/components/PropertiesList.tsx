@@ -5,6 +5,7 @@ import { Button, Skeleton } from "antd";
 import { useEffect, useState } from "react";
 import Property from "./Property";
 import { CloseOutlined } from "@ant-design/icons";
+import { PropertyState } from "@types/propertyState";
 
 const fetcher = async () => {
   const { data, error } = await supabase
@@ -19,6 +20,7 @@ const fetcher = async () => {
       )
     `
     )
+    .eq("state", PropertyState.ACTIVE)
     .order("created_at", { ascending: false });
 
   if (error) throw error;

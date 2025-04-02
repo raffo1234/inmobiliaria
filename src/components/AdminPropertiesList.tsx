@@ -5,6 +5,7 @@ import { Skeleton } from "antd";
 import { useState } from "react";
 import { ArrowUpOutlined } from "@ant-design/icons";
 import EditProperty from "@components/EditProperty";
+import { PropertyState } from "@types/propertyState";
 const PropertyItem = ({ id }: { id: string }) => {
   const [hover, setHover] = useState(false);
   return (
@@ -22,6 +23,10 @@ const PropertyItem = ({ id }: { id: string }) => {
       </a>
       <span
         className={`${hover ? "opacity-100" : "opacity-0"} transition-opacity block absolute left-0 top-0 w-full h-full bg-black bg-opacity-25 rounded-lg`}
+        style={{
+          background:
+            "linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%)",
+        }}
       >
         <div className="absolute bottom-0 left-0 w-full p-5 flex gap-5 text-white">
           <EditProperty id={id} />
@@ -41,6 +46,9 @@ const fetcher = async () => {
       `
       id,
       title,
+      description,
+      location,
+      state,
       type (
         id,
         name
@@ -68,7 +76,7 @@ export default function PropertiesList() {
       }}
     >
       {properties.map((property) => {
-        const { id, title } = property;
+        const { id, title, state } = property;
         if (error) console.error(error);
 
         if (isLoading) return <Skeleton />;
@@ -78,10 +86,19 @@ export default function PropertiesList() {
             <PropertyItem id={id} />
             <div className="flex items-center gap-2 mb-2">
               <div className="w-5 h-5 rounded-full bg-black"></div>
-              <h3>
+              <h3 className="flex gap-4 justify-between items-start w-full">
                 <a href={`inmueble/${id}`} className="font-semibold">
                   {title}
                 </a>
+                <span
+                  className={`rounded border pb-[1px] text-xs px-1 self-center block
+                  ${state === PropertyState.DRAFT ? "border-gray-400 text-gray-400" : ""}
+                  ${state === PropertyState.PENDING ? "border-cyan-200 text-cyan-200" : ""}
+                  ${state === PropertyState.ACTIVE ? "border-green-600 bg-green-600 text-white" : ""}
+                  `}
+                >
+                  {state}
+                </span>
               </h3>
             </div>
           </article>
