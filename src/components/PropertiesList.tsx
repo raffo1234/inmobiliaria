@@ -115,35 +115,42 @@ export default function PropertiesList() {
           </div>
         </div>
       ) : null}
-      {properties.map((property) => {
-        const { id, title } = property;
-        if (error) console.error(error);
+      <section
+        className="grid gap-8"
+        style={{
+          gridTemplateColumns: "repeat(auto-fit, minmax(336px, 1fr))",
+        }}
+      >
+        {properties.map((property) => {
+          const { id, title } = property;
+          if (error) console.error(error);
 
-        if (isLoading) return <Skeleton />;
+          if (isLoading) return <Skeleton />;
 
-        return (
-          <article key={id}>
-            <a
-              href={`inmueble/${id}`}
-              onClick={(event) => onClick(event, property)}
-            >
-              <img
-                src={hero.src}
-                className="w-full h-[320px] object-cover object-top rounded-lg mb-4"
-                alt="Inmobiliaria"
-              />
-            </a>
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-5 h-5 rounded-full bg-black"></div>
-              <h3>
-                <a href={`inmueble/${id}`} className="font-semibold">
-                  {title}
-                </a>
-              </h3>
-            </div>
-          </article>
-        );
-      })}
+          return (
+            <article key={id}>
+              <a
+                href={`inmueble/${id}`}
+                onClick={(event) => onClick(event, property)}
+              >
+                <img
+                  src={hero.src}
+                  className="w-full h-[320px] object-cover object-top rounded-lg mb-4"
+                  alt="Inmobiliaria"
+                />
+              </a>
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-5 h-5 rounded-full bg-black"></div>
+                <h3>
+                  <a href={`inmueble/${id}`} className="font-semibold">
+                    {title}
+                  </a>
+                </h3>
+              </div>
+            </article>
+          );
+        })}
+      </section>
     </>
   );
 }

@@ -48,14 +48,9 @@ import PropertiesList from "../components/PropertiesList";
     <Image src={hero} class="h-full w-full object-cover object-top" alt="" />
   </div>
   <main class="max-w-[1816px] mx-auto pb-20 px-4">
-    <h2 class="text-3xl font-semibold mb-10">Free Real Estate Photos</h2>
-    <section
-      class="grid gap-8"
-      style={{
-        gridTemplateColumns: "repeat(auto-fit, minmax(336px, 1fr))",
-      }}
-    >
-      <PropertiesList client:load />
-    </section>
+    <h2 class="text-3xl font-semibold mb-10">
+      Explora estos inmuebles destacados
+    </h2>
+    <PropertiesList client:load />
   </main>
 </Layout>

@@ -2,22 +2,22 @@
 import Dashboard from "@layouts/Dashboard.astro";
 import { supabase } from "@lib/supabase";
 
-interface User {
-  username: string;
-  email: string;
-  password?: string;
+interface Property {
+  title: string;
+  description: string;
+  location: string;
   created_at?: string;
 }
 
-async function fetchData() {
-  const { data: users } = await supabase
-    .from("user")
+async function fetchData(entity: string) {
+  const { data } = await supabase
+    .from(entity)
     .select("*")
     .order("created_at", { ascending: false });
-  return users;
+  return data;
 }
 
-async function insertData(data: User) {
+async function insertData(data: Property) {
   const { error } = await supabase.from("user").insert([data]);
   if (error) {
     console.error("Error inserting data:", error);
@@ -26,25 +26,25 @@ async function insertData(data: User) {
   return { success: true };
 }
 
-const users = await fetchData();
+const data = await fetchData("property");
 
 let insertResult;
 
 if (Astro.request.method === "POST") {
   const formData = await Astro.request.formData();
-  const newUser: User = {
-    username: formData.get("username") as string,
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
+  const newData: Property = {
+    title: formData.get("title") as string,
+    description: formData.get("description") as string,
+    location: formData.get("location") as string,
   };
 
-  insertResult = await insertData(newUser);
+  insertResult = await insertData(newData);
   if (insertResult.success) {
-    await fetchData();
+    await fetchData("property");
   }
 }
 
-if (!users) return null;
+if (!data) return null;
 ---
 
 <Dashboard>
@@ -71,25 +71,37 @@ if (!users) return null;
         />
       </fieldset>
       <fieldset>
-        <label for="email" class="block mb-2.5 font-manrope font-bold"
+        <label for="title" class="block mb-2.5 font-manrope font-bold"
           >Email</label
         >
         <input
-          type="email"
-          id="email"
-          name="email"
+          type="text"
+          id="title"
+          name="title"
           required
           class="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
         />
       </fieldset>
       <fieldset>
-        <label for="password" class="block mb-2.5 font-manrope font-bold"
+        <label for="description" class="block mb-2.5 font-manrope font-bold"
           >Password</label
         >
         <input
-          type="password"
-          id="password"
-          name="password"
+          type="text"
+          id="description"
+          name="description"
+          required
+          class="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+        />
+      </fieldset>
+      <fieldset>
+        <label for="location" class="block mb-2.5 font-manrope font-bold"
+          >Password</label
+        >
+        <input
+          type="text"
+          id="location"
+          name="location"
           required
           class="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
         />
@@ -101,7 +113,7 @@ if (!users) return null;
           class="bg-green-200 bg-opacity-40 text-sm p-4 mt-6 rounded-md text-green-950"
           role="alert"
         >
-          User was added successfully!
+          Item was added successfully!
         </div>
       )
     }
@@ -111,20 +123,20 @@ if (!users) return null;
           class="bg-red-300 bg-opacity-40 text-sm p-4 mt-6 rounded-md text-red-950"
           role="alert"
         >
-          There was an error creating the user: {insertResult.error}
+          There was an error creating the new item: {insertResult.error}
         </div>
       )
     }
     <div class="flex gap-4 mt-10">
       <a
-        href="/admin/users"
+        href="/admin/property"
         class="block text-center font-bold text-sm flex-grow px-6 py-2 border-gray-200 bg-white border-width-2 border rounded-md"
         >Cancel</a
       >
       <button
         type="submit"
         class="block px-6 flex-grow font-bold text-sm py-2 bg-blue-500 text-white rounded-md"
-        >Add User</button
+        >Add New Item</button
       >
     </div>
   </form>
