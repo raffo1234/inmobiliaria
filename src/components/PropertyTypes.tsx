@@ -96,13 +96,6 @@ export default function PropertyTypes({ id }: { id: string }) {
                     </div>
                     <div className="flex items-center gap-2">
                       <Icon
-                        icon="material-symbols-light:shower-outline"
-                        className="text-2xl"
-                      />
-                      <p>Banos: {bathroom_count}</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Icon
                         icon="material-symbols-light:bedroom-parent-outline"
                         className="text-2xl"
                       />
@@ -110,10 +103,17 @@ export default function PropertyTypes({ id }: { id: string }) {
                     </div>
                     <div className="flex items-center gap-2">
                       <Icon
+                        icon="material-symbols-light:shower-outline"
+                        className="text-2xl"
+                      />
+                      <p>Ba&ntilde;os: {bathroom_count}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Icon
                         icon="material-symbols-light:elevator-outline"
                         className="text-2xl"
                       />
-                      <p>Pisos: {floor}</p>
+                      <p>Piso: {floor}</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <Icon

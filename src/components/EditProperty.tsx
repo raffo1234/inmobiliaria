@@ -3,7 +3,6 @@ import EditPropertyInformation from "./EditPropertyInformation";
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
 import { useState } from "react";
-import EditPropertyType from "./EditPropertyType";
 import PropertyTypes from "./PropertyTypes";
 
 export default function EditUser({ id }: { id: string }) {

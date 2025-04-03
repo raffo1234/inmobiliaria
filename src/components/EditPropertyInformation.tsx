@@ -3,14 +3,17 @@ import useSWR, { mutate } from "swr";
 import { supabase } from "@lib/supabase";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { PropertyState } from "@types/propertyState";
-import { Button, Modal, message } from "antd";
+import { Button, message } from "antd";
 import FormSkeleton from "./FormSkeleton";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 
 type Inputs = {
   title: string;
   description: string;
   location: string;
   state: boolean;
+  created_at: string;
 };
 
 async function fetcher(id: string) {
@@ -79,6 +82,14 @@ export default function EditPropertyInformation({
       <form onSubmit={handleSubmit(onSubmit)} id="editProperty">
         <div className="flex flex-col gap-4">
           <fieldset>
+            <span className="mb-2 font-bold font-manrope">Creado: </span>
+            <span>
+              {format(new Date(data.created_at), "dd MMMM, yyyy", {
+                locale: es,
+              })}
+            </span>
+          </fieldset>
+          <fieldset>
             <label
               htmlFor="state"
               className="block font-bold mb-2 font-manrope"
@@ -116,7 +127,7 @@ export default function EditPropertyInformation({
               htmlFor="description"
               className="block mb-2.5 font-manrope font-bold"
             >
-              description
+              Descripción
             </label>
             <input
               type="text"

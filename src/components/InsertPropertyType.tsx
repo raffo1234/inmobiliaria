@@ -10,6 +10,7 @@ type TypeInputs = {
   size: string;
   price: string;
   property_id: string;
+  bedroom_count: string;
 };
 
 const fetcherType = async (propertyId: string) => {
@@ -94,6 +95,21 @@ export default function InsertPropertyType({
               type="text"
               id="size"
               {...register("size")}
+              required
+              className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="bedroom_count"
+              className="block font-bold mb-2 font-manrope"
+            >
+              Dormitorios
+            </label>
+            <input
+              type="text"
+              id="bedroom_count"
+              {...register("bedroom_count")}
               required
               className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
             />

@@ -6,6 +6,7 @@ import { useState } from "react";
 import { ArrowUpOutlined, PlusOutlined } from "@ant-design/icons";
 import EditProperty from "@components/EditProperty";
 import { PropertyState } from "@types/propertyState";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 const PropertyItem = ({ id }: { id: string }) => {
   const [hover, setHover] = useState(false);
@@ -83,7 +84,7 @@ export default function PropertiesList() {
         href="/admin/property/add"
         className="h-[320px] flex justify-center items-center rounded-lg bg-gray-100 hover:bg-gray-200 active:bg-gray-300 transition-colors"
       >
-        <PlusOutlined className="text-xl" />
+        <Icon icon="material-symbols-light:add-2-rounded" className="text-xl" />
       </a>
       {properties.map((property) => {
         const { id, title, state } = property;
@@ -94,14 +95,13 @@ export default function PropertiesList() {
         return (
           <article key={id}>
             <PropertyItem id={id} />
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-5 h-5 rounded-full bg-black"></div>
-              <h3 className="flex gap-4 justify-between items-start w-full">
+            <div className="flex flex-col gap-3">
+              <h3 className="flex gap-4 justify-between w-full">
                 <a href={`inmueble/${id}`} className="font-semibold">
                   {title}
                 </a>
                 <span
-                  className={`rounded border pb-[1px] text-xs px-1 self-center block
+                  className={`rounded border pb-[1px] text-xs px-1 mt-1 block self-start
                   ${state === PropertyState.DRAFT ? "border-gray-400 text-gray-400" : ""}
                   ${state === PropertyState.PENDING ? "border-cyan-200 text-cyan-200" : ""}
                   ${state === PropertyState.ACTIVE ? "border-green-600 bg-green-600 text-white" : ""}
@@ -110,6 +110,36 @@ export default function PropertiesList() {
                   {state}
                 </span>
               </h3>
+              <div className="flex items-center gap-2">
+                <Icon
+                  icon="material-symbols-light:bedroom-parent-outline"
+                  className="text-2xl"
+                />
+                <p>
+                  m<sup>2</sup>
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <Icon
+                  icon="material-symbols-light:bedroom-parent-outline"
+                  className="text-2xl"
+                />
+                <p>Dormitorios: </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <Icon
+                  icon="material-symbols-light:shower-outline"
+                  className="text-2xl"
+                />
+                <p>Ba&ntilde;os: </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <Icon
+                  icon="material-symbols-light:production-quantity-limits"
+                  className="text-2xl"
+                />
+                <p>Disponibles: </p>
+              </div>
             </div>
           </article>
         );
