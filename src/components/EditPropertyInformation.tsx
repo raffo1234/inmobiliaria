@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import useSWR, { mutate } from "swr";
 import { supabase } from "@lib/supabase";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { PropertyState } from "@types/propertyState";
+import { PropertyPhase, PropertyState } from "@types/propertyState";
 import { Button, message } from "antd";
 import FormSkeleton from "./FormSkeleton";
 import { format } from "date-fns";
@@ -13,6 +13,8 @@ type Inputs = {
   description: string;
   location: string;
   state: boolean;
+  phase: boolean;
+  area: boolean;
   created_at: string;
 };
 
@@ -80,21 +82,21 @@ export default function EditPropertyInformation({
     <>
       {contextHolder}
       <form onSubmit={handleSubmit(onSubmit)} id="editProperty">
-        <div className="flex flex-col gap-4">
-          <fieldset>
+        <fieldset className="flex flex-col gap-4">
+          <div>
             <span className="mb-2 font-bold font-manrope">Creado: </span>
             <span>
               {format(new Date(data.created_at), "dd MMMM, yyyy", {
                 locale: es,
               })}
             </span>
-          </fieldset>
-          <fieldset>
+          </div>
+          <div>
             <label
               htmlFor="state"
               className="block font-bold mb-2 font-manrope"
             >
-              State
+              Estado
             </label>
             <select
               id="state"
@@ -106,8 +108,8 @@ export default function EditPropertyInformation({
               <option>{PropertyState.PENDING}</option>
               <option>{PropertyState.ACTIVE}</option>
             </select>
-          </fieldset>
-          <fieldset>
+          </div>
+          <div>
             <label
               htmlFor="title"
               className="block font-bold mb-2 font-manrope"
@@ -121,28 +123,13 @@ export default function EditPropertyInformation({
               required
               className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
             />
-          </fieldset>
-          <fieldset>
-            <label
-              htmlFor="description"
-              className="block mb-2.5 font-manrope font-bold"
-            >
-              Descripción
-            </label>
-            <input
-              type="text"
-              id="description"
-              {...register("description")}
-              required
-              className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:outline-2 focus:ring focus:ring-blue-500 focus:border-blue-500"
-            />
-          </fieldset>
-          <fieldset>
+          </div>
+          <div>
             <label
               htmlFor="Location"
               className="block mb-2.5 font-manrope font-bold"
             >
-              Location
+              Ubicacion;
             </label>
             <input
               type="text"
@@ -151,7 +138,39 @@ export default function EditPropertyInformation({
               required
               className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:outline-2 focus:ring focus:ring-blue-500 focus:border-blue-500"
             />
-          </fieldset>
+          </div>
+          <div>
+            <label
+              htmlFor="phase"
+              className="block mb-2.5 font-manrope font-bold"
+            >
+              Fase
+            </label>
+            <select
+              id="phase"
+              {...register("phase")}
+              required
+              className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option>{PropertyPhase.PLANOS}</option>
+              <option>{PropertyPhase.CONSTRUCCION}</option>
+              <option>{PropertyPhase.READY}</option>
+            </select>
+          </div>
+          <div>
+            <label
+              htmlFor="description"
+              className="block mb-2.5 font-manrope font-bold"
+            >
+              Descripción
+            </label>
+            <textarea
+              id="description"
+              {...register("description")}
+              required
+              className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:outline-2 focus:ring focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
           <footer className="flex items-center gap-2 pt-4 mt-4 justify-end">
             <Button htmlType="button" onClick={hideModal}>
               Cancel
@@ -160,7 +179,7 @@ export default function EditPropertyInformation({
               Guardar
             </Button>
           </footer>
-        </div>
+        </fieldset>
       </form>
     </>
   );
