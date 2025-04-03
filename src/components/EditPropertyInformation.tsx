@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import useSWR, { mutate } from "swr";
 import { supabase } from "@lib/supabase";
 import { useForm, type SubmitHandler } from "react-hook-form";

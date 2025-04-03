@@ -23,7 +23,7 @@ const fetcherType = async (propertyId: string) => {
     `
     )
     .eq("property_id", propertyId)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: true });
 
   if (error) throw error;
   return data;
@@ -54,15 +54,6 @@ export default function PropertyTypes({ id }: { id: string }) {
             gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
           }}
         >
-          <button
-            onClick={() => setDisplayAddForm(true)}
-            className="hover:bg-gray-200 transition-colors active:bg-gray-300 h-[260px] bg-gray-100 rounded-lg flex justify-center items-center"
-          >
-            <Icon
-              icon="material-symbols-light:add-2-rounded"
-              className="text-xl"
-            />
-          </button>
           {types.map(
             ({
               id,
@@ -75,11 +66,16 @@ export default function PropertyTypes({ id }: { id: string }) {
             }) => {
               return (
                 <div key={id}>
-                  <img
-                    src={hero.src}
-                    className={`${lastCreatedId === id ? "opacity-50" : ""} w-full h-[260px] object-cover object-top rounded-lg mb-4`}
-                    alt={name}
-                  />
+                  <div className="relative">
+                    {lastCreatedId === id ? (
+                      <div className="transition-all animate-[ping_1.5s_ease-in-out] absolute w-full h-full left-0 top-0 bg-orange-200 rounded-xl z-0"></div>
+                    ) : null}
+                    <img
+                      src={hero.src}
+                      className="w-full h-[260px] object-cover object-top rounded-lg mb-4 z-10 relative"
+                      alt={name}
+                    />
+                  </div>
                   <div className="flex flex-col gap-3">
                     <div className="flex items-center gap-2">
                       <div className="w-5 h-5 bg-black rounded-full"></div>
@@ -127,6 +123,15 @@ export default function PropertyTypes({ id }: { id: string }) {
               );
             }
           )}
+          <button
+            onClick={() => setDisplayAddForm(true)}
+            className="hover:bg-gray-200 transition-colors active:bg-gray-300 h-[260px] bg-gray-100 rounded-lg flex justify-center items-center"
+          >
+            <Icon
+              icon="material-symbols-light:add-2-rounded"
+              className="text-xl"
+            />
+          </button>
         </section>
       )}
     </>

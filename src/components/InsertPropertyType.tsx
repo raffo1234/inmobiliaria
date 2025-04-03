@@ -72,73 +72,68 @@ export default function InsertPropertyType({
   if (isLoading) return <Skeleton />;
 
   return (
-    <>
-      <form onSubmit={handleSubmit(insertData)} id="addPropertyType">
-        <fieldset className="flex flex-col gap-4">
-          <div>
-            <label htmlFor="name" className="block font-bold mb-2 font-manrope">
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              {...register("name")}
-              required
-              className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-          <div>
-            <label htmlFor="size" className="block font-bold mb-2 font-manrope">
-              Size
-            </label>
-            <input
-              type="text"
-              id="size"
-              {...register("size")}
-              required
-              className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="bedroom_count"
-              className="block font-bold mb-2 font-manrope"
-            >
-              Dormitorios
-            </label>
-            <input
-              type="text"
-              id="bedroom_count"
-              {...register("bedroom_count")}
-              required
-              className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="price"
-              className="block font-bold mb-2 font-manrope"
-            >
-              Price
-            </label>
-            <input
-              type="text"
-              id="price"
-              {...register("price")}
-              required
-              className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-          <footer className="flex items-center gap-2 pt-4 mt-4 justify-end">
-            <Button htmlType="button" onClick={() => setDisplayAddForm(false)}>
-              Cancel
-            </Button>
-            <Button htmlType="submit" type="primary">
-              Guardar
-            </Button>
-          </footer>
-        </fieldset>
-      </form>
-    </>
+    <form onSubmit={handleSubmit(insertData)}>
+      <fieldset className="flex flex-col gap-4">
+        <div>
+          <label htmlFor="name" className="block font-bold mb-2 font-manrope">
+            Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            {...register("name")}
+            required
+            className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        <div>
+          <label htmlFor="size" className="block font-bold mb-2 font-manrope">
+            Size
+          </label>
+          <input
+            type="text"
+            id="size"
+            {...register("size")}
+            required
+            className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="bedroom_count"
+            className="block font-bold mb-2 font-manrope"
+          >
+            Dormitorios
+          </label>
+          <input
+            type="text"
+            id="bedroom_count"
+            {...register("bedroom_count")}
+            required
+            className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        <div>
+          <label htmlFor="price" className="block font-bold mb-2 font-manrope">
+            Price
+          </label>
+          <input
+            type="text"
+            id="price"
+            {...register("price")}
+            required
+            className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        <footer className="flex items-center gap-2 pt-4 mt-4 justify-end">
+          <Button htmlType="button" onClick={() => setDisplayAddForm(false)}>
+            Cancel
+          </Button>
+          <Button htmlType="submit" type="primary">
+            Guardar
+          </Button>
+        </footer>
+      </fieldset>
+    </form>
   );
 }
