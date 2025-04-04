@@ -38,7 +38,6 @@ export default function InsertPropertyType({
 }: {
   propertyId: string;
   setDisplayAddForm: (value: boolean) => void;
-  setLastCreatedId: Dispatch<SetStateAction<undefined>>;
 }) {
   const { data: types = [], isLoading } = useSWR(`${propertyId}-types`, () =>
     fetcherType(propertyId)
@@ -54,7 +53,7 @@ export default function InsertPropertyType({
       .select()
       .single();
 
-    await mutate(`${propertyId}-types`);
+    await mutate(`${propertyId}-types`, [...types, insertedData], false);
     reset();
     setDisplayAddForm(false);
 
