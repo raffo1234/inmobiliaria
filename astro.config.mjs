@@ -9,9 +9,11 @@ import vercel from "@astrojs/vercel";
 
 import react from "@astrojs/react";
 
+import auth from "auth-astro";
+
 export default defineConfig({
   output: "server",
-  integrations: [tailwind(), icon(), react()],
+  integrations: [tailwind(), icon(), react(), auth()],
   adapter: vercel(),
   env: {
     schema: {

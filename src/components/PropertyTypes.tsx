@@ -6,6 +6,8 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import InsertPropertyType from "./InsertPropertyType";
 import DeletePropertyType from "./DeletePropertyType";
+import EditProperty from "./EditProperty";
+import EditPropertyType from "./EditPropertyType";
 
 const fetcherType = async (propertyId: string) => {
   const { data, error } = await supabase
@@ -74,8 +76,7 @@ export default function PropertyTypes({ propertyId }: { propertyId: string }) {
                     <div className="flex gap-1 item-center absolute left-0 bottom-0 w-full z-20 text-white p-2">
                       <button>A</button>
                       <DeletePropertyType propertyId={propertyId} id={id} />
-                      {/* <EditProperty id={id} /> */}
-                      {/* <DeleteProperty id={id} /> */}
+                      <EditPropertyType id={id} />
                     </div>
                   </div>
                   <div className="flex flex-col gap-3">
