@@ -6,7 +6,7 @@ import { useState } from "react";
 import PropertyTypes from "./PropertyTypes";
 import { Icon } from "@iconify/react";
 
-export default function EditUser({ id }: { id: string }) {
+export default function EditProperty({ id }: { id: string }) {
   const [open, setOpen] = useState(false);
 
   const showModal = () => {
@@ -26,7 +26,7 @@ export default function EditUser({ id }: { id: string }) {
     {
       key: "2",
       label: "Tipologias",
-      children: <PropertyTypes id={id} />,
+      children: <PropertyTypes propertyId={id} />,
     },
   ];
 

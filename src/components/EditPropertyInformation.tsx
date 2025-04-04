@@ -129,7 +129,7 @@ export default function EditPropertyInformation({
               htmlFor="Location"
               className="block mb-2.5 font-manrope font-bold"
             >
-              Ubicacion;
+              Ubicación
             </label>
             <input
               type="text"

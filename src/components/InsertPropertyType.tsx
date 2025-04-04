@@ -35,7 +35,6 @@ const fetcherType = async (propertyId: string) => {
 export default function InsertPropertyType({
   propertyId,
   setDisplayAddForm,
-  setLastCreatedId,
 }: {
   propertyId: string;
   setDisplayAddForm: (value: boolean) => void;
@@ -56,9 +55,6 @@ export default function InsertPropertyType({
       .single();
 
     await mutate(`${propertyId}-types`);
-    if (insertedData) {
-      await setLastCreatedId(insertedData.id);
-    }
     reset();
     setDisplayAddForm(false);
 
@@ -91,7 +87,7 @@ export default function InsertPropertyType({
             Size
           </label>
           <input
-            type="text"
+            type="number"
             id="size"
             {...register("size")}
             required
@@ -106,7 +102,7 @@ export default function InsertPropertyType({
             Dormitorios
           </label>
           <input
-            type="text"
+            type="number"
             id="bedroom_count"
             {...register("bedroom_count")}
             required

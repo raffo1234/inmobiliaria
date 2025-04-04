@@ -5,6 +5,7 @@ import useSWR from "swr";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import InsertPropertyType from "./InsertPropertyType";
+import DeletePropertyType from "./DeletePropertyType";
 
 const fetcherType = async (propertyId: string) => {
   const { data, error } = await supabase
@@ -29,11 +30,10 @@ const fetcherType = async (propertyId: string) => {
   return data;
 };
 
-export default function PropertyTypes({ id }: { id: string }) {
+export default function PropertyTypes({ propertyId }: { propertyId: string }) {
   const [displayAddform, setDisplayAddForm] = useState(false);
-  const [lastCreatedId, setLastCreatedId] = useState();
-  const { data: types = [], isLoading } = useSWR(`${id}-types`, () =>
-    fetcherType(id)
+  const { data: types = [], isLoading } = useSWR(`${propertyId}-types`, () =>
+    fetcherType(propertyId)
   );
 
   if (isLoading) return <Skeleton />;
@@ -42,13 +42,12 @@ export default function PropertyTypes({ id }: { id: string }) {
     <>
       {displayAddform ? (
         <InsertPropertyType
-          propertyId={id}
+          propertyId={propertyId}
           setDisplayAddForm={setDisplayAddForm}
-          setLastCreatedId={setLastCreatedId}
         />
       ) : (
         <section
-          key={id}
+          key={propertyId}
           className="grid gap-8"
           style={{
             gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
@@ -67,14 +66,17 @@ export default function PropertyTypes({ id }: { id: string }) {
               return (
                 <div key={id}>
                   <div className="relative">
-                    {lastCreatedId === id ? (
-                      <div className="transition-all animate-[ping_1.5s_ease-in-out] absolute w-full h-full left-0 top-0 bg-orange-200 rounded-xl z-0"></div>
-                    ) : null}
                     <img
                       src={hero.src}
                       className="w-full h-[260px] object-cover object-top rounded-lg mb-4 z-10 relative"
                       alt={name}
                     />
+                    <div className="flex gap-1 item-center absolute left-0 bottom-0 w-full z-20 text-white p-2">
+                      <button>A</button>
+                      <DeletePropertyType propertyId={propertyId} id={id} />
+                      {/* <EditProperty id={id} /> */}
+                      {/* <DeleteProperty id={id} /> */}
+                    </div>
                   </div>
                   <div className="flex flex-col gap-3">
                     <div className="flex items-center gap-2">
