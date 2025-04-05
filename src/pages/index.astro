@@ -4,11 +4,7 @@ import { Image } from "astro:assets";
 import hero from "@assets/hero.jpg";
 import logo from "@assets/logo.png";
 import PropertiesList from "../components/PropertiesList";
-import { SignIn, SignOut } from "auth-astro/components";
-import { getSession } from "auth-astro/server";
-
-const session = await getSession(Astro.request);
-const user = session?.user;
+import ProfilePopover from "@components/ProfilePopover.astro";
 ---
 
 <Layout>
@@ -16,9 +12,9 @@ const user = session?.user;
     <nav
       class="max-w-[1816px] w-full mx-auto px-4 py-2 justify-between flex items-center"
     >
-      <ul class="flex items-center gap-4">
+      <ul class="flex items-center gap-4 mr-4">
         <li>
-          <a href="/" class="block">
+          <a href="/" class="block" title="Home">
             <Image
               src={logo}
               class="w-20 object-cover object-top"
@@ -35,51 +31,16 @@ const user = session?.user;
           />
         </li>
       </ul>
-      <ul class="flex gap-3">
-        <li class="block">
-          <a href="/" class="block px-5 py-2 hover:bg-gray-100 rounded-full"
-            >Home</a
-          >
-        </li>
-        <li class="block">
-          <a href="/" class="block px-5 py-2 hover:bg-gray-100 rounded-full">
-            Blog
-          </a>
-        </li>
-        <li class="flex items-center gap-3">
-          {
-            session?.user ? (
-              <>
-                <div class="relative">
-                  <img
-                    src={user?.image}
-                    class="w-12 h-12 rounded-full object-cover"
-                    alt={user?.name}
-                  />
-                  <div class="w-3 h-3 absolute top-8 right-0 rounded-full bg-green-400 border-2 border-white" />
-                </div>
-                <SignOut>Salir</SignOut>
-              </>
-            ) : (
-              <SignIn
-                class="block px-5 py-2 hover:bg-gray-100 rounded-full"
-                provider="google"
-              >
-                Iniciar sesión
-              </SignIn>
-            )
-          }
-        </li>
-      </ul>
+      <ProfilePopover />
     </nav>
-    <div class="h-lvh w-full relative z-10 mb-20">
-      <Image src={hero} class="h-full w-full object-cover object-top" alt="" />
-    </div>
-    <main class="max-w-[1816px] mx-auto pb-20 px-4">
-      <h2 class="text-3xl font-semibold mb-10">
-        Explora estos inmuebles destacados
-      </h2>
-      <PropertiesList client:load />
-    </main>
   </header>
 </Layout>
+<div class="h-lvh w-full relative z-10 mb-20">
+  <Image src={hero} class="h-full w-full object-cover object-top" alt="" />
+</div>
+<main class="max-w-[1816px] mx-auto pb-20 px-4">
+  <h2 class="text-3xl font-semibold mb-10">
+    Explora estos inmuebles destacados
+  </h2>
+  <PropertiesList client:load />
+</main>

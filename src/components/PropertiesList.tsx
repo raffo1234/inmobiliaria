@@ -98,7 +98,7 @@ export default function PropertiesList() {
       });
     };
   }, [showDetail]);
-
+  console.log("properties", properties);
   return (
     <>
       {showDetail ? (
@@ -143,11 +143,11 @@ export default function PropertiesList() {
               </a>
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-5 h-5 rounded-full bg-black"></div>
-                <h3>
+                <h2>
                   <a href={`inmueble/${id}`} className="font-semibold">
                     {title}
                   </a>
-                </h3>
+                </h2>
               </div>
             </article>
           );
