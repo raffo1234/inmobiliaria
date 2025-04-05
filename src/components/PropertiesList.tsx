@@ -98,7 +98,7 @@ export default function PropertiesList() {
       });
     };
   }, [showDetail]);
-  console.log("properties", properties);
+
   return (
     <>
       {showDetail ? (
