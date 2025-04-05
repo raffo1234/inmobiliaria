@@ -1,6 +1,9 @@
 ---
-const currentPath = Astro.url.pathname;
+import { getSession } from "auth-astro/server";
+const session = await getSession(Astro.request);
+const user = session?.user;
 
+const currentPath = Astro.url.pathname;
 const pages = [
   {
     href: "/admin/users",
@@ -17,17 +20,17 @@ const pages = [
 ];
 ---
 
-<section class="w-[280px] bg-neutral-200 p-5">
+<section class="w-[280px] bg-neutral-200 py-8 px-5">
   <header class="mb-20">
-    <div class="flex gap-2">
+    <div class="flex gap-4 items-center">
       <img
-        src=""
-        alt="Jhon Doe"
-        class="w-11 h-11 rounded-full bg-neutral-700"
+        src={user?.image}
+        alt={user?.name}
+        class="w-12 h-12 rounded-full bg-neutral-700"
       />
-      <div>
-        <p class="text-sm leading-3">Welcome back</p>
-        <h3 class="font-bold text-lg">Jhon Doe</h3>
+      <div class="">
+        <p class="text-sm leading-3 mb-1 text-gray-500">Bienvenido</p>
+        <h3 class="font-semibold text-gray-700 text-lg">{user?.name}</h3>
       </div>
     </div>
   </header>
