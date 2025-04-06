@@ -1,11 +1,11 @@
 import { supabase } from "../lib/supabase";
 import useSWR from "swr";
-import hero from "@assets/hero.jpg";
-import { Button, Skeleton } from "antd";
+import { Button } from "antd";
 import { useEffect, useState } from "react";
 import Property from "./Property";
 import { CloseOutlined } from "@ant-design/icons";
 import { PropertyState } from "@types/propertyState";
+import PropertyItem from "./PropertyItem";
 
 const fetcher = async () => {
   const { data, error } = await supabase
@@ -32,7 +32,11 @@ type Property = {
   title: string;
 };
 
-export default function PropertiesList() {
+export default function PropertiesList({
+  userEmail,
+}: {
+  userEmail: string | undefined | null;
+}) {
   const [showDetail, setShowDetail] = useState(false);
   const [propertyValue, setPropertyValue] = useState<Property>();
 
@@ -42,22 +46,22 @@ export default function PropertiesList() {
     isLoading,
   } = useSWR("properties", fetcher);
 
-  const onClick = (
-    event: React.MouseEvent<HTMLAnchorElement>,
-    property: Property
-  ) => {
-    event.preventDefault();
+  // const onClick = (
+  //   event: React.MouseEvent<HTMLAnchorElement>,
+  //   property: Property
+  // ) => {
+  //   event.preventDefault();
 
-    setShowDetail(true);
-    setPropertyValue(property);
-    const newUrl = `inmueble/${property.id}`;
-    const newState = { page: "property" };
-    const newTitle = property.title;
-    const app = document.getElementById("app") as HTMLElement;
-    app.classList.add("overflow-hidden");
+  //   setShowDetail(true);
+  //   setPropertyValue(property);
+  //   const newUrl = `inmueble/${property.id}`;
+  //   const newState = { page: "property" };
+  //   const newTitle = property.title;
+  //   const app = document.getElementById("app") as HTMLElement;
+  //   app.classList.add("overflow-hidden");
 
-    window.history.pushState(newState, newTitle, newUrl);
-  };
+  //   window.history.pushState(newState, newTitle, newUrl);
+  // };
 
   const handleClose = () => {
     setPropertyValue(undefined);
@@ -86,6 +90,34 @@ export default function PropertiesList() {
       onClose();
     }
   };
+
+  // const handleLike = async (id: string) => {
+  //   const { data } = await supabase
+  //     .from("user")
+  //     .select()
+  //     .eq("email", userEmail)
+  //     .single();
+  //   const { count: like } = await supabase
+  //     .from("like")
+  //     .select("*", { count: "exact" })
+  //     .eq("property_id", id)
+  //     .eq("user_id", data.id);
+
+  //   if (like === 0) {
+  //     await supabase.from("like").insert([
+  //       {
+  //         property_id: id,
+  //         user_id: data.id,
+  //       },
+  //     ]);
+  //   } else {
+  //     await supabase
+  //       .from("like")
+  //       .delete()
+  //       .eq("property_id", id)
+  //       .eq("user_id", data.id);
+  //   }
+  // };
 
   useEffect(() => {
     document.addEventListener("keyup", function (event) {
@@ -124,32 +156,15 @@ export default function PropertiesList() {
         }}
       >
         {properties.map((property) => {
-          const { id, title } = property;
-          if (error) console.error(error);
-
-          if (isLoading) return <Skeleton />;
-
           return (
-            <article key={id}>
-              <a
-                href={`inmueble/${id}`}
-                onClick={(event) => onClick(event, property)}
-              >
-                <img
-                  src={hero.src}
-                  className="w-full h-[320px] object-cover object-top rounded-lg mb-4"
-                  alt="Inmobiliaria"
-                />
-              </a>
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-5 h-5 rounded-full bg-black"></div>
-                <h2>
-                  <a href={`inmueble/${id}`} className="font-semibold">
-                    {title}
-                  </a>
-                </h2>
-              </div>
-            </article>
+            <PropertyItem
+              key={property.id}
+              userEmail={userEmail}
+              isLoading={isLoading}
+              property={property}
+              setShowDetail={setShowDetail}
+              setPropertyValue={setPropertyValue}
+            />
           );
         })}
       </section>

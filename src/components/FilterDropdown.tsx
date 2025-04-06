@@ -13,7 +13,6 @@ export default function FilterDropdown() {
           icon="material-symbols-light:chevron-left-rounded"
           className="rotate-90 group-hover:-rotate-90 transition-transform duration-200"
         />
-       
       </button>
       <div className="group-hover:translate-y-0 -translate-y-1 invisible group-hover:visible absolute group-hover:opacity-100 opacity-0 transition-all duration-500 top-full left-0 w-[140px] py-3">
         <div className="bg-white shadow-md rounded-[30px] p-2 flex flex-col">

@@ -815,6 +815,13 @@
   dependencies:
     "@iconify/types" "*"
 
+"@iconify-json/mingcute@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@iconify-json/mingcute/-/mingcute-1.2.3.tgz#a576b008f55957035017f3c19240c90b3dacc9c7"
+  integrity sha512-yiEQfLBF5iwyOdxuY0kEU06+8Mp6Mrp14KVXTb+5jjSVuD71C9EQrzM/mm1Efd8Nu2amJalTPisl3loC8pHBqQ==
+  dependencies:
+    "@iconify/types" "*"
+
 "@iconify/react@^5.2.1":
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/@iconify/react/-/react-5.2.1.tgz#62688343aa619c1ec3378730f41d57af53d664e6"

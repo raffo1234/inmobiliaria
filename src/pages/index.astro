@@ -7,6 +7,9 @@ import ProfilePopover from "@components/ProfilePopover.astro";
 import { Icon } from "astro-icon/components";
 import FilterDropdown from "@components/FilterDropdown";
 import { syncUserWithDb } from "@lib/auth";
+import { getSession } from "auth-astro/server";
+const session = await getSession(Astro.request);
+const user = session?.user;
 
 syncUserWithDb(Astro);
 ---
@@ -57,14 +60,10 @@ syncUserWithDb(Astro);
           type="submit"
           class="h-[52px] aspect-square rounded-full bg-cyan-400 hover:bg-cyan-500 active:bg-cyan-600 transition duration-700 flex items-center justify-center"
         >
-          <Icon
-            name="material-symbols-light:location-searching"
-            size="42"
-            class="text-white"
-          />
+          <Icon name="mingcute:search-line" size="32" class="text-white" />
         </button>
       </fieldset>
     </form>
   </div>
-  <PropertiesList client:load />
+  <PropertiesList client:load userEmail={user?.email} />
 </main>
