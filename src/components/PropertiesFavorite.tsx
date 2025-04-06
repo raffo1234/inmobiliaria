@@ -4,25 +4,16 @@ import { Button } from "antd";
 import { useEffect, useState } from "react";
 import Property from "./Property";
 import { CloseOutlined } from "@ant-design/icons";
-import { PropertyState } from "@types/propertyState";
 import PropertyItem from "./PropertyItem";
 
-const fetcher = async () => {
+const fetcher = async (userId: string) => {
   const { data, error } = await supabase
-    .from("property")
-    .select(
-      `
-      id,
-      title,
-      type (
-        id,
-        name
-      )
-    `
-    )
-    .eq("state", PropertyState.ACTIVE)
+    .from("like")
+    .select("property(*)")
+    .eq("user_id", userId)
     .order("created_at", { ascending: false });
 
+  console.log({ error });
   if (error) throw error;
   return data;
 };
@@ -32,7 +23,7 @@ type Property = {
   title: string;
 };
 
-export default function PropertiesList({
+export default function PropertiesFavorite({
   userEmail,
 }: {
   userEmail: string | undefined | null;
@@ -44,7 +35,9 @@ export default function PropertiesList({
     data: properties = [],
     error,
     isLoading,
-  } = useSWR("properties", fetcher);
+  } = useSWR(`-properties`, () =>
+    fetcher("67fc3f7a-9723-4ca4-bef4-43c7428c76c5")
+  );
 
   const handleClose = () => {
     setPropertyValue(undefined);

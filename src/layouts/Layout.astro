@@ -45,28 +45,5 @@ const { pageTitle } = Astro.props;
   </head>
   <body id="app" class="font-inter-tight">
     <slot />
-
-    <!-- <script is:inline>
-      document.addEventListener("astro:page-load", () => {
-        const app = document.getElementById("app");
-        if (app) {
-          app.classList.remove("opacity-0");
-        }
-
-        document.querySelectorAll("a").forEach((link) => {
-          link.addEventListener("click", (event) => {
-            if (event.currentTarget.getAttribute("target") !== "_blank") {
-              event.preventDefault();
-              const path = event.currentTarget.getAttribute("href");
-
-              document.body.classList.add("opacity-0");
-              setTimeout(() => {
-                window.location.href = path;
-              }, 700);
-            }
-          });
-        });
-      });
-    </script> -->
   </body>
 </html>

@@ -16,7 +16,7 @@ export default function PropertyItem({
   setShowDetail,
   setPropertyValue,
 }: {
-  userEmail: string | undefined;
+  userEmail: string | undefined | null;
   isLoading: boolean;
   property: Property;
   setShowDetail: (value: boolean) => void;

@@ -1,17 +1,15 @@
 ---
+import FilterDropdown from "@components/FilterDropdown";
+import ProfilePopover from "@components/ProfilePopover.astro";
 import Layout from "@layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
 import logo from "@assets/logo.png";
-import PropertiesList from "../components/PropertiesList";
-import ProfilePopover from "@components/ProfilePopover.astro";
-import { Icon } from "astro-icon/components";
-import FilterDropdown from "@components/FilterDropdown";
-import { syncUserWithDb } from "@lib/auth";
+import PropertiesFavorite from "@components/PropertiesFavorite";
 import { getSession } from "auth-astro/server";
+
 const session = await getSession(Astro.request);
 const user = session?.user;
-
-syncUserWithDb(Astro);
 ---
 
 <Layout>
@@ -33,18 +31,8 @@ syncUserWithDb(Astro);
       <ProfilePopover />
     </nav>
   </header>
-</Layout>
-<main class="max-w-[1816px] mx-auto pb-20 px-4">
-  <h2
-    style={{
-      fontSize: "clamp(18px, 13vw + .5rem, 50px)",
-    }}
-    class="mb-10 leading-relaxed w-full text-center"
-  >
-    Explora estos <br /> inmuebles destacados
-  </h2>
-  <div class="mx-auto mb-32 w-[700px]">
-    <form>
+  <div class="max-w-[1816px] w-full mx-auto p-4">
+    <form class="mb-8">
       <fieldset
         class="hover:bg-white hover:border-cyan-100 focus-within:bg-white focus-within:border-cyan-100 border-2 transition-colors duration-500 border-gray-100 flex items-center bg-gray-100 w-[700px] rounded-full p-1 gap-2"
       >
@@ -63,9 +51,6 @@ syncUserWithDb(Astro);
         </button>
       </fieldset>
     </form>
+    <PropertiesFavorite client:load userEmail={user?.email} />
   </div>
-  <div class="flex justify-end mb-8">
-    <a href="/inmuebles/favoritos"> Mis favoritos </a>
-  </div>
-  <PropertiesList client:load userEmail={user?.email} />
-</main>
+</Layout>

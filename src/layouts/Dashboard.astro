@@ -10,6 +10,7 @@ import "@fontsource-variable/inter-tight";
 import { ClientRouter } from "astro:transitions";
 import "@ant-design/v5-patch-for-react-19";
 import Aside from "../components/Aside.astro";
+import ProfilePopover from "@components/ProfilePopover.astro";
 
 const { pageTitle } = Astro.props;
 ---
@@ -49,10 +50,13 @@ const { pageTitle } = Astro.props;
     <div class="flex w-full">
       <Aside />
       <main class="flex-grow bg-white min-h-lvh">
-        <header class="border-neutral-200 border-b p-5">
+        <header
+          class="border-neutral-200 border-b p-5 flex justify-between relative z-20"
+        >
           <h1 class="text-4xl font-semibold">{pageTitle}</h1>
+          <ProfilePopover />
         </header>
-        <section class="w-full mx-auto p-5">
+        <section class="w-full mx-auto p-5 relative z-10">
           <slot />
         </section>
       </main>
