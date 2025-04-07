@@ -6,6 +6,7 @@ import PropertiesList from "../components/PropertiesList";
 import ProfilePopover from "@components/ProfilePopover.astro";
 import { Icon } from "astro-icon/components";
 import FilterDropdown from "@components/FilterDropdown";
+import SearchForm from "@components/SearchForm";
 
 type User = {
   id: string;
@@ -48,25 +49,7 @@ const { currentUserId: userId } = Astro.locals;
     Explora estos <br /> inmuebles destacados
   </h2>
   <div class="mx-auto mb-32 w-[700px]">
-    <form>
-      <fieldset
-        class="hover:bg-white hover:border-cyan-100 focus-within:bg-white focus-within:border-cyan-100 border-2 transition-colors duration-500 border-gray-100 flex items-center bg-gray-100 w-[700px] rounded-full p-1 gap-2"
-      >
-        <FilterDropdown client:load />
-        <input
-          type="search"
-          name="search"
-          class="placeholder:text-gray-400 flex-grow border-transparent border-2 focus:outline-none py-3 bg-transparent"
-          placeholder="Buscar ..."
-        />
-        <button
-          type="submit"
-          class="h-[52px] aspect-square rounded-full bg-cyan-400 hover:bg-cyan-500 active:bg-cyan-600 transition duration-700 flex items-center justify-center"
-        >
-          <Icon name="mingcute:search-line" size="32" class="text-white" />
-        </button>
-      </fieldset>
-    </form>
+    <SearchForm client:load />
   </div>
   <div class="flex justify-end mb-8">
     <a href="/inmuebles/favoritos">Mis favoritos</a>
