@@ -3,7 +3,7 @@ import hero from "@assets/hero.jpg";
 import { Icon } from "@iconify/react";
 import { supabase } from "../lib/supabase";
 import { useEffect, useState } from "react";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 
 type Property = {
   id: string;
@@ -64,6 +64,7 @@ export default function PropertyItem({
           user_id: userId,
         },
       ]);
+      await mutate(`${userId}-${id}-properties`, null);
       setLikeByUser(true);
     } else {
       await supabase
@@ -71,6 +72,7 @@ export default function PropertyItem({
         .delete()
         .eq("property_id", id)
         .eq("user_id", userId);
+      await mutate(`${userId}-${id}-properties`, `${userId}-${id}-properties`);
       setLikeByUser(false);
     }
   };
