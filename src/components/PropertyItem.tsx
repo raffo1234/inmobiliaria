@@ -47,7 +47,7 @@ export default function PropertyItem({
 
     setShowDetail(true);
     setPropertyValue(property);
-    const newUrl = `inmueble/${property.id}`;
+    const newUrl = `/inmueble/${property.id}`;
     const newState = { page: "property" };
     const newTitle = property.title;
     const app = document.getElementById("app") as HTMLElement;
@@ -87,7 +87,7 @@ export default function PropertyItem({
     <article key={id}>
       <div className="relative mb-4">
         <a
-          href={`inmueble/${id}`}
+          href={`/inmueble/${id}`}
           onClick={(event) => onClick(event, property)}
         >
           <img
@@ -112,7 +112,7 @@ export default function PropertyItem({
       <div className="flex items-center gap-2 mb-2">
         <div className="w-5 h-5 rounded-full bg-black"></div>
         <h2>
-          <a href={`inmueble/${id}`} className="font-semibold">
+          <a href={`/inmueble/${id}`} className="font-semibold">
             {title}
           </a>
         </h2>

@@ -5,17 +5,24 @@ import { useEffect, useState } from "react";
 import Property from "./Property";
 import { CloseOutlined } from "@ant-design/icons";
 import PropertyItem from "./PropertyItem";
+import getLastSlashValueFromCurrentUrl from "src/utils/getLastSlashValueFromCurrentUrl";
 
 type Property = {
   id: string;
   title: string;
 };
 
-const fetcher = async (userId: string) => {
+const columnsToSearch = ["title", "description", "location"];
+
+const fetcher = async (searchTerms: string) => {
+  const orConditions = columnsToSearch
+    .map((column) => `${column}.ilike.%${searchTerms}%`)
+    .join(",");
+
   const { data, error } = await supabase
     .from("property")
-    .select("id, title, like!inner(user:user_id(id), user_id)")
-    .eq("like.user_id", userId)
+    .select("*")
+    .or(orConditions)
     .order("created_at", { ascending: false });
 
   if (error) throw error;
@@ -26,9 +33,10 @@ export default function PropertiesFavorite({ userId }: { userId: string }) {
   const [currentHref, setCurrentHref] = useState("");
   const [showDetail, setShowDetail] = useState(false);
   const [propertyValue, setPropertyValue] = useState<Property>();
+  const searchTerms = getLastSlashValueFromCurrentUrl() || "";
 
-  const { data: likes = [] } = useSWR(`${userId}-likes-properties`, () =>
-    fetcher(userId)
+  const { data: properties = [] } = useSWR(`${userId}-likes-properties`, () =>
+    fetcher(searchTerms)
   );
 
   const handleClose = () => {
@@ -78,6 +86,11 @@ export default function PropertiesFavorite({ userId }: { userId: string }) {
 
   return (
     <>
+      <div className="flex justify-end mb-8">
+        <a href="/inmuebles/favoritos" title="Mis Favoritos">
+          Mis favoritos
+        </a>
+      </div>
       {showDetail ? (
         <div
           onClick={onClose}
@@ -100,7 +113,7 @@ export default function PropertiesFavorite({ userId }: { userId: string }) {
           gridTemplateColumns: "repeat(auto-fit, minmax(336px, 1fr))",
         }}
       >
-        {likes.map(({ id, title }) => {
+        {properties.map(({ id, title }) => {
           return (
             <PropertyItem
               key={id}

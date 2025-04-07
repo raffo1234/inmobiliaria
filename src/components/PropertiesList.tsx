@@ -40,6 +40,7 @@ type User = {
 };
 
 export default function PropertiesList({ userId }: { userId: string }) {
+  const [currentHref, setCurrentHref] = useState("");
   const [showDetail, setShowDetail] = useState(false);
   const [propertyValue, setPropertyValue] = useState<Property>();
 
@@ -51,7 +52,8 @@ export default function PropertiesList({ userId }: { userId: string }) {
 
   const handleClose = () => {
     setPropertyValue(undefined);
-    const newUrl = "/";
+
+    const newUrl = currentHref;
     const newState = { page: "Home" };
     const newTitle = "Inmobiliaria";
     const app = document.getElementById("app") as HTMLElement;
@@ -89,8 +91,17 @@ export default function PropertiesList({ userId }: { userId: string }) {
     };
   }, [showDetail]);
 
+  useEffect(() => {
+    setCurrentHref(window.location.href);
+  }, []);
+
   return (
     <>
+      <div className="flex justify-end mb-8">
+        <a href="/inmuebles/favoritos" title="Mis Favoritos">
+          Mis favoritos
+        </a>
+      </div>
       {showDetail ? (
         <div
           onClick={onClose}

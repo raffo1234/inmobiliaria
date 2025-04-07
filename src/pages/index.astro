@@ -4,8 +4,6 @@ import { Image } from "astro:assets";
 import logo from "@assets/logo.png";
 import PropertiesList from "../components/PropertiesList";
 import ProfilePopover from "@components/ProfilePopover.astro";
-import { Icon } from "astro-icon/components";
-import FilterDropdown from "@components/FilterDropdown";
 import SearchForm from "@components/SearchForm";
 
 type User = {
@@ -50,9 +48,6 @@ const { currentUserId: userId } = Astro.locals;
   </h2>
   <div class="mx-auto mb-32 w-[700px]">
     <SearchForm client:load />
-  </div>
-  <div class="flex justify-end mb-8">
-    <a href="/inmuebles/favoritos">Mis favoritos</a>
   </div>
   {userId ? <PropertiesList client:load userId={userId} /> : null}
 </main>

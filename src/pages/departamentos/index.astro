@@ -1,12 +1,10 @@
 ---
-import FilterDropdown from "@components/FilterDropdown";
 import ProfilePopover from "@components/ProfilePopover.astro";
 import Layout from "@layouts/Layout.astro";
-import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
 import logo from "@assets/logo.png";
-import PropertiesFavorite from "@components/PropertiesFavorite";
 import SearchForm from "@components/SearchForm";
+import PropertiesResult from "@components/PropertiesResult";
 
 const userId = Astro.locals.currentUserId;
 ---
@@ -32,6 +30,6 @@ const userId = Astro.locals.currentUserId;
   </header>
   <div class="max-w-[1816px] w-full mx-auto p-4 relative z-10">
     <SearchForm client:load />
-    <PropertiesFavorite client:load userId={userId} />
+    <PropertiesResult client:only userId={userId} />
   </div>
 </Layout>
