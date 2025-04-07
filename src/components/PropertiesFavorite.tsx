@@ -6,37 +6,31 @@ import Property from "./Property";
 import { CloseOutlined } from "@ant-design/icons";
 import PropertyItem from "./PropertyItem";
 
+type Property = {
+  id: string;
+  title: string;
+};
+
 const fetcher = async (userId: string) => {
   const { data, error } = await supabase
-    .from("like")
-    .select("property(*)")
-    .eq("user_id", userId)
+    .from("property")
+    .select("id, title, like!inner(user:user_id(id), user_id)")
+    .eq("like.user_id", userId)
     .order("created_at", { ascending: false });
 
   if (error) throw error;
   return data;
 };
 
-type Property = {
-  id: string;
-  title: string;
-};
-
-export default function PropertiesFavorite({
-  userEmail,
-}: {
-  userEmail: string | undefined | null;
-}) {
+export default function PropertiesFavorite({ userId }: { userId: string }) {
   const [showDetail, setShowDetail] = useState(false);
   const [propertyValue, setPropertyValue] = useState<Property>();
 
   const {
-    data: properties = [],
+    data: likes = [],
     error,
     isLoading,
-  } = useSWR(`-properties`, () =>
-    fetcher("67fc3f7a-9723-4ca4-bef4-43c7428c76c5")
-  );
+  } = useSWR(`${userId}-likes-properties`, () => fetcher(userId));
 
   const handleClose = () => {
     setPropertyValue(undefined);
@@ -102,13 +96,12 @@ export default function PropertiesFavorite({
           gridTemplateColumns: "repeat(auto-fit, minmax(336px, 1fr))",
         }}
       >
-        {properties.map((property) => {
+        {likes.map(({ id, title }) => {
           return (
             <PropertyItem
-              key={property.id}
-              userEmail={userEmail}
-              isLoading={isLoading}
-              property={property}
+              key={id}
+              userId={userId}
+              property={{ id, title }}
               setShowDetail={setShowDetail}
               setPropertyValue={setPropertyValue}
             />

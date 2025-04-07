@@ -3,33 +3,41 @@ import hero from "@assets/hero.jpg";
 import { Icon } from "@iconify/react";
 import { supabase } from "../lib/supabase";
 import { useEffect, useState } from "react";
+import useSWR from "swr";
 
 type Property = {
   id: string;
   title: string;
 };
 
-// type User = {
-//   name: string;
-//   email: string;
-//   image: string;
-// };
+const fetcher = async (id: string, userId: string) => {
+  const { count, error } = await supabase
+    .from("like")
+    .select("user_id", { count: "exact" })
+    .eq("property_id", id)
+    .eq("user_id", userId);
+
+  if (error) throw error;
+  return count;
+};
 
 export default function PropertyItem({
   userId,
-  isLoading,
   property,
   setShowDetail,
   setPropertyValue,
 }: {
   userId: string;
-  isLoading: boolean;
   property: Property;
   setShowDetail: (value: boolean) => void;
   setPropertyValue: (property: Property) => void;
 }) {
   const { id, title } = property;
-  const [likeCount, setLikeCount] = useState<boolean>(false);
+  const [likeByUser, setLikeByUser] = useState<boolean>(false);
+
+  const { data: count, isLoading } = useSWR(`${userId}-${id}-properties`, () =>
+    fetcher(id, userId)
+  );
 
   const onClick = (
     event: React.MouseEvent<HTMLAnchorElement>,
@@ -49,45 +57,27 @@ export default function PropertyItem({
   };
 
   const handleLike = async (id: string) => {
-    const { count: like } = await supabase
-      .from("like")
-      .select("*", { count: "exact" })
-      .eq("property_id", id)
-      .eq("user_id", userId);
-
-    if (like === 0) {
+    if (count === 0) {
       await supabase.from("like").insert([
         {
           property_id: id,
           user_id: userId,
         },
       ]);
-      setLikeCount(true);
+      setLikeByUser(true);
     } else {
       await supabase
         .from("like")
         .delete()
         .eq("property_id", id)
         .eq("user_id", userId);
-      setLikeCount(false);
+      setLikeByUser(false);
     }
   };
 
-  const loadLike = async () => {
-    if (!userId) return;
-
-    const { count: like } = await supabase
-      .from("like")
-      .select("*", { count: "exact" })
-      .eq("property_id", id)
-      .eq("user_id", userId);
-
-    like === 0 ? setLikeCount(false) : setLikeCount(true);
-  };
-
   useEffect(() => {
-    loadLike();
-  }, []);
+    if (count) setLikeByUser(count > 0);
+  }, [count]);
 
   if (isLoading) return <Skeleton />;
 
@@ -110,7 +100,7 @@ export default function PropertyItem({
           </button> */}
           <button
             onClick={() => handleLike(id)}
-            className={`${likeCount ? "bg-cyan-50 text-cyan-300" : "bg-white hover:text-gray-500"} p-3  rounded-full transition-colors duration-700`}
+            className={`${likeByUser ? "bg-cyan-50 text-cyan-300" : "bg-white hover:text-gray-500"} p-3  rounded-full transition-colors duration-700`}
           >
             {isLoading}
             <Icon icon="solar:heart-bold" className="text-2xl" />

@@ -6,10 +6,8 @@ import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
 import logo from "@assets/logo.png";
 import PropertiesFavorite from "@components/PropertiesFavorite";
-import { getSession } from "auth-astro/server";
 
-const session = await getSession(Astro.request);
-const user = session?.user;
+const userId = Astro.locals.currentUserId;
 ---
 
 <Layout>
@@ -51,6 +49,6 @@ const user = session?.user;
         </button>
       </fieldset>
     </form>
-    <PropertiesFavorite client:load userEmail={user?.email} />
+    <PropertiesFavorite client:load userId={userId} />
   </div>
 </Layout>

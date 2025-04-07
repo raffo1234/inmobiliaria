@@ -118,7 +118,6 @@ export default function PropertiesList({ userId }: { userId: string }) {
             <PropertyItem
               key={property.id}
               userId={userId}
-              isLoading={isLoading}
               property={property}
               setShowDetail={setShowDetail}
               setPropertyValue={setPropertyValue}
