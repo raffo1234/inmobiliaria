@@ -9,14 +9,20 @@ type Property = {
   title: string;
 };
 
+// type User = {
+//   name: string;
+//   email: string;
+//   image: string;
+// };
+
 export default function PropertyItem({
-  userEmail,
+  userId,
   isLoading,
   property,
   setShowDetail,
   setPropertyValue,
 }: {
-  userEmail: string | undefined | null;
+  userId: string;
   isLoading: boolean;
   property: Property;
   setShowDetail: (value: boolean) => void;
@@ -43,23 +49,17 @@ export default function PropertyItem({
   };
 
   const handleLike = async (id: string) => {
-    const { data } = await supabase
-      .from("user")
-      .select()
-      .eq("email", userEmail)
-      .single();
-
     const { count: like } = await supabase
       .from("like")
       .select("*", { count: "exact" })
       .eq("property_id", id)
-      .eq("user_id", data.id);
+      .eq("user_id", userId);
 
     if (like === 0) {
       await supabase.from("like").insert([
         {
           property_id: id,
-          user_id: data.id,
+          user_id: userId,
         },
       ]);
       setLikeCount(true);
@@ -68,25 +68,19 @@ export default function PropertyItem({
         .from("like")
         .delete()
         .eq("property_id", id)
-        .eq("user_id", data.id);
+        .eq("user_id", userId);
       setLikeCount(false);
     }
   };
 
   const loadLike = async () => {
-    if (!userEmail) return;
-
-    const { data } = await supabase
-      .from("user")
-      .select()
-      .eq("email", userEmail)
-      .single();
+    if (!userId) return;
 
     const { count: like } = await supabase
       .from("like")
       .select("*", { count: "exact" })
       .eq("property_id", id)
-      .eq("user_id", data.id);
+      .eq("user_id", userId);
 
     like === 0 ? setLikeCount(false) : setLikeCount(true);
   };

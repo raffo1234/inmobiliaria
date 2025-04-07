@@ -1,4 +1,4 @@
-import type { AstroGlobal } from 'astro';
+import type { APIContext } from 'astro';
 import type { Session } from '@auth/core/types';
 import { getSession } from 'auth-astro/server';
 import { supabase } from './supabase';
@@ -11,16 +11,16 @@ interface SyncResult {
   error?: unknown; 
 }
 
-export async function syncUserWithDb(Astro: AstroGlobal): Promise<SyncResult | null> {
-  const session: Session | null = await getSession(Astro.request);
+export async function syncUserWithDb(context: APIContext ): Promise<SyncResult | null> {
+  const session: Session | null = await getSession(context.request);
   
   if (!session?.user) {
     console.log('syncUserWithDb: No active session found.');
     return null;
   }
  
-  const { name, email, image, id: providerId } = session.user;
-
+  const { name, email, image } = session.user;
+  
   if (!email) {
     console.error('syncUserWithDb: User email not found in session.');
     return { success: false, message: 'User email missing in session.', user: session.user };
@@ -34,19 +34,22 @@ export async function syncUserWithDb(Astro: AstroGlobal): Promise<SyncResult | n
     .select()
     .eq("email", email).single();
     
+    context.locals.currentUserId = existingUser.id
+
     if (!existingUser) {
-      
       try {
-      const { data: createdUser, error: errorSupabase } = await supabase.from("user").insert([{
+        const { data: createdUser, error: errorSupabase } = await supabase.from("user").insert([{
+        provider: "google",
         email,
         name,
         username: email,
         image_url: image
-      }]).select().single();
+        }]).select().single();
 
+        context.locals.currentUserId = createdUser.id
       
-        console.info(`syncUserWithDb: User ${createdUser.email} created successfully.`);
-      } catch (error) {
+      console.info(`syncUserWithDb: User ${createdUser.email} created successfully.`);
+    } catch (error) {
         console.error('syncUserWithDb: Error creating user:', error);
         return { success: false, message: 'User creation failed.', user: session.user, error: error };
       }

@@ -13,7 +13,6 @@ const fetcher = async (userId: string) => {
     .eq("user_id", userId)
     .order("created_at", { ascending: false });
 
-  console.log({ error });
   if (error) throw error;
   return data;
 };

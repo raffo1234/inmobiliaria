@@ -1,8 +1,11 @@
+import { syncUserWithDb } from '@lib/auth';
 import { defineMiddleware } from 'astro:middleware';
 import { getSession } from 'auth-astro/server';
 
 export const onRequest = defineMiddleware(async (context, next) => {
   try {
+    await syncUserWithDb(context)
+    
     const session = await getSession(context.request);
     if ((context.url.pathname.startsWith("/admin") || context.url.pathname.includes("/admin/")) && !session?.user) {
       return context.redirect("/");

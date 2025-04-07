@@ -6,12 +6,16 @@ import PropertiesList from "../components/PropertiesList";
 import ProfilePopover from "@components/ProfilePopover.astro";
 import { Icon } from "astro-icon/components";
 import FilterDropdown from "@components/FilterDropdown";
-import { syncUserWithDb } from "@lib/auth";
-import { getSession } from "auth-astro/server";
-const session = await getSession(Astro.request);
-const user = session?.user;
 
-syncUserWithDb(Astro);
+type User = {
+  id: string;
+  userId: string;
+  name: string;
+  email: string;
+  image: string;
+};
+
+const { currentUserId: userId } = Astro.locals;
 ---
 
 <Layout>
@@ -65,7 +69,7 @@ syncUserWithDb(Astro);
     </form>
   </div>
   <div class="flex justify-end mb-8">
-    <a href="/inmuebles/favoritos"> Mis favoritos </a>
+    <a href="/inmuebles/favoritos">Mis favoritos</a>
   </div>
-  <PropertiesList client:load userEmail={user?.email} />
+  {userId ? <PropertiesList client:load userId={userId} /> : null}
 </main>

@@ -7,7 +7,7 @@ import { CloseOutlined } from "@ant-design/icons";
 import { PropertyState } from "@types/propertyState";
 import PropertyItem from "./PropertyItem";
 
-const fetcher = async () => {
+const fetcher = async (userId: string) => {
   const { data, error } = await supabase
     .from("property")
     .select(
@@ -20,6 +20,7 @@ const fetcher = async () => {
       )
     `
     )
+    .eq("user_id", userId)
     .eq("state", PropertyState.ACTIVE)
     .order("created_at", { ascending: false });
 
@@ -32,11 +33,13 @@ type Property = {
   title: string;
 };
 
-export default function PropertiesList({
-  userEmail,
-}: {
-  userEmail: string | undefined | null;
-}) {
+type User = {
+  name: string;
+  email: string;
+  image: string;
+};
+
+export default function PropertiesList({ userId }: { userId: string }) {
   const [showDetail, setShowDetail] = useState(false);
   const [propertyValue, setPropertyValue] = useState<Property>();
 
@@ -44,7 +47,7 @@ export default function PropertiesList({
     data: properties = [],
     error,
     isLoading,
-  } = useSWR("properties", fetcher);
+  } = useSWR("properties", () => fetcher(userId));
 
   const handleClose = () => {
     setPropertyValue(undefined);
@@ -114,7 +117,7 @@ export default function PropertiesList({
           return (
             <PropertyItem
               key={property.id}
-              userEmail={userEmail}
+              userId={userId}
               isLoading={isLoading}
               property={property}
               setShowDetail={setShowDetail}
