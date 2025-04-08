@@ -1,6 +1,7 @@
 import hero from "@assets/hero.jpg";
 import { useState } from "react";
 import { Button, Input } from "antd";
+import Typologies from "./Typologies";
 
 const Image = ({ src, alt }: { src: string; alt: string }) => {
   const [loading, setLoading] = useState(false);
@@ -15,9 +16,21 @@ const Image = ({ src, alt }: { src: string; alt: string }) => {
   );
 };
 
+type Typology = {
+  name: string;
+  description: string;
+  price: string;
+  size: string;
+  stock: string;
+  bathroom_count: string;
+  bedroom_count: string;
+};
+
 type Property = {
   id: string;
   title: string;
+  description: string;
+  typologies?: Typology[];
 };
 
 export default function Property({
@@ -58,13 +71,9 @@ export default function Property({
           </form>
         </section>
       </div>
-      <h3 className="mt-10 mb-6 text-xl font-semibold">Details</h3>
-      <p className="leading-relaxed">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veritatis unde
-        sapiente corrupti voluptates recusandae quos repudiandae soluta
-        obcaecati totam qui magnam, libero ducimus atque neque quidem omnis
-        voluptate natus aperiam?
-      </p>
+      <h3 className="mt-10 mb-6 text-xl font-semibold">Conoce mas:</h3>
+      <p className="leading-relaxed">{property.description}</p>
+      <Typologies propertyId={property.id} />
     </>
   );
 }
