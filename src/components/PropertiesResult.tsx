@@ -12,18 +12,23 @@ type Property = {
   title: string;
 };
 
-const columnsToSearch = ["title", "description", "location"];
+const columnsToSearch = ["title", "description", "location", "type"];
 
 const fetcher = async (searchTerms: string) => {
   const orConditions = columnsToSearch
     .map((column) => `${column}.ilike.%${searchTerms}%`)
     .join(",");
 
-  const { data, error } = await supabase
-    .from("property")
-    .select("*")
-    .or(orConditions)
-    .order("created_at", { ascending: false });
+  const { data, error } = searchTerms
+    ? await supabase
+        .from("property")
+        .select("*")
+        .or(orConditions)
+        .order("created_at", { ascending: false })
+    : await supabase
+        .from("property")
+        .select("*")
+        .order("created_at", { ascending: false });
 
   if (error) throw error;
   return data;

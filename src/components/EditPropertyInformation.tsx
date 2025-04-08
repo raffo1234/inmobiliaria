@@ -2,7 +2,11 @@ import { useEffect, useMemo } from "react";
 import useSWR, { mutate } from "swr";
 import { supabase } from "@lib/supabase";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { PropertyPhase, PropertyState } from "@types/propertyState";
+import {
+  PropertyPhase,
+  PropertyState,
+  PropertyType,
+} from "@types/propertyState";
 import { Button, message } from "antd";
 import FormSkeleton from "./FormSkeleton";
 import { format } from "date-fns";
@@ -14,6 +18,7 @@ type Inputs = {
   location: string;
   state: boolean;
   phase: boolean;
+  type: boolean;
   area: boolean;
   created_at: string;
 };
@@ -54,7 +59,7 @@ export default function EditPropertyInformation({
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const { data: updatedData } = await supabase
+      const { data: updatedData, error } = await supabase
         .from("property")
         .update(data)
         .eq("id", id)
@@ -64,6 +69,7 @@ export default function EditPropertyInformation({
       await mutate("properties");
       success();
       hideModal();
+      console.log(error);
     } catch (error) {
       console.error(error);
       hideModal();
@@ -74,7 +80,7 @@ export default function EditPropertyInformation({
     reset(data);
   }, [data]);
 
-  if (error) return <div>Error loading item details</div>;
+  if (error) return <div>Error cargando datos ...</div>;
 
   return isLoading ? (
     <FormSkeleton rows={2} />
@@ -107,6 +113,20 @@ export default function EditPropertyInformation({
               <option>{PropertyState.DRAFT}</option>
               <option>{PropertyState.PENDING}</option>
               <option>{PropertyState.ACTIVE}</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="type" className="block font-bold mb-2 font-manrope">
+              Tipo
+            </label>
+            <select
+              id="type"
+              {...register("type")}
+              required
+              className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option>{PropertyType.APARTMENT}</option>
+              <option>{PropertyType.HOUSE}</option>
             </select>
           </div>
           <div>
