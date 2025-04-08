@@ -13,7 +13,7 @@ async function fetcher(): Promise<Property[]> {
 }
 
 export default function DeleteProperty({ id }: { id: string }) {
-  const { data: properties } = useSWR("properties", fetcher);
+  const { data: properties } = useSWR("admin-properties", fetcher);
   const onDelete = async (id: string) => {
     const confirmationMessage = confirm(
       "Esta acción es irreversible. Esta seguro?"

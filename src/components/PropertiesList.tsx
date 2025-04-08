@@ -26,8 +26,7 @@ const fetcher = async () => {
     )
     .eq("state", PropertyState.ACTIVE)
     .order("created_at", { ascending: false });
-  console.log("error", error);
-  console.log("data", data);
+
   if (error) throw error;
   return data;
 };
@@ -129,7 +128,7 @@ export default function PropertiesList({ userId }: { userId: string }) {
         }}
       >
         {properties.map((property) => {
-          console.log(property);
+          console.log("property", property);
           return (
             <PropertyItem
               key={property.id}

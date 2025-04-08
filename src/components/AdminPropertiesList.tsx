@@ -86,7 +86,11 @@ const fetcher = async (): Promise<Property[]> => {
 };
 
 export default function PropertiesList() {
-  const { data: properties, error, isLoading } = useSWR("properties", fetcher);
+  const {
+    data: properties,
+    error,
+    isLoading,
+  } = useSWR("admin-properties", fetcher);
 
   return (
     <section
@@ -103,6 +107,7 @@ export default function PropertiesList() {
       </a>
       {Array.isArray(properties) &&
         properties.map((property) => {
+          console.log("admin: ", property);
           const { id, title, state, phase } = property;
           if (error) console.error(error);
 

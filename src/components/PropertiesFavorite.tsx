@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Property from "./Property";
 import { CloseOutlined } from "@ant-design/icons";
 import PropertyItem from "./PropertyItem";
+import { PropertyState } from "@types/propertyState";
 
 type Property = {
   id: string;
@@ -31,6 +32,7 @@ const fetcher = async (userId: string) => {
         image_url
       )`
     )
+    .eq("state", PropertyState.ACTIVE)
     .eq("like.user_id", userId)
     .order("created_at", { ascending: false });
 

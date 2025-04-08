@@ -66,7 +66,7 @@ export default function EditPropertyInformation({
         .select()
         .single();
       await mutate(id, updatedData);
-      await mutate("properties");
+      await mutate("admin-properties");
       success();
       hideModal();
       console.log(error);

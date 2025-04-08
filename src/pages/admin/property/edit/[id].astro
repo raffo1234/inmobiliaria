@@ -32,35 +32,6 @@ const { id } = Astro.params;
 if (!id || !user) {
   return Astro.redirect("/404");
 }
-
-// async function updateData(data: User, userId: string) {
-//   const { data: updatedUser, error } = await supabase
-//     .from("user")
-//     .update(data)
-//     .eq("id", userId)
-//     .select()
-//     .single();
-
-//   if (error) {
-//     console.error("Error updating data:", error);
-//     return { data, success: false, error: error.message };
-//   }
-//   return { data: updatedUser, success: true };
-// }
-
-// if (Astro.request.method === "POST") {
-//   const formData = await Astro.request.formData();
-//   const newUser: User = {
-//     username: formData.get("username") as string,
-//     email: formData.get("email") as string,
-//   };
-
-//   const response = await updateData(newUser, id);
-
-//   if (response.success) {
-//     return Astro.redirect("/admin/users");
-//   }
-// }
 ---
 
 <Dashboard pageTitle="Add User">
