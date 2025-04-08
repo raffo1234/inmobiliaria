@@ -9,12 +9,28 @@ import PropertyItem from "./PropertyItem";
 type Property = {
   id: string;
   title: string;
+  user: {
+    id: string;
+    name: string;
+    image_url: string;
+  };
 };
 
 const fetcher = async (userId: string) => {
   const { data, error } = await supabase
     .from("property")
-    .select("id, title, like!inner(user:user_id(id), user_id)")
+    .select(
+      `id,
+      title,
+      like!inner(user_id),
+      user_id,
+      user!property_user_id_fkey (
+        id,
+        email,
+        name,
+        image_url
+      )`
+    )
     .eq("like.user_id", userId)
     .order("created_at", { ascending: false });
 
@@ -25,9 +41,9 @@ const fetcher = async (userId: string) => {
 export default function PropertiesFavorite({ userId }: { userId: string }) {
   const [currentHref, setCurrentHref] = useState("");
   const [showDetail, setShowDetail] = useState(false);
-  const [propertyValue, setPropertyValue] = useState<Property>();
+  const [propertyValue, setPropertyValue] = useState<Property | undefined>();
 
-  const { data: likes = [] } = useSWR(`${userId}-likes-properties`, () =>
+  const { data: properties = [] } = useSWR(`${userId}-likes-properties`, () =>
     fetcher(userId)
   );
 
@@ -100,12 +116,13 @@ export default function PropertiesFavorite({ userId }: { userId: string }) {
           gridTemplateColumns: "repeat(auto-fit, minmax(336px, 1fr))",
         }}
       >
-        {likes.map(({ id, title }) => {
+        {properties.map((property) => {
+          console.log(property);
           return (
             <PropertyItem
-              key={id}
+              key={property.id}
               userId={userId}
-              property={{ id, title }}
+              property={property}
               setShowDetail={setShowDetail}
               setPropertyValue={setPropertyValue}
             />

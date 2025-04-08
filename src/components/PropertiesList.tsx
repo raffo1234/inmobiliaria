@@ -14,15 +14,20 @@ const fetcher = async () => {
       `
       id,
       title,
-      type (
+      description,
+      user_id,
+      user!property_user_id_fkey (
         id,
-        name
+        email,
+        name,
+        image_url
       )
     `
     )
     .eq("state", PropertyState.ACTIVE)
     .order("created_at", { ascending: false });
-
+  console.log("error", error);
+  console.log("data", data);
   if (error) throw error;
   return data;
 };
@@ -124,6 +129,7 @@ export default function PropertiesList({ userId }: { userId: string }) {
         }}
       >
         {properties.map((property) => {
+          console.log(property);
           return (
             <PropertyItem
               key={property.id}

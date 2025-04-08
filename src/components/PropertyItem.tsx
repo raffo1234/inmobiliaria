@@ -5,10 +5,20 @@ import { supabase } from "../lib/supabase";
 import { useEffect, useState } from "react";
 import useSWR, { mutate } from "swr";
 
-type Property = {
+interface Property {
   id: string;
   title: string;
-};
+  like: {
+    user_id: string;
+  }[];
+  user_id: string;
+  user: {
+    id: string;
+    email: string;
+    name: string;
+    image_url: string;
+  };
+}
 
 const fetcher = async (id: string, userId: string) => {
   const { count, error } = await supabase
@@ -32,7 +42,8 @@ export default function PropertyItem({
   setShowDetail: (value: boolean) => void;
   setPropertyValue: (property: Property) => void;
 }) {
-  const { id, title } = property;
+  const { id, title, user } = property;
+
   const [likeByUser, setLikeByUser] = useState<boolean>(false);
 
   const { data: count, isLoading } = useSWR(`${userId}-${id}-properties`, () =>
@@ -94,6 +105,7 @@ export default function PropertyItem({
             src={hero.src}
             className="w-full h-[320px] object-cover object-top rounded-lg"
             alt={title}
+            title={title}
           />
         </a>
         <div className="absolute right-0 top-0 p-4 gap-2 flex items-center">
@@ -110,9 +122,16 @@ export default function PropertyItem({
         </div>
       </div>
       <div className="flex items-center gap-2 mb-2">
-        <div className="w-5 h-5 rounded-full bg-black"></div>
+        <a href={`/user/${user.id}`} title={user.name}>
+          <img
+            src={user.image_url}
+            className="w-8 h-8 object-cover rounded-full"
+            alt={user.name}
+            title={user.name}
+          />
+        </a>
         <h2>
-          <a href={`/inmueble/${id}`} className="font-semibold">
+          <a title={title} href={`/inmueble/${id}`} className="font-semibold">
             {title}
           </a>
         </h2>
