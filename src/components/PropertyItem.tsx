@@ -39,7 +39,7 @@ export default function PropertyItem({
     fetcher(id, userId)
   );
 
-  const onClick = (
+  const onDisplayPropertyDetail = (
     event: React.MouseEvent<HTMLAnchorElement>,
     property: Property
   ) => {
@@ -88,7 +88,7 @@ export default function PropertyItem({
       <div className="relative mb-4">
         <a
           href={`/inmueble/${id}`}
-          onClick={(event) => onClick(event, property)}
+          onClick={(event) => onDisplayPropertyDetail(event, property)}
         >
           <img
             src={hero.src}
