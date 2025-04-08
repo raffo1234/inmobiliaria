@@ -70,7 +70,7 @@ const fetcher = async (): Promise<Property[]> => {
       state,
       phase,
       created_at,
-      type (
+      typology (
         property_id,
         id,
         name,

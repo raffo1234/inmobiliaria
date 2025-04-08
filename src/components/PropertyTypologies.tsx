@@ -4,14 +4,13 @@ import hero from "@assets/hero.jpg";
 import useSWR from "swr";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
-import InsertPropertyType from "./InsertPropertyType";
+import InsertPropertyType from "./InsertPropertyTypology";
 import DeletePropertyType from "./DeletePropertyType";
-import EditProperty from "./EditProperty";
 import EditPropertyType from "./EditPropertyType";
 
 const fetcherType = async (propertyId: string) => {
   const { data, error } = await supabase
-    .from("type")
+    .from("typology")
     .select(
       `
       id,
@@ -32,10 +31,15 @@ const fetcherType = async (propertyId: string) => {
   return data;
 };
 
-export default function PropertyTypes({ propertyId }: { propertyId: string }) {
+export default function PropertyTypologies({
+  propertyId,
+}: {
+  propertyId: string;
+}) {
   const [displayAddform, setDisplayAddForm] = useState(false);
-  const { data: types = [], isLoading } = useSWR(`${propertyId}-types`, () =>
-    fetcherType(propertyId)
+  const { data: types = [], isLoading } = useSWR(
+    `${propertyId}-typologies`,
+    () => fetcherType(propertyId)
   );
 
   if (isLoading) return <Skeleton />;

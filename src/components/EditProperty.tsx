@@ -3,7 +3,7 @@ import EditPropertyInformation from "./EditPropertyInformation";
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
 import { useState } from "react";
-import PropertyTypes from "./PropertyTypes";
+import PropertyTypes from "./PropertyTypologies";
 import { Icon } from "@iconify/react";
 
 export default function EditProperty({ id }: { id: string }) {

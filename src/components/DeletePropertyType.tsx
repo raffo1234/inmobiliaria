@@ -2,13 +2,13 @@ import { Icon } from "@iconify/react";
 import { supabase } from "@lib/supabase";
 import useSWR, { mutate } from "swr";
 
-type Type = {
+type Typology = {
   id: string;
 };
 
-async function fetcher(propertyId: string): Promise<Type[]> {
+async function fetcher(propertyId: string): Promise<Typology[]> {
   const { data, error } = await supabase
-    .from("type")
+    .from("typology")
     .select()
     .eq("property_id", propertyId);
   if (error) throw error;
@@ -22,7 +22,7 @@ export default function DeletePropertyType({
   propertyId: string;
   id: string;
 }) {
-  const { data: types } = useSWR(`${propertyId}-types`, () =>
+  const { data: typologies } = useSWR(`${propertyId}-typologies`, () =>
     fetcher(propertyId)
   );
   const onDelete = async (id: string) => {
@@ -32,17 +32,17 @@ export default function DeletePropertyType({
     if (!confirmationMessage) return;
 
     try {
-      const { data: deletedType } = await supabase
-        .from("type")
+      const { data: deletedTypology } = await supabase
+        .from("typology")
         .delete()
         .eq("id", id)
         .select("id")
         .single();
 
-      if (deletedType && types) {
+      if (deletedTypology && typologies) {
         await mutate(
           `${propertyId}-types`,
-          types.filter((type) => type.id !== deletedType.id),
+          typologies.filter((typology) => typology.id !== deletedTypology.id),
           false
         );
       }

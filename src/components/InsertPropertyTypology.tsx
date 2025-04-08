@@ -1,11 +1,9 @@
-import FormSkeleton from "@components/FormSkeleton";
 import { supabase } from "@lib/supabase";
 import useSWR, { mutate } from "swr";
-import { useState, type Dispatch, type SetStateAction } from "react";
-import { Button, Modal, Skeleton, message } from "antd";
+import { Button, Skeleton } from "antd";
 import { useForm } from "react-hook-form";
 
-type TypeInputs = {
+type TypologyInputs = {
   name: string;
   size: string;
   price: string;
@@ -15,7 +13,7 @@ type TypeInputs = {
 
 const fetcherType = async (propertyId: string) => {
   const { data, error } = await supabase
-    .from("type")
+    .from("typology")
     .select(
       `
       id,
@@ -32,28 +30,33 @@ const fetcherType = async (propertyId: string) => {
   return data;
 };
 
-export default function InsertPropertyType({
+export default function InsertPropertyTypology({
   propertyId,
   setDisplayAddForm,
 }: {
   propertyId: string;
   setDisplayAddForm: (value: boolean) => void;
 }) {
-  const { data: types = [], isLoading } = useSWR(`${propertyId}-types`, () =>
-    fetcherType(propertyId)
+  const { data: typologies = [], isLoading } = useSWR(
+    `${propertyId}-typologies`,
+    () => fetcherType(propertyId)
   );
 
-  const { register, reset, handleSubmit } = useForm<TypeInputs>({
+  const { register, reset, handleSubmit } = useForm<TypologyInputs>({
     mode: "onBlur",
   });
-  async function insertData(data: TypeInputs) {
+  async function insertData(data: TypologyInputs) {
     const { error, data: insertedData } = await supabase
-      .from("type")
+      .from("typology")
       .insert([{ ...data, property_id: propertyId }])
       .select()
       .single();
 
-    await mutate(`${propertyId}-types`, [...types, insertedData], false);
+    await mutate(
+      `${propertyId}-typologies`,
+      [...typologies, insertedData],
+      false
+    );
     reset();
     setDisplayAddForm(false);
 

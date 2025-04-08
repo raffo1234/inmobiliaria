@@ -21,7 +21,7 @@ type Inputs = {
 
 async function fetcher(id: string) {
   const { data, error } = await supabase
-    .from("type")
+    .from("typology")
     .select()
     .eq("id", id)
     .single();
@@ -51,7 +51,7 @@ export default function EditPropertyType({ id }: { id: string }) {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       const { data: updatedData } = await supabase
-        .from("type")
+        .from("typology")
         .update(data)
         .eq("id", id)
         .select()
