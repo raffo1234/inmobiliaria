@@ -1,7 +1,9 @@
 ---
+import Header from "@components/Header.astro";
 import Layout from "../../layouts/Layout.astro";
 import { supabase } from "../../lib/supabase";
 import Property from "../../components/Property";
+import Main from "@components/Main.astro";
 
 const id = Astro.params.id;
 export async function getStaticPaths() {
@@ -36,5 +38,8 @@ if (!id || !property) {
 ---
 
 <Layout>
-  <Property property={property} client:only />
+  <Header />
+  <Main>
+    <Property property={property} client:only />
+  </Main>
 </Layout>

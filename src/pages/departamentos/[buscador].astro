@@ -1,35 +1,17 @@
 ---
-import ProfilePopover from "@components/ProfilePopover.astro";
+import Header from "@components/Header.astro";
 import Layout from "@layouts/Layout.astro";
-import { Image } from "astro:assets";
-import logo from "@assets/logo.png";
 import SearchForm from "@components/SearchForm";
 import PropertiesResult from "@components/PropertiesResult";
+import Main from "@components/Main.astro";
 
 const userId = Astro.locals.currentUserId;
 ---
 
 <Layout>
-  <header class="w-full z-20 mb-12 relative">
-    <nav
-      class="max-w-[1816px] w-full mx-auto p-4 justify-between flex items-center"
-    >
-      <ul class="flex items-center gap-4 mr-4">
-        <li>
-          <a href="/" class="block" title="Home">
-            <Image
-              src={logo}
-              class="w-20 object-cover object-top"
-              alt="Inmobiliaria"
-            />
-          </a>
-        </li>
-      </ul>
-      <ProfilePopover />
-    </nav>
-  </header>
-  <div class="max-w-[1816px] w-full mx-auto p-4 relative z-10">
+  <Header />
+  <Main>
     <SearchForm client:load />
     <PropertiesResult client:only userId={userId} />
-  </div>
+  </Main>
 </Layout>

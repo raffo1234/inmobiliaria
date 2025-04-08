@@ -28,7 +28,7 @@ export default function Property({
   if (!property) return null;
 
   return (
-    <main className="relative px-4 lg:px-6 py-[64px]">
+    <>
       <h2 className="text-2xl font-semibold mb-8">{property.title}</h2>
       <div className="flex items-start gap-6">
         <div className="w-3/4">
@@ -65,6 +65,6 @@ export default function Property({
         obcaecati totam qui magnam, libero ducimus atque neque quidem omnis
         voluptate natus aperiam?
       </p>
-    </main>
+    </>
   );
 }

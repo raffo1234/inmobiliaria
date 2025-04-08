@@ -107,7 +107,6 @@ export default function PropertiesList() {
       </a>
       {Array.isArray(properties) &&
         properties.map((property) => {
-          console.log("admin: ", property);
           const { id, title, state, phase } = property;
           if (error) console.error(error);
 

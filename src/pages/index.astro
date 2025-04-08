@@ -1,53 +1,30 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import { Image } from "astro:assets";
-import logo from "@assets/logo.png";
-import PropertiesList from "../components/PropertiesList";
-import ProfilePopover from "@components/ProfilePopover.astro";
+import PropertiesList from "@components/PropertiesList";
+import Header from "@components/Header.astro";
 import SearchForm from "@components/SearchForm";
-
-type User = {
-  id: string;
-  userId: string;
-  name: string;
-  email: string;
-  image: string;
-};
+import Main from "@components/Main.astro";
 
 const { currentUserId: userId } = Astro.locals;
 ---
 
 <Layout>
-  <header class="w-full z-20 mb-12">
-    <nav
-      class="max-w-[1816px] w-full mx-auto p-4 justify-between flex items-center"
+  <Header />
+  <Main>
+    <h2
+      style={{
+        fontSize: "clamp(18px, 13vw + .5rem, 50px)",
+      }}
+      class="mb-10 leading-relaxed w-full text-center"
     >
-      <ul class="flex items-center gap-4 mr-4">
-        <li>
-          <a href="/" class="block" title="Home">
-            <Image
-              src={logo}
-              class="w-20 object-cover object-top"
-              alt="Inmobiliaria"
-            />
-          </a>
-        </li>
-      </ul>
-      <ProfilePopover />
-    </nav>
-  </header>
+      Explora estos <br /> inmuebles destacados
+    </h2>
+    <div class="mx-auto mb-32 w-[700px]">
+      <SearchForm client:load />
+    </div>
+    <div class="mb-8">
+      <a href="/inmuebles/favoritos" title="Mis Favoritos"> Mis favoritos </a>
+    </div>
+    {userId ? <PropertiesList client:load userId={userId} /> : null}
+  </Main>
 </Layout>
-<main class="max-w-[1816px] mx-auto pb-20 px-4">
-  <h2
-    style={{
-      fontSize: "clamp(18px, 13vw + .5rem, 50px)",
-    }}
-    class="mb-10 leading-relaxed w-full text-center"
-  >
-    Explora estos <br /> inmuebles destacados
-  </h2>
-  <div class="mx-auto mb-32 w-[700px]">
-    <SearchForm client:load />
-  </div>
-  {userId ? <PropertiesList client:load userId={userId} /> : null}
-</main>
