@@ -44,7 +44,7 @@ export default function Property({
     <>
       <h2 className="text-2xl font-semibold mb-8">{property.title}</h2>
       <div className="flex items-start gap-6">
-        <div className="w-3/4">
+        <div className="w-4/6 aspect-5/3">
           <Image src={hero.src} alt="Property" />
         </div>
         <section>

@@ -103,7 +103,7 @@ export default function PropertyItem({
         >
           <img
             src={hero.src}
-            className="w-full aspect-[4/3] object-cover rounded-lg"
+            className="w-full aspect-[5/4] object-cover rounded-lg"
             alt={title}
             title={title}
           />

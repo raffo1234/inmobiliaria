@@ -31,12 +31,21 @@ const user = session?.user;
             <p class="text-center text-sm font-semibold w-full">{user?.name}</p>
           </li>
           <li>
-            <a href="/" class="block py-4 px-6 hover:bg-gray-50">
+            <a href="/" class="block py-2 px-6 hover:bg-gray-50">
               Home
             </a>
           </li>
           <li>
-            <a href="/admin/property" class="block py-4 px-6 hover:bg-gray-50">
+            <a
+              title="Favoritos"
+              href="/inmuebles/favoritos"
+              class="block py-2 px-6 hover:bg-gray-50"
+            >
+              Favoritos
+            </a>
+          </li>
+          <li>
+            <a href="/admin/property" class="block py-2 px-6 hover:bg-gray-50">
               Admin
             </a>
           </li>
@@ -50,7 +59,7 @@ const user = session?.user;
     </div>
   ) : (
     <SignIn
-      class="block px-5 py-2 bg-black text-white rounded-full transition-colors duration-700 hover:bg-gray-800 active:bg-gray-900"
+      class="block px-6 py-2 bg-black text-white rounded-full transition-colors duration-700 hover:bg-gray-800 active:bg-gray-900"
       provider="google"
     >
       Iniciar sesión
