@@ -12,9 +12,6 @@ const userId = Astro.locals.currentUserId;
   <Header />
   <Main>
     <SearchForm client:load />
-    <div class="mb-8">
-      <a href="/inmuebles/favoritos" title="Mis Favoritos"> Mis favoritos </a>
-    </div>
     <PropertiesFavorite client:load userId={userId} />
   </Main>
 </Layout>

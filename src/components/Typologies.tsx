@@ -108,7 +108,7 @@ export default function Typologies({ propertyId }: { propertyId: string }) {
       </h3>
       <TypologiesGrid>
         {typologies.map((typology) => {
-          return <Typology typology={typology} />;
+          return <Typology key={typology.id} typology={typology} />;
         })}
       </TypologiesGrid>
     </>
