@@ -1,9 +1,7 @@
 import { supabase } from "../lib/supabase";
 import useSWR from "swr";
-import { Button } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Property from "./Property";
-import { CloseOutlined } from "@ant-design/icons";
 import PropertyItem from "./PropertyItem";
 import getLastSlashValueFromCurrentUrl from "src/utils/getLastSlashValueFromCurrentUrl";
 import { PropertyState } from "@types/propertyState";

@@ -3,10 +3,11 @@ import hero from "@assets/hero.jpg";
 import { Icon } from "@iconify/react";
 import { supabase } from "../lib/supabase";
 import { useState } from "react";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import { Modal } from "antd";
 import logo from "@assets/logo.png";
 import { signIn } from "auth-astro/client";
+import getLastSlashValueFromCurrentUrl from "src/utils/getLastSlashValueFromCurrentUrl";
 
 interface Property {
   id: string;
@@ -113,6 +114,8 @@ export default function PropertyItem({
   };
 
   const handleLike = async (id: string) => {
+    const lastSlashValue = getLastSlashValueFromCurrentUrl() || "";
+
     if (!userId) {
       showModal();
       return;
@@ -127,6 +130,10 @@ export default function PropertyItem({
       ]);
       await mutateByUser();
       await mutateByProperty();
+
+      if (!lastSlashValue.includes("favorito")) {
+        await mutate(`${userId}-likes-properties`, null);
+      }
     } else {
       await supabase
         .from("like")
@@ -135,6 +142,10 @@ export default function PropertyItem({
         .eq("user_id", userId);
       await mutateByUser();
       await mutateByProperty();
+
+      if (!lastSlashValue.includes("favorito")) {
+        await mutate(`${userId}-likes-properties`, null);
+      }
     }
   };
 
