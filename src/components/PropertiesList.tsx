@@ -1,9 +1,7 @@
 import { supabase } from "../lib/supabase";
 import useSWR from "swr";
-import { Button } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Property from "./Property";
-import { CloseOutlined } from "@ant-design/icons";
 import { PropertyState } from "@types/propertyState";
 import PropertyItem from "./PropertyItem";
 import PropertyDetail from "./PropertyDetail";
@@ -11,12 +9,14 @@ import PropertiesGrid from "./PropertiesGrid";
 
 const fetcher = async () => {
   const { data, error } = await supabase
+
     .from("property")
     .select(
       `
       id,
       title,
       description,
+      state,
       user_id,
       user!property_user_id_fkey (
         id,

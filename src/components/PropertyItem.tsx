@@ -21,11 +21,16 @@ interface Property {
 }
 
 const fetcher = async (id: string, userId: string) => {
-  const { count, error } = await supabase
+  let query = supabase
     .from("like")
     .select("user_id", { count: "exact" })
-    .eq("property_id", id)
-    .eq("user_id", userId);
+    .eq("property_id", id);
+
+  if (userId) {
+    query = query.eq("user_id", userId);
+  }
+
+  const { count, error } = await query;
 
   if (error) throw error;
   return count;

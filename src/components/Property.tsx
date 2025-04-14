@@ -108,27 +108,6 @@ export default function Property({
                 <div className="text-sm">Entrega: 03 de Enero, 2025</div>
               </div>
             </div>
-            {/* <form className="mb-6 flex flex-col gap-4">
-              <fieldset>
-                <label className="inline-block font-semibold text-sm mb-3">
-                  Nombres
-                </label>
-                <Input
-                  name="name"
-                  size="large"
-                  placeholder="Nombres y Apellidos"
-                />
-              </fieldset>
-              <fieldset>
-                <label className="inline-block font-semibold text-sm mb-3">
-                  Email
-                </label>
-                <Input name="email" size="large" placeholder="Email" />
-              </fieldset>
-              <Button size="large" color="default" variant="solid">
-                Contactar
-              </Button>
-            </form> */}
           </section>
         </div>
       </div>

@@ -25,6 +25,6 @@ const { currentUserId: userId } = Astro.locals;
     <div class="mb-8">
       <a href="/inmuebles/favoritos" title="Mis Favoritos"> Mis favoritos </a>
     </div>
-    {userId ? <PropertiesList client:load userId={userId} /> : null}
+    <PropertiesList client:load userId={userId} />
   </Main>
 </Layout>
