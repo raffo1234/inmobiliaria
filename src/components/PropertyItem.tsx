@@ -4,6 +4,9 @@ import { Icon } from "@iconify/react";
 import { supabase } from "../lib/supabase";
 import { useEffect, useState } from "react";
 import useSWR, { mutate } from "swr";
+import { Modal } from "antd";
+import logo from "@assets/logo.png";
+import { signIn } from "auth-astro/client";
 
 interface Property {
   id: string;
@@ -48,8 +51,16 @@ export default function PropertyItem({
   setPropertyValue: (property: Property) => void;
 }) {
   const { id, title, user } = property;
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [likeByUser, setLikeByUser] = useState<boolean>(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const hideModal = () => {
+    setIsModalOpen(false);
+  };
 
   const { data: count, isLoading } = useSWR(`${userId}-${id}-properties`, () =>
     fetcher(id, userId)
@@ -68,11 +79,15 @@ export default function PropertyItem({
     const newTitle = property.title;
     const app = document.getElementById("app") as HTMLElement;
     app.classList.add("overflow-hidden");
-
     window.history.pushState(newState, newTitle, newUrl);
   };
 
   const handleLike = async (id: string) => {
+    if (!userId) {
+      showModal();
+      return;
+    }
+
     if (count === 0) {
       await supabase.from("like").insert([
         {
@@ -88,7 +103,7 @@ export default function PropertyItem({
         .delete()
         .eq("property_id", id)
         .eq("user_id", userId);
-      await mutate(`${userId}-${id}-properties`, `${userId}-${id}-properties`);
+      await mutate(`${userId}-${id}-properties`, null);
       setLikeByUser(false);
     }
   };
@@ -105,47 +120,84 @@ export default function PropertyItem({
     );
 
   return (
-    <article key={id} className="max-w-[422px]">
-      <div className="relative mb-4">
-        <a
-          href={`/inmueble/${id}`}
-          onClick={(event) => onDisplayPropertyDetail(event, property)}
-        >
-          <img
-            src={hero.src}
-            className="w-full aspect-[5/4] object-cover rounded-lg"
-            alt={title}
-            title={title}
-          />
-        </a>
-        <div className="absolute right-0 top-0 p-4 gap-2 flex items-center">
-          {/* <button className="p-3 hover:text-gray-500 bg-white rounded-full transition-colors duration-700 ease-in-out">
+    <>
+      <article key={id} className="max-w-[422px]">
+        <div className="relative mb-4">
+          <a
+            href={`/inmueble/${id}`}
+            onClick={(event) => onDisplayPropertyDetail(event, property)}
+          >
+            <img
+              src={hero.src}
+              className="w-full aspect-[5/4] object-cover rounded-lg"
+              alt={title}
+              title={title}
+            />
+          </a>
+          <div className="absolute right-0 top-0 p-4 gap-2 flex items-center">
+            {/* <button className="p-3 hover:text-gray-500 bg-white rounded-full transition-colors duration-700 ease-in-out">
             <Icon icon="material-symbols:bookmark" className="text-2xl" />
           </button> */}
+            <button
+              onClick={() => handleLike(id)}
+              className={`${!!userId && likeByUser ? "bg-cyan-50 text-cyan-300" : "bg-white hover:text-gray-500"} p-3  rounded-full transition-colors duration-700`}
+            >
+              {/* {isLoading} */}
+              <Icon icon="solar:heart-bold" className="text-2xl" />
+            </button>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 mb-2">
+          <a href={`/user/${user.id}`} title={user.name}>
+            <img
+              src={user.image_url}
+              className="w-8 h-8 object-cover rounded-full"
+              alt={user.name}
+              title={user.name}
+            />
+          </a>
+          <div className="flex items-center justify-between w-full gap-4">
+            <h2>
+              <a
+                title={title}
+                href={`/inmueble/${id}`}
+                className="font-semibold"
+              >
+                {title}
+              </a>
+            </h2>
+            <div className="flex items-center gap-1">
+              <Icon icon="solar:heart-bold" className="text-lg text-gray-400" />
+              <span className="text-gray-600 text-xs font-semibold min-w-2">
+                {count}
+              </span>
+            </div>
+          </div>
+        </div>
+      </article>
+      <Modal
+        open={isModalOpen}
+        onCancel={hideModal}
+        destroyOnClose
+        footer={null}
+      >
+        <div className="py-8 p-6">
+          <img
+            src={logo.src}
+            className="w-20 object-cover object-top mb-8"
+            alt="Inmobiliaria"
+          />
+          <h3 className="text-xl mb-10">
+            Para indicar que te gusta, inicia sesion.
+          </h3>
           <button
-            onClick={() => handleLike(id)}
-            className={`${likeByUser ? "bg-cyan-50 text-cyan-300" : "bg-white hover:text-gray-500"} p-3  rounded-full transition-colors duration-700`}
+            onClick={() => signIn("google")}
+            className="text-lg block w-full px-6 pb-4 pt-3 bg-black text-white rounded-full transition-colors duration-700 hover:bg-gray-800 active:bg-gray-900"
           >
-            {isLoading}
-            <Icon icon="solar:heart-bold" className="text-2xl" />
+            Iniciar Sesión
           </button>
         </div>
-      </div>
-      <div className="flex items-center gap-2 mb-2">
-        <a href={`/user/${user.id}`} title={user.name}>
-          <img
-            src={user.image_url}
-            className="w-8 h-8 object-cover rounded-full"
-            alt={user.name}
-            title={user.name}
-          />
-        </a>
-        <h2>
-          <a title={title} href={`/inmueble/${id}`} className="font-semibold">
-            {title}
-          </a>
-        </h2>
-      </div>
-    </article>
+      </Modal>
+    </>
   );
 }
