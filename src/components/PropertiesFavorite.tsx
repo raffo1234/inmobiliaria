@@ -1,13 +1,12 @@
 import { supabase } from "../lib/supabase";
 import useSWR from "swr";
-import { Button } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Property from "./Property";
-import { CloseOutlined } from "@ant-design/icons";
 import PropertyItem from "./PropertyItem";
 import { PropertyState } from "@types/propertyState";
 import PropertyDetail from "./PropertyDetail";
 import PropertiesGrid from "./PropertiesGrid";
+import { Icon } from "@iconify/react";
 
 type Property = {
   id: string;
@@ -20,7 +19,7 @@ type Property = {
 };
 
 const fetcher = async (userId: string) => {
-  const { data, error } = await supabase
+  let query = supabase
     .from("property")
     .select(
       `id,
@@ -35,8 +34,14 @@ const fetcher = async (userId: string) => {
       )`
     )
     .eq("state", PropertyState.ACTIVE)
-    .eq("like.user_id", userId)
+
     .order("created_at", { ascending: false });
+
+  if (userId) {
+    query = query.eq("user_id", userId);
+  }
+
+  const { data, error } = await query;
 
   if (error) throw error;
   return data;
@@ -49,6 +54,23 @@ export default function PropertiesFavorite({ userId }: { userId: string }) {
   const { data: properties = [] } = useSWR(`${userId}-likes-properties`, () =>
     fetcher(userId)
   );
+
+  if (properties.length === 0) {
+    return (
+      <div className="max-w-md mx-auto items-center flex flex-col gap-10">
+        <div className="flex justify-center w-[300px] rounded-full items-center mx-auto bg-cyan-500 aspect-square bg-opacity-5">
+          <Icon
+            icon="material-symbols-light:bookmark-heart-outline"
+            className="text-[200px] text-cyan-500"
+          />
+        </div>
+        <h1 className="text-center">
+          Tu próxima propiedad ideal podría estar esperándote. Explora nuestra
+          selección y guarda las que capturen tu interés.
+        </h1>
+      </div>
+    );
+  }
 
   return (
     <>
