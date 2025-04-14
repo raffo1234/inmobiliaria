@@ -97,10 +97,15 @@ export default function PropertyItem({
     if (count) setLikeByUser(count > 0);
   }, [count]);
 
-  if (isLoading) return <Skeleton />;
+  if (isLoading)
+    return (
+      <div className="max-w-[422px]">
+        <Skeleton />
+      </div>
+    );
 
   return (
-    <article key={id}>
+    <article key={id} className="max-w-[422px]">
       <div className="relative mb-4">
         <a
           href={`/inmueble/${id}`}
