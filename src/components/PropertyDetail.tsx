@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Property from "./Property";
 import { Button } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
@@ -6,6 +6,7 @@ import { CloseOutlined } from "@ant-design/icons";
 interface Property {
   id: string;
   title: string;
+  description: string;
   like?: {
     user_id: string;
   }[];
@@ -29,8 +30,6 @@ export default function PropertyDetail({
   setPropertyValue: (property: Property | undefined) => void;
   propertyValue: Property;
 }) {
-  const [currentHref, setCurrentHref] = useState("");
-
   const onClose = (event?: React.MouseEvent<HTMLElement>) => {
     if (event) {
       if (event.target === event.currentTarget) {
@@ -43,15 +42,10 @@ export default function PropertyDetail({
 
   const handleClose = () => {
     setPropertyValue(undefined);
-
-    const newUrl = currentHref;
-    const newState = { page: "Home" };
-    const newTitle = "Inmobiliaria";
     const app = document.getElementById("app") as HTMLElement;
     app.classList.remove("overflow-hidden");
     setShowDetail(false);
-
-    window.history.pushState(newState, newTitle, newUrl);
+    window.history.go(-1);
   };
 
   const handleEscape = (event: KeyboardEvent) => {
@@ -71,10 +65,6 @@ export default function PropertyDetail({
       });
     };
   }, [showDetail]);
-
-  useEffect(() => {
-    setCurrentHref(window.location.href);
-  }, []);
 
   return showDetail ? (
     <div

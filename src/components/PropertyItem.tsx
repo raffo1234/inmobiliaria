@@ -73,6 +73,7 @@ export default function PropertyItem({
 }) {
   const { id, title, user } = property;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
 
   const keyByUser = `${userId}-${id}-user-like`;
   const keyByProperty = `${userId}-${id}-property-like`;
@@ -122,6 +123,8 @@ export default function PropertyItem({
       return;
     }
 
+    setIsClicked(true);
+
     if (countByUser === 0) {
       await supabase.from("like").insert([
         {
@@ -135,6 +138,8 @@ export default function PropertyItem({
       if (!lastSlashValue.includes("favorito")) {
         await mutate(`${userId}-likes-properties`, null);
       }
+
+      setIsClicked(false);
     } else {
       await supabase
         .from("like")
@@ -147,6 +152,8 @@ export default function PropertyItem({
       if (!lastSlashValue.includes("favorito")) {
         await mutate(`${userId}-likes-properties`, null);
       }
+
+      setIsClicked(false);
     }
   };
 
@@ -170,10 +177,10 @@ export default function PropertyItem({
           </button> */}
             <button
               onClick={() => handleLike(id)}
-              disabled={isValidatingByUser}
+              disabled={isClicked && isValidatingByUser}
               className={`${countByUser ? "bg-cyan-50 text-cyan-300" : "bg-white hover:text-gray-500"} p-3  rounded-full transition-colors duration-500`}
             >
-              {isValidatingByUser ? (
+              {isClicked && isValidatingByUser ? (
                 <Icon
                   icon="line-md:loading-twotone-loop"
                   className="text-2xl"
