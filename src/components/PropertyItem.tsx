@@ -88,6 +88,7 @@ export default function PropertyItem({
   const {
     data: countByUser,
     isLoading: isLoadingByUser,
+    isValidating: isValidatingByUser,
     mutate: mutateByUser,
   } = useSWR(keyByUser, () => (userId ? fetcherByUser(id, userId) : null));
 
@@ -169,10 +170,14 @@ export default function PropertyItem({
           </button> */}
             <button
               onClick={() => handleLike(id)}
+              disabled={isValidatingByUser}
               className={`${countByUser ? "bg-cyan-50 text-cyan-300" : "bg-white hover:text-gray-500"} p-3  rounded-full transition-colors duration-500`}
             >
-              {isLoadingByUser ? (
-                "..."
+              {isValidatingByUser ? (
+                <Icon
+                  icon="line-md:loading-twotone-loop"
+                  className="text-2xl"
+                />
               ) : (
                 <Icon icon="solar:heart-bold" className="text-2xl" />
               )}
