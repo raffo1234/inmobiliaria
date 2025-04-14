@@ -2,8 +2,8 @@ import { Skeleton } from "antd";
 import hero from "@assets/hero.jpg";
 import { Icon } from "@iconify/react";
 import { supabase } from "../lib/supabase";
-import { useEffect, useState } from "react";
-import useSWR, { mutate } from "swr";
+import { useState } from "react";
+import useSWR from "swr";
 import { Modal } from "antd";
 import logo from "@assets/logo.png";
 import { signIn } from "auth-astro/client";
@@ -23,20 +23,40 @@ interface Property {
   };
 }
 
-const fetcher = async (id: string, userId: string) => {
-  let query = supabase
+const fetcherByUser = async (id: string, userId: string) => {
+  const { count, error } = await supabase
     .from("like")
     .select("user_id", { count: "exact" })
-    .eq("property_id", id);
-
-  if (userId) {
-    query = query.eq("user_id", userId);
-  }
-
-  const { count, error } = await query;
+    .eq("property_id", id)
+    .eq("user_id", userId);
 
   if (error) throw error;
   return count;
+};
+
+const fetcherByProperty = async (id: string) => {
+  const { count, error } = await supabase
+    .from("like")
+    .select("property_id", { count: "exact" })
+    .eq("property_id", id);
+
+  if (error) throw error;
+  return count;
+};
+
+const PropertyImage = ({ src, alt }: { src: string; alt: string }) => {
+  const [loading, setLoading] = useState(true);
+
+  return (
+    <img
+      src={src}
+      onLoad={() => setLoading(false)}
+      alt={alt}
+      title={alt}
+      loading="lazy"
+      className={`transition-opacity w-full aspect-[5/4] object-cover rounded-lg ${loading ? "opacity-0" : "opacity-100"}`}
+    />
+  );
 };
 
 export default function PropertyItem({
@@ -52,7 +72,9 @@ export default function PropertyItem({
 }) {
   const { id, title, user } = property;
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [likeByUser, setLikeByUser] = useState<boolean>(false);
+
+  const keyByUser = `${userId}-${id}-user-like`;
+  const keyByProperty = `${userId}-${id}-property-like`;
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -62,9 +84,17 @@ export default function PropertyItem({
     setIsModalOpen(false);
   };
 
-  const { data: count, isLoading } = useSWR(`${userId}-${id}-properties`, () =>
-    fetcher(id, userId)
-  );
+  const {
+    data: countByUser,
+    isLoading: isLoadingByUser,
+    mutate: mutateByUser,
+  } = useSWR(keyByUser, () => (userId ? fetcherByUser(id, userId) : null));
+
+  const {
+    data: countByProperty,
+    isLoading: isLoadingByProperty,
+    mutate: mutateByProperty,
+  } = useSWR(keyByProperty, () => fetcherByProperty(id));
 
   const onDisplayPropertyDetail = (
     event: React.MouseEvent<HTMLAnchorElement>,
@@ -88,51 +118,39 @@ export default function PropertyItem({
       return;
     }
 
-    if (count === 0) {
+    if (countByUser === 0) {
       await supabase.from("like").insert([
         {
           property_id: id,
           user_id: userId,
         },
       ]);
-      await mutate(`${userId}-${id}-properties`, null);
-      setLikeByUser(true);
+      await mutateByUser();
+      await mutateByProperty();
     } else {
       await supabase
         .from("like")
         .delete()
         .eq("property_id", id)
         .eq("user_id", userId);
-      await mutate(`${userId}-${id}-properties`, null);
-      setLikeByUser(false);
+      await mutateByUser();
+      await mutateByProperty();
     }
   };
 
-  useEffect(() => {
-    if (count) setLikeByUser(count > 0);
-  }, [count]);
-
-  if (isLoading)
-    return (
-      <div className="max-w-[422px]">
-        <Skeleton />
-      </div>
-    );
+  if (isLoadingByUser || isLoadingByProperty) {
+    return <Skeleton className="xl:max-w-[422px]" />;
+  }
 
   return (
     <>
-      <article key={id} className="max-w-[422px]">
+      <article key={id} className="xl:max-w-[422px]">
         <div className="relative mb-4">
           <a
             href={`/inmueble/${id}`}
             onClick={(event) => onDisplayPropertyDetail(event, property)}
           >
-            <img
-              src={hero.src}
-              className="w-full aspect-[5/4] object-cover rounded-lg"
-              alt={title}
-              title={title}
-            />
+            <PropertyImage src={hero.src} alt={title} />
           </a>
           <div className="absolute right-0 top-0 p-4 gap-2 flex items-center">
             {/* <button className="p-3 hover:text-gray-500 bg-white rounded-full transition-colors duration-700 ease-in-out">
@@ -140,10 +158,13 @@ export default function PropertyItem({
           </button> */}
             <button
               onClick={() => handleLike(id)}
-              className={`${!!userId && likeByUser ? "bg-cyan-50 text-cyan-300" : "bg-white hover:text-gray-500"} p-3  rounded-full transition-colors duration-700`}
+              className={`${countByUser ? "bg-cyan-50 text-cyan-300" : "bg-white hover:text-gray-500"} p-3  rounded-full transition-colors duration-500`}
             >
-              {/* {isLoading} */}
-              <Icon icon="solar:heart-bold" className="text-2xl" />
+              {isLoadingByUser ? (
+                "..."
+              ) : (
+                <Icon icon="solar:heart-bold" className="text-2xl" />
+              )}
             </button>
           </div>
         </div>
@@ -169,7 +190,7 @@ export default function PropertyItem({
             <div className="flex items-center gap-1">
               <Icon icon="solar:heart-bold" className="text-lg text-gray-400" />
               <span className="text-gray-600 text-xs font-semibold min-w-2">
-                {count}
+                {countByProperty}
               </span>
             </div>
           </div>

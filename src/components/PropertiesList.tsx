@@ -41,7 +41,7 @@ type Property = {
 export default function PropertiesList({ userId }: { userId: string }) {
   const [showDetail, setShowDetail] = useState(false);
   const [propertyValue, setPropertyValue] = useState<Property>();
-  const { data: properties = [] } = useSWR("properties", fetcher);
+  const { data: properties = [], isLoading } = useSWR("properties", fetcher);
 
   return (
     <>
