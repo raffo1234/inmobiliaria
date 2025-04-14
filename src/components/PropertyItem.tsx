@@ -155,7 +155,7 @@ export default function PropertyItem({
 
   return (
     <>
-      <article key={id} className="xl:max-w-[422px]">
+      <article key={id} className="self-end">
         <div className="relative mb-4">
           <a
             href={`/inmueble/${id}`}
