@@ -18,14 +18,14 @@ export async function syncUserWithDb(context: APIContext ): Promise<SyncResult |
     console.log('syncUserWithDb: No active session found.');
     return null;
   }
- 
+  
   const { name, email, image } = session.user;
   
   if (!email) {
     console.error('syncUserWithDb: User email not found in session.');
     return { success: false, message: 'User email missing in session.', user: session.user };
   }
-  
+
   try {
     console.info(`syncUserWithDb: Checking/syncing user ${email}...`);
 
@@ -33,8 +33,7 @@ export async function syncUserWithDb(context: APIContext ): Promise<SyncResult |
     .from("user")
     .select()
     .eq("email", email).single();
-    
-    context.locals.currentUserId = existingUser.id
+     
 
     if (!existingUser) {
       try {
@@ -47,15 +46,14 @@ export async function syncUserWithDb(context: APIContext ): Promise<SyncResult |
         }]).select().single();
 
         context.locals.currentUserId = createdUser.id
-      
-      console.info(`syncUserWithDb: User ${createdUser.email} created successfully.`);
-    } catch (error) {
-        console.error('syncUserWithDb: Error creating user:', error);
-        return { success: false, message: 'User creation failed.', user: session.user, error: error };
+        console.info(`syncUserWithDb: User ${createdUser.email} created successfully.`);
+        
+      } catch (error) {
+          console.error('syncUserWithDb: Error creating user:', error);
+          return { success: false, message: 'User creation failed.', user: session.user, error: error };
       }
-      
-      return { success: true, message: 'User created successfully.', user: session.user };
     } else {
+      context.locals.currentUserId = existingUser.id
       console.log(`syncUserWithDb: User ${email} already exists.`);
       return { success: true, message: 'User already exists.', user: session.user };
     }

@@ -4,9 +4,9 @@ import PropertiesList from "@components/PropertiesList";
 import Header from "@components/Header.astro";
 import SearchForm from "@components/SearchForm";
 import Main from "@components/Main.astro";
-import { SignIn, SignOut } from "auth-astro/components";
 
 const { currentUserId: userId } = Astro.locals;
+console.log({ userId });
 ---
 
 <Layout>
