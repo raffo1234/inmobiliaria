@@ -31,9 +31,13 @@ const fetcherByProperty = async (propertyId: string) => {
 export default function Like({
   propertyId,
   userId,
+  size = "medium",
+  hasCounter = false,
 }: {
   propertyId: string;
-  userId: string;
+  userId?: string;
+  size?: "medium" | "small";
+  hasCounter?: boolean;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const keyByUser = `${userId}-${propertyId}-user-like`;
@@ -102,13 +106,24 @@ export default function Like({
       <button
         onClick={() => handleLike(propertyId)}
         disabled={isValidatingByUser}
-        className={`${countByUser ? "bg-cyan-50 text-cyan-300" : "bg-white hover:text-gray-500"} ${isLoadingByUser ? "opacity-0" : "opacity-100"} transition-all p-3 rounded-full duration-500`}
+        className={`${size === "medium" && countByUser ? "bg-cyan-50 text-cyan-300" : "bg-gray-50 hover:text-gray-500"} 
+          ${isLoadingByUser ? "opacity-0" : "opacity-100"}          
+          transition-all p-3 rounded-full duration-500 flex gap-1 items-center`}
       >
         {isValidatingByUser ? (
-          <Icon icon="line-md:loading-twotone-loop" className="text-2xl" />
+          <Icon
+            icon="line-md:loading-twotone-loop"
+            className={`${size === "small" ? "text-lg text-gray-500" : "text-2xl"}`}
+          />
         ) : (
-          <Icon icon="solar:heart-bold" className="text-2xl" />
+          <Icon
+            icon="solar:heart-bold"
+            className={`${size === "small" ? "text-lg text-gray-500" : "text-2xl"}`}
+          />
         )}
+        {hasCounter ? (
+          <span className="text-xs min-w-2 block">{countByProperty}</span>
+        ) : null}
       </button>
       <Modal
         open={isModalOpen}

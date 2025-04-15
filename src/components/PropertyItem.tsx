@@ -100,7 +100,7 @@ export default function PropertyItem({
             </a>
           </h2>
           <div className="flex items-center">
-            <Like propertyId={id} userId={userId} />
+            <Like propertyId={id} userId={userId} size="small" hasCounter />
           </div>
         </div>
       </div>

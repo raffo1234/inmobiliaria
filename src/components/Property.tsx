@@ -6,6 +6,7 @@ import { Carousel } from "antd";
 import { PropertyPhase } from "@types/propertyState";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
+import Like from "./Like";
 
 const MainImage = ({ src, alt }: { src: string; alt: string }) => {
   const [loading, setLoading] = useState(false);
@@ -45,14 +46,23 @@ type Property = {
 };
 
 export default function Property({
+  userId,
   property,
 }: {
   property: Property | undefined;
+  userId: string;
 }) {
   if (!property) return null;
 
-  const { title, bathroom_count, bedroom_count, phase, delivery_at, price } =
-    property;
+  const {
+    id,
+    title,
+    bathroom_count,
+    bedroom_count,
+    phase,
+    delivery_at,
+    price,
+  } = property;
 
   return (
     <>
@@ -60,7 +70,7 @@ export default function Property({
         <div className="flex items-center justify-between w-full mb-6">
           <h2 className="text-2xl font-semibold">{title}</h2>
           <div className="flex gap-3">
-            <button type="button">Heart</button>
+            <Like propertyId={id} userId={userId} />
             <button
               type="button"
               className="block px-6 py-2 bg-black text-white rounded-full transition-colors duration-700 hover:bg-gray-800 active:bg-gray-900"

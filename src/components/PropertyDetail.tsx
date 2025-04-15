@@ -32,12 +32,14 @@ export default function PropertyDetail({
   setShowDetail,
   propertyValue,
   currentHref,
+  userId,
 }: {
   showDetail: boolean;
   setShowDetail: (value: boolean) => void;
   setPropertyValue: (property: Property | undefined) => void;
   propertyValue: Property;
-  currentHref: string;
+    currentHref: string;
+    userId: string;
 }) {
   const onClose = (event?: React.MouseEvent<HTMLElement>) => {
     if (!showDetail) return;
@@ -86,7 +88,7 @@ export default function PropertyDetail({
     >
       <div className="max-w-[1816px] py-20 px-4 animate-slideUp cursor-default mx-auto relative delay-50 transform-all lg:rounded-lg bg-white min-h-lvh">
         <div className="mx-auto max-w-[1024px] w-full">
-          <Property property={propertyValue} />
+          <Property property={propertyValue} userId={userId} />
         </div>
         <Button
           className="absolute right-6 top-6 rounded-full w-12 h-12 flex justify-center items-center"

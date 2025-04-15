@@ -81,6 +81,7 @@ export default function PropertiesFavorite({ userId }: { userId: string }) {
     <>
       {propertyValue ? (
         <PropertyDetail
+          userId={userId}
           showDetail={showDetail}
           setShowDetail={setShowDetail}
           propertyValue={propertyValue}

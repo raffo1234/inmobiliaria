@@ -5,6 +5,8 @@ import { supabase } from "../../lib/supabase";
 import Property from "../../components/Property";
 import Main from "@components/Main.astro";
 
+const { currentUserId: userId } = Astro.locals;
+
 const id = Astro.params.id;
 export async function getStaticPaths() {
   const { data: properties, error } = await supabase
@@ -40,6 +42,6 @@ if (!id || !property) {
 <Layout>
   <Header />
   <Main>
-    <Property property={property} client:only />
+    <Property property={property} userId={userId} client:only />
   </Main>
 </Layout>
