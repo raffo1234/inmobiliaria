@@ -49,7 +49,7 @@ export default function PropertiesList({ userId }: { userId: string }) {
   const [showDetail, setShowDetail] = useState(false);
   const [currentHref, setCurrentHref] = useState("");
   const [propertyValue, setPropertyValue] = useState<Property>();
-  const { data: properties = [] } = useSWR("properties", fetcher);
+  const { data: properties = [], isLoading } = useSWR("properties", fetcher);
 
   useEffect(() => {
     setCurrentHref(window.location.href);
@@ -75,6 +75,7 @@ export default function PropertiesList({ userId }: { userId: string }) {
               property={property}
               setShowDetail={setShowDetail}
               setPropertyValue={setPropertyValue}
+              isLoading={isLoading}
             />
           );
         })}
