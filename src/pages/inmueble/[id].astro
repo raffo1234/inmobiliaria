@@ -25,7 +25,34 @@ export async function getStaticPaths() {
 
 const { data: property, error } = await supabase
   .from("property")
-  .select("*")
+  .select(
+    `
+      id,
+      title,
+      description,
+      state,
+      user_id,
+      size,
+      delivery_at,
+      bathroom_count,
+      phase,
+      price,
+      bedroom_count,
+      company_id,
+      user!property_user_id_fkey (
+        id,
+        email,
+        name,
+        image_url
+      ),
+      company!property_company_id_fkey (
+        id,
+        name,
+        image_url,
+        logo_url
+      )
+    `
+  )
   .eq("id", id)
   .single();
 

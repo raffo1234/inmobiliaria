@@ -31,6 +31,13 @@ type Typology = {
   bedroom_count: string;
 };
 
+type Company = {
+  id: string;
+  name: string;
+  logo_url: string;
+  image_url: string;
+};
+
 type Property = {
   id: string;
   title: string;
@@ -43,6 +50,7 @@ type Property = {
   typologies?: Typology[];
   delivery_at: string;
   phase: string;
+  company: Company;
 };
 
 export default function Property({
@@ -62,13 +70,19 @@ export default function Property({
     phase,
     delivery_at,
     price,
+    company,
   } = property;
 
   return (
     <>
       <div className="mx-auto max-w-[1250px] w-full mb-6">
         <div className="flex items-center justify-between w-full mb-6">
-          <h2 className="text-2xl font-semibold">{title}</h2>
+          <div className="flex items-center gap-2">
+            <a href={`/empresa/${company.id}`} title={company.name}>
+              <img src={company.logo_url} alt={company.name} className="w-28" />
+            </a>
+            <h2 className="text-2xl font-semibold">{title}</h2>
+          </div>
           <div className="flex gap-3">
             <Like propertyId={id} userId={userId} />
             <button
