@@ -57,14 +57,15 @@ const fetcher = async (searchTerms: string) => {
   return data;
 };
 
-export default function PropertiesFavorite({ userId }: { userId: string }) {
+export default function PropertiesResult({ userId }: { userId: string }) {
   const [showDetail, setShowDetail] = useState(false);
   const [currentHref, setCurrentHref] = useState("");
   const [propertyValue, setPropertyValue] = useState<Property>();
   const searchTerms = getLastSlashValueFromCurrentUrl() || "";
 
-  const { data: properties = [] } = useSWR(`${userId}-likes-properties`, () =>
-    fetcher(searchTerms)
+  const { data: properties = [] } = useSWR(
+    `${userId}-${searchTerms}-result-properties`,
+    () => fetcher(searchTerms)
   );
 
   useEffect(() => {

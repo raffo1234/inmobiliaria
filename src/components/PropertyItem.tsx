@@ -5,9 +5,6 @@ import Like from "./Like";
 interface Property {
   id: string;
   title: string;
-  like: {
-    user_id: string;
-  }[];
   user_id: string;
   company: {
     id: string;
