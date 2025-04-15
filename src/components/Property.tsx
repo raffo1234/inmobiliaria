@@ -7,6 +7,7 @@ import { PropertyPhase } from "@types/propertyState";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import Like from "./Like";
+import GetInTouch from "./GetInTouch";
 
 const MainImage = ({ src, alt }: { src: string; alt: string }) => {
   const [loading, setLoading] = useState(false);
@@ -85,12 +86,12 @@ export default function Property({
           </div>
           <div className="flex gap-3">
             <Like propertyId={id} userId={userId} />
-            <button
-              type="button"
-              className="block px-6 py-2 bg-black text-white rounded-full transition-colors duration-700 hover:bg-gray-800 active:bg-gray-900"
-            >
-              Contactar
-            </button>
+            <GetInTouch
+              propertyId={id}
+              companyName={company.name}
+              companyLogo={company.logo_url}
+              propertyTitle={property.title}
+            />
           </div>
         </div>
         <div className="lg:flex items-start gap-4">
