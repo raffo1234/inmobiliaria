@@ -18,26 +18,24 @@ const userId = Astro.locals.currentUserId;
       userId ? (
         <PropertiesFavorite client:load userId={userId} />
       ) : (
-        <>
-          <div class="max-w-md mx-auto items-center flex flex-col gap-10">
-            <div class="flex justify-center w-[300px] rounded-full items-center mx-auto bg-cyan-500 aspect-square bg-opacity-5">
-              <Icon
-                name="material-symbols-light:bookmark-heart-outline"
-                class="text-[200px] text-cyan-500"
-              />
-            </div>
-            <h1 class="text-center">
-              Necesitas iniciar sesión para poder ver tu lista de inmuebles
-              favoritos.
-            </h1>
-            <SignIn
-              class="block px-6 py-2 bg-black text-white rounded-full transition-colors duration-700 hover:bg-gray-800 active:bg-gray-900"
-              provider="google"
-            >
-              Iniciar sesión
-            </SignIn>
+        <div class="max-w-md mx-auto items-center flex flex-col gap-10">
+          <div class="flex justify-center w-[300px] rounded-full items-center mx-auto bg-cyan-500 aspect-square bg-opacity-5">
+            <Icon
+              name="material-symbols-light:bookmark-heart-outline"
+              class="text-[200px] text-cyan-500"
+            />
           </div>
-        </>
+          <h1 class="text-center">
+            Necesitas iniciar sesión para poder ver tu lista de inmuebles
+            favoritos.
+          </h1>
+          <SignIn
+            class="block px-6 py-2 bg-black text-white rounded-full transition-colors duration-700 hover:bg-gray-800 active:bg-gray-900"
+            provider="google"
+          >
+            Iniciar sesión
+          </SignIn>
+        </div>
       )
     }
   </Main>

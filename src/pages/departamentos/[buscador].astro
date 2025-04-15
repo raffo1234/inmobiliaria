@@ -4,6 +4,7 @@ import Layout from "@layouts/Layout.astro";
 import SearchForm from "@components/SearchForm";
 import PropertiesResult from "@components/PropertiesResult";
 import Main from "@components/Main.astro";
+import HightLightSelect from "@components/HighLightSelect";
 
 const userId = Astro.locals.currentUserId;
 ---
@@ -12,6 +13,7 @@ const userId = Astro.locals.currentUserId;
   <Header />
   <Main>
     <SearchForm client:load />
+    <HightLightSelect client:load />
     <PropertiesResult client:only userId={userId} />
   </Main>
 </Layout>

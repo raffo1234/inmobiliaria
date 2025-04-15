@@ -4,6 +4,7 @@ import PropertiesList from "@components/PropertiesList";
 import Header from "@components/Header.astro";
 import SearchForm from "@components/SearchForm";
 import Main from "@components/Main.astro";
+import HightLightSelect from "@components/HighLightSelect";
 
 const { currentUserId: userId } = Astro.locals;
 ---
@@ -20,9 +21,7 @@ const { currentUserId: userId } = Astro.locals;
       Explora estos <br /> inmuebles destacados
     </h2>
     <SearchForm client:load />
-    <div class="mb-8">
-      <a href="/inmuebles/favoritos" title="Mis Favoritos"> Mis favoritos </a>
-    </div>
+    <HightLightSelect client:load />
     <PropertiesList client:load userId={userId} />
   </Main>
 </Layout>

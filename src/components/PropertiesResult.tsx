@@ -66,11 +66,6 @@ export default function PropertiesFavorite({ userId }: { userId: string }) {
 
   return (
     <>
-      <div className="flex justify-end mb-8">
-        <a href="/inmuebles/favoritos" title="Mis Favoritos">
-          Mis favoritos
-        </a>
-      </div>
       {propertyValue ? (
         <PropertyDetail
           userId={userId}
