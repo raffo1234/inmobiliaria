@@ -2,7 +2,6 @@ import { Skeleton } from "antd";
 import hero from "@assets/hero.jpg";
 import { useState } from "react";
 import Like from "./Like";
-
 interface Property {
   id: string;
   title: string;
@@ -10,6 +9,11 @@ interface Property {
     user_id: string;
   }[];
   user_id: string;
+  company: {
+    id: string;
+    name: string;
+    logo_url: string;
+  };
   user: {
     id: string;
     email: string;
@@ -46,7 +50,7 @@ export default function PropertyItem({
   setPropertyValue: (property: Property) => void;
   isLoading: boolean;
 }) {
-  const { id, title, user } = property;
+  const { id, title, company } = property;
 
   const onDisplayPropertyDetail = (
     event: React.MouseEvent<HTMLAnchorElement>,
@@ -85,12 +89,12 @@ export default function PropertyItem({
         </div>
       </div>
       <div className="flex items-center gap-2 mb-2">
-        <a href={`/user/${user.id}`} title={user.name}>
+        <a href={`/empresa/${company.id}`} title={company.name}>
           <img
-            src={user.image_url}
-            className="w-8 h-8 object-cover rounded-full"
-            alt={user.name}
-            title={user.name}
+            src={company.logo_url}
+            className="w-6 h-6 object-cover rounded-full"
+            alt={company.name}
+            title={company.name}
           />
         </a>
         <div className="flex items-center justify-between w-full gap-4">

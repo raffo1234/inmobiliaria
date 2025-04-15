@@ -36,6 +36,12 @@ const fetcher = async (userId: string) => {
           email,
           name,
           image_url
+        ),
+        company!property_company_id_fkey (
+          id,
+          name,
+          image_url,
+          logo_url
         )
       )
     `

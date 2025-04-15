@@ -7,9 +7,8 @@ import PropertyItem from "./PropertyItem";
 import PropertyDetail from "./PropertyDetail";
 import PropertiesGrid from "./PropertiesGrid";
 
-const fetcher = async () => {
+const fetcher = async (companyId: string) => {
   const { data, error } = await supabase
-
     .from("property")
     .select(
       `
@@ -34,11 +33,12 @@ const fetcher = async () => {
       company!property_company_id_fkey (
         id,
         name,
-        image_url,
-        logo_url
+        logo_url,
+        image_url
       )
     `
     )
+    .eq("company_id", companyId)
     .eq("state", PropertyState.ACTIVE)
     .order("created_at", { ascending: false });
 
@@ -52,11 +52,20 @@ type Property = {
   description: string;
 };
 
-export default function PropertiesList({ userId }: { userId: string }) {
+export default function PropertiesListByCompany({
+  userId,
+  companyId,
+}: {
+  userId: string;
+  companyId: string;
+}) {
   const [showDetail, setShowDetail] = useState(false);
   const [currentHref, setCurrentHref] = useState("");
   const [propertyValue, setPropertyValue] = useState<Property>();
-  const { data: properties = [], isLoading } = useSWR("properties", fetcher);
+  const { data: properties = [], isLoading } = useSWR(
+    `${companyId}-company`,
+    () => fetcher(companyId)
+  );
 
   useEffect(() => {
     setCurrentHref(window.location.href);

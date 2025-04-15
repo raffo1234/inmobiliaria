@@ -16,16 +16,7 @@ type Property = {
 
 const columnsToSearch = ["title", "description", "location", "type"];
 
-const fetcher = async (searchTerms: string) => {
-  const orConditions = columnsToSearch
-    .map((column) => `${column}.ilike.%${searchTerms}%`)
-    .join(",");
-
-  const { data, error } = searchTerms
-    ? await supabase
-        .from("property")
-        .select(
-          `
+const query = `
           id,
           title,
           description,
@@ -35,15 +26,31 @@ const fetcher = async (searchTerms: string) => {
             email,
             name,
             image_url
+          ),
+          company!property_company_id_fkey (
+            id,
+            name,
+            image_url,
+            logo_url
           )
-        `
-        )
+        `;
+
+const fetcher = async (searchTerms: string) => {
+  const orConditions = columnsToSearch
+    .map((column) => `${column}.ilike.%${searchTerms}%`)
+    .join(",");
+
+  const { data, error } = searchTerms
+    ? await supabase
+        .from("property")
+        .select(query)
         .eq("state", PropertyState.ACTIVE)
         .or(orConditions)
         .order("created_at", { ascending: false })
     : await supabase
         .from("property")
-        .select("*")
+        .select(query)
+        .eq("state", PropertyState.ACTIVE)
         .order("created_at", { ascending: false });
 
   if (error) throw error;
