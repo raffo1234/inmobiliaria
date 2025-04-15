@@ -38,8 +38,8 @@ export default function PropertyDetail({
   setShowDetail: (value: boolean) => void;
   setPropertyValue: (property: Property | undefined) => void;
   propertyValue: Property;
-    currentHref: string;
-    userId: string;
+  currentHref: string;
+  userId: string;
 }) {
   const onClose = (event?: React.MouseEvent<HTMLElement>) => {
     if (!showDetail) return;
@@ -92,7 +92,7 @@ export default function PropertyDetail({
         </div>
         <Button
           className="absolute right-6 top-6 rounded-full w-12 h-12 flex justify-center items-center"
-          onClick={() => onClose()}
+          onClick={onClose}
         >
           <CloseOutlined className="text-xl" />
         </Button>

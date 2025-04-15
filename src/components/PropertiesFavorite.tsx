@@ -1,6 +1,6 @@
 import { supabase } from "../lib/supabase";
 import useSWR from "swr";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Property from "./Property";
 import PropertyItem from "./PropertyItem";
 import { PropertyState } from "@types/propertyState";
@@ -57,11 +57,16 @@ const fetcher = async (userId: string) => {
 export default function PropertiesFavorite({ userId }: { userId: string }) {
   const [showDetail, setShowDetail] = useState(false);
   const [propertyValue, setPropertyValue] = useState<Property | undefined>();
+  const [currentHref, setCurrentHref] = useState("");
 
   const { data: likes = [], isLoading } = useSWR(
     `${userId}-likes-properties`,
     () => (userId ? fetcher(userId) : null)
   );
+
+  useEffect(() => {
+    setCurrentHref(window.location.href);
+  }, []);
 
   if (isLoading) return null;
 
@@ -98,6 +103,7 @@ export default function PropertiesFavorite({ userId }: { userId: string }) {
           setShowDetail={setShowDetail}
           propertyValue={propertyValue}
           setPropertyValue={setPropertyValue}
+          currentHref={currentHref}
         />
       ) : null}
       <PropertiesGrid>
