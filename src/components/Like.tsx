@@ -56,8 +56,12 @@ export default function Like({
     isValidating: isValidatingByUser,
     isLoading: isLoadingByUser,
     mutate: mutateByUser,
-  } = useSWR(keyByUser, () =>
-    userId ? fetcherByUser(propertyId, userId) : null
+  } = useSWR(
+    keyByUser,
+    () => (userId ? fetcherByUser(propertyId, userId) : null),
+    {
+      revalidateOnReconnect: false,
+    }
   );
 
   const { data: countByProperty, mutate: mutateByProperty } = useSWR(
