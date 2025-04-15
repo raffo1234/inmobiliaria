@@ -56,7 +56,7 @@ export default function PropertyTypologies({
           key={propertyId}
           className="grid gap-8"
           style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
           }}
         >
           {types.map(

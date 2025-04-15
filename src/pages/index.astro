@@ -14,15 +14,13 @@ console.log({ userId });
   <Main>
     <h2
       style={{
-        fontSize: "clamp(18px, 13vw + .5rem, 50px)",
+        fontSize: "clamp(16px, 6vw + .5rem, 50px)",
       }}
       class="mb-10 leading-relaxed w-full text-center"
     >
       Explora estos <br /> inmuebles destacados
     </h2>
-    <div class="mx-auto mb-32">
-      <SearchForm client:load />
-    </div>
+    <SearchForm client:load />
     <div class="mb-8">
       <a href="/inmuebles/favoritos" title="Mis Favoritos"> Mis favoritos </a>
     </div>

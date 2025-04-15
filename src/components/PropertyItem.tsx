@@ -210,8 +210,22 @@ export default function PropertyItem({
                 {title}
               </a>
             </h2>
-            <div className="flex items-center gap-1">
-              <Icon icon="solar:heart-bold" className="text-lg text-gray-400" />
+            <div className="flex items-center">
+              <button
+                type="button"
+                onClick={() => handleLike(id)}
+                disabled={isClicked && isValidatingByUser}
+                className={`${countByUser ? "text-cyan-300" : "text-gray-400"} text-lg p-1`}
+              >
+                {isClicked && isValidatingByUser ? (
+                  <Icon
+                    icon="line-md:loading-twotone-loop"
+                    className="text-md"
+                  />
+                ) : (
+                  <Icon icon="solar:heart-bold" className="text-lg" />
+                )}
+              </button>
               <span className="text-gray-600 text-xs font-semibold min-w-2">
                 {countByProperty}
               </span>

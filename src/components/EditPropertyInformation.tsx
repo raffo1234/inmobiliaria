@@ -20,7 +20,12 @@ type Inputs = {
   phase: boolean;
   type: boolean;
   area: boolean;
+  bathroom_count: string;
+  bedroom_count: string;
+  size: string;
+  price: string;
   created_at: string;
+  delivery_at: string;
 };
 
 async function fetcher(id: string) {
@@ -69,7 +74,7 @@ export default function EditPropertyInformation({
       await mutate("admin-properties");
       success();
       hideModal();
-      console.log(error);
+      console.error(error);
     } catch (error) {
       console.error(error);
       hideModal();
@@ -140,6 +145,78 @@ export default function EditPropertyInformation({
               type="text"
               id="title"
               {...register("title")}
+              required
+              className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="price"
+              className="block font-bold mb-2 font-manrope"
+            >
+              Precio
+            </label>
+            <input
+              type="text"
+              id="price"
+              {...register("price")}
+              required
+              className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <div>
+            <label htmlFor="size" className="block font-bold mb-2 font-manrope">
+              Tama&ntilde;o
+            </label>
+            <input
+              type="text"
+              id="size"
+              {...register("size")}
+              required
+              className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="bathroom_count"
+              className="block font-bold mb-2 font-manrope"
+            >
+              Dormitorios
+            </label>
+            <input
+              type="text"
+              id="bathroom_count"
+              {...register("bathroom_count")}
+              required
+              className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="bedroom_count"
+              className="block font-bold mb-2 font-manrope"
+            >
+              Ba&ntilde;os
+            </label>
+            <input
+              type="text"
+              id="bedroom_count"
+              {...register("bedroom_count")}
+              required
+              className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="delivery_at"
+              className="block font-bold mb-2 font-manrope"
+            >
+              Fecha de entrega
+            </label>
+            <input
+              type="date"
+              id="delivery_at"
+              {...register("delivery_at")}
               required
               className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
             />

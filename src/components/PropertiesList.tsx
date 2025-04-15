@@ -18,6 +18,12 @@ const fetcher = async () => {
       description,
       state,
       user_id,
+      size,
+      delivery_at,
+      bathroom_count,
+      phase,
+      price,
+      bedroom_count,
       user!property_user_id_fkey (
         id,
         email,

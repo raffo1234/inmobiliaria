@@ -34,7 +34,7 @@ function Typology({ typology }: { typology: Typology }) {
   return (
     <div key={id}>
       <div className="relative mb-4">
-        <button className="relative group">
+        <button className="relative group block">
           <img
             src={hero.src}
             className="block w-full aspect-[4/3] object-cover rounded-lg z-10 relative"
@@ -53,18 +53,16 @@ function Typology({ typology }: { typology: Typology }) {
           className="block absolute right-2 bottom-3.5 z-30 pb-1"
           size="large"
         >
-          Cotiza
+          Cotizar
         </Button>
       </div>
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-col gap-1">
+        <div className="flex items-center gap-2 mb-3">
           <div className="w-5 h-5 bg-black rounded-full"></div>
           <p>{name}</p>
         </div>
-        <div className="justify-center flex items-center gap-2 p-3 bg-orange-100 rounded-md">
-          <p>
-            Desde <strong>S/. {price}</strong>{" "}
-          </p>
+        <div className="justify-center flex items-center p-3 bg-orange-100 rounded-md">
+          <p className="font-semibold">S/. {price}</p>
         </div>
         <div
           className="grid gap-1 rounded-md"
@@ -72,23 +70,32 @@ function Typology({ typology }: { typology: Typology }) {
             gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
           }}
         >
-          <div className="flex items-center gap-2 p-2 bg-gray-100 rounded-md">
-            <Icon icon="mdi:floor-plan" className="text-2xl" />
-            <p>
+          <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md">
+            <Icon icon="mdi:floor-plan" className="text-2xl text-[#F3B408]" />
+            <p className="text-sm">
               {size} m<sup>2</sup>
             </p>
           </div>
-          <div className="flex items-center gap-2 p-2 bg-gray-100 rounded-md">
-            <Icon icon="lucide:bed-double" className="text-2xl" />
-            <p>{bedroom_count}</p>
+          <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md">
+            <Icon
+              icon="lucide:bed-double"
+              className="text-2xl text-[#476CF6]"
+            />
+            <p className="text-sm">{bedroom_count} Dorms.</p>
           </div>
-          <div className="flex items-center gap-2 p-2 bg-gray-100 rounded-md">
-            <Icon icon="lucide-lab:shower" className="text-2xl" />
-            <p>{bathroom_count}</p>
+          <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md">
+            <Icon
+              icon="lucide-lab:shower"
+              className="text-2xl text-[#2FCCCC]"
+            />
+            <p className="text-sm">{bathroom_count} Ba&ntilde;os</p>
           </div>
-          <div className="flex items-center gap-2 p-2 bg-gray-100 rounded-md">
-            <Icon icon="carbon:skill-level" className="text-xl" />
-            <p>Pisos: {floor}</p>
+          <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md">
+            <Icon
+              icon="carbon:skill-level"
+              className="text-xl text-[#8C75FF]"
+            />
+            <p className="text-sm">Pisos: {floor}</p>
           </div>
         </div>
       </div>

@@ -7,6 +7,13 @@ interface Property {
   id: string;
   title: string;
   description: string;
+  price: string;
+  bathroom_count: string;
+  bedroom_count: string;
+  state: string;
+  size: string;
+  delivery_at: string;
+  phase: string;
   like?: {
     user_id: string;
   }[];
@@ -75,9 +82,9 @@ export default function PropertyDetail({
   return showDetail ? (
     <div
       onClick={onClose}
-      className="px-4 bg-black fixed z-30 top-0 cursor-pointer left-0 w-full h-full overflow-auto p-6 bg-opacity-40"
+      className="bg-black fixed z-30 top-0 cursor-pointer left-0 w-full h-full overflow-auto lg:p-6 bg-opacity-40"
     >
-      <div className="max-w-[1816px] py-10 pb-20 px-4 animate-slideUp cursor-default mx-auto relative delay-50 transform-all rounded-lg bg-white min-h-lvh">
+      <div className="max-w-[1816px] py-20 px-4 animate-slideUp cursor-default mx-auto relative delay-50 transform-all lg:rounded-lg bg-white min-h-lvh">
         <div className="mx-auto max-w-[1024px] w-full">
           <Property property={propertyValue} />
         </div>
