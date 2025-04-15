@@ -1,6 +1,6 @@
 import { supabase } from "../lib/supabase";
 import useSWR from "swr";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Property from "./Property";
 import { PropertyState } from "@types/propertyState";
 import PropertyItem from "./PropertyItem";
@@ -36,12 +36,18 @@ const fetcher = async () => {
 type Property = {
   id: string;
   title: string;
+  description: string;
 };
 
 export default function PropertiesList({ userId }: { userId: string }) {
   const [showDetail, setShowDetail] = useState(false);
+  const [currentHref, setCurrentHref] = useState("");
   const [propertyValue, setPropertyValue] = useState<Property>();
   const { data: properties = [] } = useSWR("properties", fetcher);
+
+  useEffect(() => {
+    setCurrentHref(window.location.href);
+  }, []);
 
   return (
     <>
@@ -51,6 +57,7 @@ export default function PropertiesList({ userId }: { userId: string }) {
           setShowDetail={setShowDetail}
           propertyValue={propertyValue}
           setPropertyValue={setPropertyValue}
+          currentHref={currentHref}
         />
       ) : null}
       <PropertiesGrid>

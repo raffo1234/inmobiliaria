@@ -24,13 +24,17 @@ export default function PropertyDetail({
   setPropertyValue,
   setShowDetail,
   propertyValue,
+  currentHref,
 }: {
   showDetail: boolean;
   setShowDetail: (value: boolean) => void;
   setPropertyValue: (property: Property | undefined) => void;
   propertyValue: Property;
+  currentHref: string;
 }) {
   const onClose = (event?: React.MouseEvent<HTMLElement>) => {
+    if (!showDetail) return;
+
     if (event) {
       if (event.target === event.currentTarget) {
         handleClose();
@@ -41,11 +45,11 @@ export default function PropertyDetail({
   };
 
   const handleClose = () => {
+    setShowDetail(false);
     setPropertyValue(undefined);
     const app = document.getElementById("app") as HTMLElement;
     app.classList.remove("overflow-hidden");
-    setShowDetail(false);
-    window.history.go(-1);
+    window.history.pushState({}, "", currentHref);
   };
 
   const handleEscape = (event: KeyboardEvent) => {
@@ -56,11 +60,13 @@ export default function PropertyDetail({
 
   useEffect(() => {
     document.addEventListener("keyup", function (event) {
+      if (!showDetail) return;
       handleEscape(event);
     });
 
     return () => {
       document.removeEventListener("keyup", function (event) {
+        if (!showDetail) return;
         handleEscape(event);
       });
     };

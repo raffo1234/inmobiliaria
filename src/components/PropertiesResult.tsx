@@ -1,6 +1,6 @@
 import { supabase } from "../lib/supabase";
 import useSWR from "swr";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Property from "./Property";
 import PropertyItem from "./PropertyItem";
 import getLastSlashValueFromCurrentUrl from "src/utils/getLastSlashValueFromCurrentUrl";
@@ -11,6 +11,7 @@ import PropertiesGrid from "./PropertiesGrid";
 type Property = {
   id: string;
   title: string;
+  description: string;
 };
 
 const columnsToSearch = ["title", "description", "location", "type"];
@@ -51,12 +52,17 @@ const fetcher = async (searchTerms: string) => {
 
 export default function PropertiesFavorite({ userId }: { userId: string }) {
   const [showDetail, setShowDetail] = useState(false);
+  const [currentHref, setCurrentHref] = useState("");
   const [propertyValue, setPropertyValue] = useState<Property>();
   const searchTerms = getLastSlashValueFromCurrentUrl() || "";
 
   const { data: properties = [] } = useSWR(`${userId}-likes-properties`, () =>
     fetcher(searchTerms)
   );
+
+  useEffect(() => {
+    setCurrentHref(window.location.href);
+  }, []);
 
   return (
     <>
@@ -71,6 +77,7 @@ export default function PropertiesFavorite({ userId }: { userId: string }) {
           setShowDetail={setShowDetail}
           propertyValue={propertyValue}
           setPropertyValue={setPropertyValue}
+          currentHref={currentHref}
         />
       ) : null}
       <PropertiesGrid>
