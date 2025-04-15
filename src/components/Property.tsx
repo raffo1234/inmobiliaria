@@ -52,6 +52,7 @@ type Property = {
   delivery_at: string;
   phase: string;
   company: Company;
+  location: string;
 };
 
 export default function Property({
@@ -71,6 +72,7 @@ export default function Property({
     phase,
     delivery_at,
     price,
+    location,
     company,
   } = property;
 
@@ -82,7 +84,10 @@ export default function Property({
             <a href={`/empresa/${company.id}`} title={company.name}>
               <img src={company.logo_url} alt={company.name} className="w-28" />
             </a>
-            <h2 className="text-2xl font-semibold">{title}</h2>
+            <div>
+              <h2 className="text-2xl font-semibold mb-1">{title}</h2>
+              <p className="text-sm">{location}</p>
+            </div>
           </div>
           <div className="flex gap-3">
             <Like propertyId={id} userId={userId} />
