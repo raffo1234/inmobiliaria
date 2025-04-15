@@ -7,7 +7,6 @@ import { PropertyState } from "@types/propertyState";
 import PropertyDetail from "./PropertyDetail";
 import PropertiesGrid from "./PropertiesGrid";
 import { Icon } from "@iconify/react";
-import { Skeleton } from "antd";
 
 type Property = {
   id: string;
@@ -73,6 +72,13 @@ export default function PropertiesFavorite({ userId }: { userId: string }) {
           Tu próxima propiedad ideal podría estar esperándote. Explora nuestra
           selección y guarda las que capturen tu interés.
         </h1>
+        <a
+          href="/"
+          className="text-lg flex items-center gap-2 px-6 pb-4 pt-3 bg-black text-white rounded-full transition-colors duration-700 hover:bg-gray-800 active:bg-gray-900"
+        >
+          <Icon icon="octicon:home-24" fontSize={24}></Icon>
+          <span>Ir al Inicio</span>
+        </a>
       </div>
     );
   }
