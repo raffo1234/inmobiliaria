@@ -728,50 +728,10 @@
   resolved "https://registry.npmjs.org/@fontsource-variable/cinzel/-/cinzel-5.2.5.tgz"
   integrity sha512-h3IcwaWgbCeylbOMRYUmqrEGK2jluuY0VSqFsg3vzt2DKcyBDPcirkNegho1H+qfboEZnkJo0sjfQ+URIHdaVw==
 
-"@fontsource-variable/inter-tight@^5.2.5":
-  version "5.2.5"
-  resolved "https://registry.yarnpkg.com/@fontsource-variable/inter-tight/-/inter-tight-5.2.5.tgz#dc4b173d6376ec97080bf9f6cafc4a62682cfe24"
-  integrity sha512-f7WqR3BQ7YmWT+3i1bR1mqQ1FoIDCfmwKRTENEARFRtkhhR4JPxzF+rB3T75AjZ+dTjIx/nO47LOQDLFWAwJWA==
-
-"@fontsource-variable/inter@^5.2.5":
-  version "5.2.5"
-  resolved "https://registry.yarnpkg.com/@fontsource-variable/inter/-/inter-5.2.5.tgz#10f44952c460d8145fd9eac7133e0012ca17d252"
-  integrity sha512-TrWffUAFOnT8zroE9YmGybagoOgM/HjRqMQ8k9R0vVgXlnUh/vnpbGPAS/Caz1KIlOPnPGh6fvJbb7DHbFCncA==
-
-"@fontsource/bebas-neue@^5.2.5":
-  version "5.2.5"
-  resolved "https://registry.npmjs.org/@fontsource/bebas-neue/-/bebas-neue-5.2.5.tgz"
-  integrity sha512-9hZCl9BpuwrIPRgprS17WRHMRyqprFKxNEDOl98en9XzikR8GGXpeiLaKf5HpNm1NKnVo/EowTjcgcgrvW3h0w==
-
-"@fontsource/lobster@^5.1.1":
-  version "5.1.1"
-  resolved "https://registry.npmjs.org/@fontsource/lobster/-/lobster-5.1.1.tgz"
-  integrity sha512-NalmVtEQtEv80T658yl1T2CXf1+I8ypDSYz4bgxMdR9bMhVu2myguXY1exhBhPQ+iNKmxatoLuukJp/QgNaBOQ==
-
-"@fontsource/manrope@^5.1.1":
-  version "5.1.1"
-  resolved "https://registry.npmjs.org/@fontsource/manrope/-/manrope-5.1.1.tgz"
-  integrity sha512-5Ry4+6hRxdE59aTUGu5jH4nFsILKyIdqIs7AtCGMfkOwGRxph/fQyOmE9CdU+4vQgaJBopB6XtL6CRg55Ew8Ag==
-
-"@fontsource/mulish@^5.1.1":
-  version "5.1.1"
-  resolved "https://registry.npmjs.org/@fontsource/mulish/-/mulish-5.1.1.tgz"
-  integrity sha512-4zLYQ2iWugtXFSViBpJYfINhIK7s7xANtHgpkvK/UfY7aWYZUss0fLNk2GYW/KT1ohOzwfRd30oPKFNlrWrwVg==
-
 "@fontsource/nixie-one@^5.1.1":
   version "5.1.1"
   resolved "https://registry.npmjs.org/@fontsource/nixie-one/-/nixie-one-5.1.1.tgz"
   integrity sha512-W9DaArL3o9ftlvDI0xVgyLKnaqSsDMwuPmxjvuicYx0IYBxhSyPZsbtee5YAAZ+1hLMxbaUrZgkzyUF0NLSREg==
-
-"@fontsource/quicksand@^5.1.1":
-  version "5.1.1"
-  resolved "https://registry.npmjs.org/@fontsource/quicksand/-/quicksand-5.1.1.tgz"
-  integrity sha512-NnIL4yqpkn50GEpye7yztBmkkkQ5vjlVvMnjlkLQr/H8PXveUdaCdGIScd5yHvsc1qcTBwOaAtpz/YkDojwA1A==
-
-"@fontsource/raleway@^5.1.1":
-  version "5.1.1"
-  resolved "https://registry.npmjs.org/@fontsource/raleway/-/raleway-5.1.1.tgz"
-  integrity sha512-gCLRJLqdUYI7BDSzvoMFOSNvS4NXUIqSdzQ7PTEqoQDHWLTcoA0xhXgljivmVbJ2ziJq1NZO7tYpDLMlIFe66g==
 
 "@humanfs/core@^0.19.1":
   version "0.19.1"

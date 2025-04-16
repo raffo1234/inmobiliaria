@@ -3,15 +3,8 @@ export default {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
     fontFamily: {
-      quicksand: ["Quicksand", "sans-serif"],
-      raleway: ["Raleway", "sans-serif"],
-      manrope: ["Manrope", "sans-serif"],
       cinzel: ["Cinzel Variable", "sans-serif"],
-      "bebas-neue": ["Bebas Neue", "sans-serif"],
-      lobster: ["Lobster", "sans-serif"],
       "nixie-one": ["Nixie One", "sans-serif"],
-      inter: ["Inter Variable", "sans-serif"],
-      "inter-tight": ["Inter Tight Variable", "sans-serif"],
     },
     extend: {
       keyframes: {

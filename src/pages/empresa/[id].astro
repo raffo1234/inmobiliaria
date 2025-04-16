@@ -35,15 +35,13 @@ if (!id || !company) {
   <Header />
   <Main>
     <SearchForm client:load />
-    <div class="mb-6">
-      <a href={`/empresa/${id}`} title={company.name} class="inline-block">
-        <img
-          src={company.logo_url}
-          width="300px"
-          class="mb-4"
-          alt={company.name}
-        />
-      </a>
+    <div class="mb-5">
+      <img
+        src={company.logo_url}
+        width="300px"
+        class="mb-5"
+        alt={company.name}
+      />
       <h1 class="text-3xl font-semibold mb-4">
         {company.name}
       </h1>
