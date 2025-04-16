@@ -7,7 +7,6 @@ import "@fontsource-variable/cinzel";
 import "@fontsource/nixie-one";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/inter-tight";
-import { ClientRouter } from "astro:transitions";
 
 const { pageTitle } = Astro.props;
 ---
@@ -41,7 +40,6 @@ const { pageTitle } = Astro.props;
       {pageTitle ? " | " : ""}
       Rafael Meza | Web Developer
     </title>
-    <ClientRouter />
   </head>
   <body id="app" class="font-inter-tight">
     <slot />
