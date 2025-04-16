@@ -39,39 +39,51 @@ export default function UsersTable() {
   if (error) return null;
 
   return (
-    <>
+    <div className="max-w-[1200px] mx-auto w-full">
       {isLoading ? (
         <TableSkeleton cols={3} rows={3} />
       ) : (
-        <table className="w-full text-md mb-4">
-          <thead className="text-left uppercase font-normal text-xs">
-            <tr>
-              <th className="text-left p-3 px-5">Username</th>
-              <th className="text-left p-3 px-5">Email</th>
-              <th className="text-left p-3 px-5 w-50">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users?.map(({ username, email, id }, index) => {
-              return (
-                <tr
-                  key={id}
-                  className={`hover:bg-emerald-50  ${index % 2 === 0 ? "bg-gray-100" : ""}`}
-                >
-                  <td className="p-3 px-5">{username}</td>
-                  <td>{email}</td>
-                  <td className="text-center">
-                    <div className="flex gap-2">
-                      <EditUser userId={id} />
-                      <DeleteUser userId={id} />
-                    </div>
-                  </td>
+        <>
+          <div className="flex justify-end mb-2">
+            <a
+              href="/admin/users/add"
+              className="inline-block py-2 px-6 text-sm bg-cyan-100 border border-cyan-500 rounded-md"
+            >
+              Agregar
+            </a>
+          </div>
+          <div className="rounded-lg border border-gray-200">
+            <table className="w-full text-left rounded-lg">
+              <thead>
+                <tr>
+                  <th className="px-6 py-4 font-normal">Nombre</th>
+                  <th className="px-6 py-4 font-normal">Email</th>
+                  <th className="px-6 py-4 font-normal w-50">Acciones</th>
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
+              </thead>
+              <tbody>
+                {users?.map(({ name, email, id }) => {
+                  return (
+                    <tr
+                      key={id}
+                      className="transition-colors duration-300 hover:bg-gray-50 border-t border-gray-200"
+                    >
+                      <td className="px-6 py-4">{name}</td>
+                      <td className="px-6 py-4">{email}</td>
+                      <td className="px-6 py-4">
+                        <div className="flex gap-4 items-center">
+                          <EditUser userId={id} />
+                          <DeleteUser userId={id} />
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
-    </>
+    </div>
   );
 }

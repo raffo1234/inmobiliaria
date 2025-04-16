@@ -19,16 +19,27 @@ async function fetcher(userId: string) {
 type Inputs = {
   username: string;
   email: string;
+  name: string;
+  role_id: string;
+};
+
+const rolesFetcher = async () => {
+  const { data, error } = await supabase
+    .from("role")
+    .select("*")
+    .order("name", { ascending: true });
+  if (error) throw error;
+  return data;
 };
 
 export default function EditUser({ userId }: { userId: string }) {
+  const [isUpdating, setIsUpdating] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const [open, setOpen] = useState(false);
-  const {
-    data: user,
-    error,
-    isLoading,
-  } = useSWR(userId, () => fetcher(userId));
+
+  const { data: roles, error, isLoading } = useSWR("admin-roles", rolesFetcher);
+
+  const { data: user } = useSWR(userId, () => fetcher(userId));
 
   const success = () => {
     messageApi.open({
@@ -53,6 +64,7 @@ export default function EditUser({ userId }: { userId: string }) {
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setIsUpdating(true);
     try {
       const { data: updatedUser } = await supabase
         .from("user")
@@ -67,6 +79,8 @@ export default function EditUser({ userId }: { userId: string }) {
     } catch (error) {
       console.error(error);
       hideModal();
+    } finally {
+      setIsUpdating(false);
     }
   };
 
@@ -82,60 +96,91 @@ export default function EditUser({ userId }: { userId: string }) {
         type="button"
         disabled={isLoading}
         onClick={showModal}
-        className="inline-block text-500 hover:text-blue-500 py-2 px-5 text-sm"
+        className="inline-block py-2 px-6 bg-white text-sm border border-gray-200 rounded-lg transition-colors hover:border-gray-300 active:border-gray-400"
       >
         Edit
       </button>
       {contextHolder}
       <Modal
-        title="Edit User"
+        title="Editar Usuario"
         open={open}
         onCancel={hideModal}
         destroyOnClose
         okText="Save"
         okButtonProps={{
-          disabled: isLoading,
+          disabled: isLoading || isUpdating,
           form: "editUser",
           htmlType: "submit",
         }}
-        cancelButtonProps={{ disabled: isLoading }}
+        cancelButtonProps={{ disabled: isLoading || isUpdating }}
       >
         {isLoading ? (
           <FormSkeleton rows={2} />
         ) : (
-          <form onSubmit={handleSubmit(onSubmit)} id="editUser">
-            <div className="flex flex-col gap-4">
-              <fieldset>
-                <label
-                  htmlFor="username"
-                  className="block font-bold mb-2 font-manrope"
-                >
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            id="editUser"
+            className="py-6"
+          >
+            <fieldset className="flex flex-col gap-4">
+              <div>
+                <label htmlFor="name" className="block font-semibold mb-2">
+                  Nombre
+                </label>
+                <input
+                  disabled
+                  type="text"
+                  id="name"
+                  {...register("name")}
+                  required
+                  className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+              <div>
+                <label htmlFor="username" className="block font-semibold mb-2">
                   Username
                 </label>
                 <input
+                  disabled
                   type="text"
                   id="username"
                   {...register("username")}
                   required
-                  className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                 />
-              </fieldset>
-              <fieldset>
-                <label
-                  htmlFor="email"
-                  className="block mb-2.5 font-manrope font-bold"
-                >
+              </div>
+              <div>
+                <label htmlFor="email" className="block mb-2 font-semibold">
                   Email
                 </label>
                 <input
+                  disabled
                   type="email"
                   id="email"
                   {...register("email")}
                   required
-                  className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:outline-2 focus:ring focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:outline-none focus:outline-2 focus:ring focus:ring-blue-500 focus:border-blue-500"
                 />
-              </fieldset>
-            </div>
+              </div>
+              <div>
+                <label htmlFor="role_id" className="block mb-2 font-semibold">
+                  Role
+                </label>
+                <select
+                  id="role_id"
+                  {...register("role_id")}
+                  className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:outline-none focus:outline-2 focus:ring focus:ring-blue-500 focus:border-blue-500"
+                >
+                  {roles?.map(({ id, name }) => {
+                    return (
+                      <option value={id} key={id}>
+                        {name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            </fieldset>
           </form>
         )}
       </Modal>

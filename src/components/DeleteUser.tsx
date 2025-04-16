@@ -1,19 +1,9 @@
 import { message } from "antd";
 import { supabase } from "@lib/supabase";
 import { mutate } from "swr";
-import { useState } from "react";
-import Modal from "@components/Modal";
-import { Button } from "antd";
-export default function DeleteUser({ userId }: { userId: string }) {
-  const [messageApi, contextHolder] = message.useMessage();
-  const [open, setOpen] = useState(false);
-  const showModal = () => {
-    setOpen(true);
-  };
 
-  const hideModal = () => {
-    setOpen(false);
-  };
+export default function DeleteUser({ userId }: { userId: string }) {
+  const [messageApi] = message.useMessage();
 
   const successMessage = () => {
     messageApi.open({
@@ -30,37 +20,31 @@ export default function DeleteUser({ userId }: { userId: string }) {
   };
 
   const deleteUser = async () => {
+    const confirmationMessage = confirm(
+      "Esta acción no se puede deshacer. ¿Realmente desea eliminar este elemento?"
+    );
+    if (!confirmationMessage) return;
+
     try {
       await supabase.from("user").delete().eq("id", userId);
       await mutate("users");
       successMessage();
-      hideModal();
     } catch (error) {
       console.error("Error deleting user", error);
       errorMessage();
-      hideModal();
     }
   };
 
   return (
     <div id="edit-user">
       <button
-        onClick={showModal}
+        disabled
+        onClick={deleteUser}
         type="button"
-        className="inline-block text-500 hover:text-red-500 py-2 px-5 text-sm"
+        className="disabled:pointer-events-none inline-block py-2 px-6 bg-red-50 text-sm border border-red-100 rounded-lg transition-colors hover:border-red-200 active:border-red-300"
       >
         Delete
       </button>
-      {contextHolder}
-      <Modal isOpen={open} setOpen={setOpen}>
-        <h2 className="font-bold mb-6">Do you want to delete this user?</h2>
-        <footer className="flex justify-end gap-2 w-full mt-3">
-          <Button onClick={hideModal}>Cancel</Button>
-          <Button type="primary" onClick={deleteUser}>
-            Delete
-          </Button>
-        </footer>
-      </Modal>
     </div>
   );
 }
