@@ -39,7 +39,7 @@ export default function SearchForm({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="mb-20 w-full max-w-[600px] mx-auto relative z-30"
+      className="mb-20 w-full max-w-[600px] mx-auto relative z-10"
     >
       <div className="w-full hover:bg-white hover:border-cyan-100 focus-within:bg-white focus-within:border-cyan-100 border-2 transition-colors duration-500 border-gray-100 flex items-center bg-gray-100 rounded-full p-1 gap-2">
         <div
