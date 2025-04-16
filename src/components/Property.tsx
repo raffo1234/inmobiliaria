@@ -99,8 +99,8 @@ export default function Property({
             />
           </div>
         </div>
-        <div className="lg:flex items-start gap-4">
-          <div className="flex-grow lg:w-3/5">
+        <div className="lg:flex items-start gap-2">
+          <div className="flex-grow lg:w-3/5 mb-2">
             <Carousel
               arrows
               draggable
