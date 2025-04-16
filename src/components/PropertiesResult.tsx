@@ -14,7 +14,18 @@ type Property = {
   description: string;
 };
 
-const columnsToSearch = ["title", "description", "location", "type"];
+const columnsToSearch = [
+  "title",
+  "description",
+  "location",
+  "type",
+  "price",
+  "state",
+  "phase",
+  "size",
+  "bathroom_count",
+  "bedroom_count",
+];
 
 const query = `
           id,
