@@ -5,6 +5,7 @@ import SearchForm from "@components/SearchForm";
 import Main from "@components/Main.astro";
 import { supabase } from "@lib/supabase";
 import PropertiesListByCompany from "@components/PropertiesListByCompany";
+import GetInTouch from "@components/GetInTouch";
 
 const { id } = Astro.params;
 const { currentUserId: userId } = Astro.locals;
@@ -47,12 +48,13 @@ if (!id || !company) {
       </h1>
       <p class="text-lg">{company.description}</p>
     </div>
-    <div class="mb-20">
-      <button
-        class="text-lg px-6 py-3 bg-black text-white rounded-full transition-colors duration-700 hover:bg-gray-800 active:bg-gray-900"
-      >
-        Contactar
-      </button>
+    <div class="mb-8">
+      <GetInTouch
+        client:load
+        companyId={company.id}
+        companyName={company.name}
+        companyLogo={company.logo_url}
+      />
     </div>
     <PropertiesListByCompany
       client:load

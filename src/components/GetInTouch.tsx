@@ -1,7 +1,26 @@
 import { supabase } from "@lib/supabase";
-import { Button, Input, Modal } from "antd";
+import { PropertyState } from "@types/propertyState";
+import { Button, Modal } from "antd";
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import useSWR from "swr";
+
+const fetcher = async (companyId: string) => {
+  const { data, error } = await supabase
+    .from("property")
+    .select(
+      `
+      id,
+      title
+    `
+    )
+    .eq("company_id", companyId)
+    .eq("state", PropertyState.ACTIVE)
+    .order("created_at", { ascending: false });
+
+  if (error) throw error;
+  return data;
+};
 
 type Inputs = {
   first_name: string;
@@ -10,23 +29,32 @@ type Inputs = {
   phone: string;
   dni: number;
   message: number;
+  property_id?: string;
 };
 
 export default function GetInTouch({
+  companyId,
   propertyId,
   companyLogo,
   companyName,
   propertyTitle,
 }: {
-  propertyId: string;
-  companyLogo: string;
+  companyId?: string;
+  propertyId?: string;
+  propertyTitle?: string;
   companyName: string;
-  propertyTitle: string;
+  companyLogo: string;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { reset, register, handleSubmit } = useForm<inputs>({
+  const { reset, register, handleSubmit } = useForm<Inputs>({
     mode: "onBlur",
   });
+
+  const { data: properties = [], isLoading } = useSWR(
+    `${companyId || propertyId}-get-in-touch-company`,
+    () => (companyId ? fetcher(companyId) : null)
+  );
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -43,7 +71,7 @@ export default function GetInTouch({
     try {
       const { data: createdInquiry } = await supabase
         .from("inquiry")
-        .insert({ ...data, ...{ property_id: propertyId } })
+        .insert({ ...data, ...(propertyId && { property_id: propertyId }) })
         .select()
         .single();
       if (createdInquiry) {
@@ -64,7 +92,12 @@ export default function GetInTouch({
       >
         Contactar
       </button>
-      <Modal footer={null} open={isModalOpen} onCancel={hideModal}>
+      <Modal
+        footer={null}
+        style={{ top: 20 }}
+        open={isModalOpen}
+        onCancel={hideModal}
+      >
         <form onSubmit={handleSubmit(onSubmit)}>
           <fieldset className="py-4 px-4 flex flex-col gap-4">
             <div className="flex items-center gap-2">
@@ -76,6 +109,31 @@ export default function GetInTouch({
                 <p>Descubre: {propertyTitle}</p>
               </div>
             </div>
+            {companyId ? (
+              <div>
+                <label
+                  htmlFor="property_id"
+                  className="inline-block mb-2 font-semibold"
+                >
+                  Inmueble de tu interes
+                </label>
+                <select
+                  id="property_id"
+                  {...register("property_id")}
+                  required
+                  className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option>{isLoading ? "Cargando ..." : "Selecciona"}</option>
+                  {properties?.map(({ id, title }) => {
+                    return (
+                      <option key={id} value={id}>
+                        {title}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            ) : null}
             <div>
               <label
                 htmlFor="email"
