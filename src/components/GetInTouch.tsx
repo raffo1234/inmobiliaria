@@ -1,6 +1,6 @@
 import { supabase } from "@lib/supabase";
 import { PropertyState } from "@types/propertyState";
-import { Button, Modal } from "antd";
+import { Button, message, Modal } from "antd";
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import useSWR from "swr";
@@ -69,7 +69,23 @@ export default function GetInTouch({
   companyName: string;
   companyLogo: string;
 }) {
+  const [messageApi, contextHolder] = message.useMessage();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const success = () => {
+    messageApi.open({
+      type: "success",
+      content:
+        "Hemos recibido tu mensaje correctamente. Gracias por contactarnos.",
+    });
+  };
+  const error = () => {
+    messageApi.open({
+      type: "error",
+      content:
+        "Lo sentimos, hubo un problema. Por favor, inténtalo de nuevo en unos instantes.",
+    });
+  };
+
   const {
     reset,
     register,
@@ -107,14 +123,17 @@ export default function GetInTouch({
       if (createdInquiry) {
         hideModal();
         reset();
+        success();
       }
     } catch (error) {
+      error();
       console.error(error);
     }
   };
 
   return (
     <>
+      {contextHolder}
       <button
         onClick={sendInquiry}
         type="button"
