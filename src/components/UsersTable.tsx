@@ -31,21 +31,6 @@ export default function UsersTable() {
     mutate,
   } = useSWR("users", fetchUsers);
 
-  const onDelete = async (id: string | undefined) => {
-    const confirmationMessage = confirm(
-      "Are you sure you want to delete this item?"
-    );
-    if (!confirmationMessage) return;
-
-    try {
-      await supabase.from("user").delete().eq("id", id);
-      const updatedUsers = users.filter((user) => user.id !== id);
-      mutate(updatedUsers, false);
-    } catch (error) {
-      console.error("Error deleting user", error);
-    }
-  };
-
   if (error) return null;
 
   return (
