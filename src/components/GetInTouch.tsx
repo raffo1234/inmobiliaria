@@ -4,6 +4,9 @@ import { Button, Modal } from "antd";
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import useSWR from "swr";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import InputError from "./InputError";
 
 const fetcher = async (companyId: string) => {
   const { data, error } = await supabase
@@ -21,6 +24,27 @@ const fetcher = async (companyId: string) => {
   if (error) throw error;
   return data;
 };
+
+const formSchema = z.object({
+  property_id: z
+    .string()
+    .min(1, { message: "Selecciona una opción" })
+    .optional(),
+  first_name: z.string().min(2, { message: "Nombre es requerido" }),
+  last_name: z.string().min(2, { message: "Apellido es requerido" }),
+  email: z
+    .string()
+    .min(1, { message: "Email es requerido" })
+    .email({ message: "Ingresa un Email valido" }),
+  phone: z.string().regex(/^([2-7]\d{7}|9\d{8})$/, {
+    message: "Ingrese un teléfono valido.",
+  }),
+  dni: z
+    .string()
+    .length(8, { message: "El DNI debe tener 8 dígitos." })
+    .regex(/^\d+$/, { message: "El DNI debe contener solo números." }),
+  message: z.string().min(2, { message: "Mensaje es requerido" }),
+});
 
 type Inputs = {
   first_name: string;
@@ -46,8 +70,14 @@ export default function GetInTouch({
   companyLogo: string;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { reset, register, handleSubmit } = useForm<Inputs>({
+  const {
+    reset,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>({
     mode: "onBlur",
+    resolver: zodResolver(formSchema),
   });
 
   const { data: properties = [], isLoading } = useSWR(
@@ -123,7 +153,9 @@ export default function GetInTouch({
                   required
                   className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
                 >
-                  <option>{isLoading ? "Cargando ..." : "Selecciona"}</option>
+                  <option value="">
+                    {isLoading ? "Cargando ..." : "Selecciona"}
+                  </option>
                   {properties?.map(({ id, title }) => {
                     return (
                       <option key={id} value={id}>
@@ -132,6 +164,9 @@ export default function GetInTouch({
                     );
                   })}
                 </select>
+                <InputError>
+                  {errors.property_id && errors.property_id.message}
+                </InputError>
               </div>
             ) : null}
             <div>
@@ -146,6 +181,7 @@ export default function GetInTouch({
                 id="email"
                 className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
               />
+              <InputError>{errors.email && errors.email.message}</InputError>
             </div>
             <div>
               <label
@@ -159,6 +195,9 @@ export default function GetInTouch({
                 id="first_name"
                 className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
               />
+              <InputError>
+                {errors.first_name && errors.first_name.message}
+              </InputError>
             </div>
             <div>
               <label
@@ -172,6 +211,9 @@ export default function GetInTouch({
                 id="last_name"
                 className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
               />
+              <InputError>
+                {errors.last_name && errors.last_name.message}
+              </InputError>
             </div>
             <div>
               <label htmlFor="dni" className="inline-block mb-2 font-semibold">
@@ -182,19 +224,21 @@ export default function GetInTouch({
                 id="dni"
                 className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
               />
+              <InputError>{errors.dni && errors.dni.message}</InputError>
             </div>
             <div>
               <label
                 htmlFor="phone"
                 className="inline-block mb-2 font-semibold"
               >
-                Celular
+                Teléfono
               </label>
               <input
                 {...register("phone")}
                 id="phone"
                 className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
               />
+              <InputError>{errors.phone && errors.phone.message}</InputError>
             </div>
             <div>
               <label
@@ -206,8 +250,11 @@ export default function GetInTouch({
               <textarea
                 {...register("message")}
                 id="message"
-                className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                className="w-full block px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
               />
+              <InputError>
+                {errors.message && errors.message.message}
+              </InputError>
             </div>
             <Button
               htmlType="submit"

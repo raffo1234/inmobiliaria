@@ -19,6 +19,7 @@
     "@emotion/react": "^11.14.0",
     "@fontsource-variable/cinzel": "^5.2.5",
     "@fontsource/nixie-one": "^5.1.1",
+    "@hookform/resolvers": "^5.0.1",
     "@iconify-json/material-symbols-light": "^1.2.12",
     "@iconify-json/mingcute": "^1.2.3",
     "@supabase/supabase-js": "^2.49.1",
@@ -36,7 +37,8 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
     "swr": "^2.3.3",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3.4.17",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@iconify/react": "^5.2.1",
