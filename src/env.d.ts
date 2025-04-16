@@ -9,5 +9,6 @@ interface ImportMeta {
 declare namespace App {
   interface Locals {
     currentUserId: string;
+    currentUserRoleId: string;
   }
 }

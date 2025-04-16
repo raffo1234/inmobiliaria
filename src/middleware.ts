@@ -4,6 +4,7 @@ import { getSession } from 'auth-astro/server';
 
 export const onRequest = defineMiddleware(async (context, next) => {
   try {
+    
     await syncUserWithDb(context)
     
     const session = await getSession(context.request);

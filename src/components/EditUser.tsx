@@ -75,11 +75,10 @@ export default function EditUser({ userId }: { userId: string }) {
       await mutate(userId, updatedUser);
       await mutate("users");
       success();
-      hideModal();
     } catch (error) {
       console.error(error);
-      hideModal();
     } finally {
+      hideModal();
       setIsUpdating(false);
     }
   };
@@ -102,7 +101,6 @@ export default function EditUser({ userId }: { userId: string }) {
       </button>
       {contextHolder}
       <Modal
-        title="Editar Usuario"
         open={open}
         onCancel={hideModal}
         destroyOnClose
@@ -117,71 +115,82 @@ export default function EditUser({ userId }: { userId: string }) {
         {isLoading ? (
           <FormSkeleton rows={2} />
         ) : (
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            id="editUser"
-            className="py-6"
-          >
-            <fieldset className="flex flex-col gap-4">
-              <div>
-                <label htmlFor="name" className="block font-semibold mb-2">
-                  Nombre
-                </label>
-                <input
-                  disabled
-                  type="text"
-                  id="name"
-                  {...register("name")}
-                  required
-                  className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-              <div>
-                <label htmlFor="username" className="block font-semibold mb-2">
-                  Username
-                </label>
-                <input
-                  disabled
-                  type="text"
-                  id="username"
-                  {...register("username")}
-                  required
-                  className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-              <div>
-                <label htmlFor="email" className="block mb-2 font-semibold">
-                  Email
-                </label>
-                <input
-                  disabled
-                  type="email"
-                  id="email"
-                  {...register("email")}
-                  required
-                  className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:outline-none focus:outline-2 focus:ring focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-              <div>
-                <label htmlFor="role_id" className="block mb-2 font-semibold">
-                  Role
-                </label>
-                <select
-                  id="role_id"
-                  {...register("role_id")}
-                  className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:outline-none focus:outline-2 focus:ring focus:ring-blue-500 focus:border-blue-500"
-                >
-                  {roles?.map(({ id, name }) => {
-                    return (
-                      <option value={id} key={id}>
-                        {name}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-            </fieldset>
-          </form>
+          <div className="md:py-6 md:px-3">
+            <h4 className="mb-6 text-xl">Editar Usuario</h4>
+            <form onSubmit={handleSubmit(onSubmit)} id="editUser">
+              <fieldset className="flex flex-col gap-4">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="inline-block font-semibold mb-2"
+                  >
+                    Nombre
+                  </label>
+                  <input
+                    disabled
+                    type="text"
+                    id="name"
+                    {...register("name")}
+                    required
+                    className="w-full px-5 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="username"
+                    className="inline-block font-semibold mb-2"
+                  >
+                    Username
+                  </label>
+                  <input
+                    disabled
+                    type="text"
+                    id="username"
+                    {...register("username")}
+                    required
+                    className="w-full px-5 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="inline-block mb-2 font-semibold"
+                  >
+                    Email
+                  </label>
+                  <input
+                    disabled
+                    type="email"
+                    id="email"
+                    {...register("email")}
+                    required
+                    className="w-full px-5 py-3 rounded-xl border border-gray-200 focus:outline-none focus:outline-2 focus:ring focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="role_id"
+                    className="inline-block mb-2 font-semibold"
+                  >
+                    Role
+                  </label>
+                  <select
+                    id="role_id"
+                    {...register("role_id")}
+                    className="w-full px-5 py-3 rounded-xl border border-gray-200 focus:outline-none focus:outline-2 focus:ring focus:ring-blue-500 focus:border-blue-500"
+                  >
+                    {roles?.map(({ id, name }) => {
+                      return (
+                        <option value={id} key={id}>
+                          {name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </fieldset>
+            </form>
+          </div>
         )}
       </Modal>
     </>

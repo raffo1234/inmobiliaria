@@ -7,7 +7,17 @@ import useSWR from "swr";
 const fetchUsers = async () => {
   const { data, error } = await supabase
     .from("user")
-    .select("*")
+    .select(
+      `
+      id,
+      image_url,
+      name,
+      username,
+      email,
+      role_id,
+      role(*)  
+      `
+    )
     .order("created_at", { ascending: false });
   if (error) throw error;
   return data;
@@ -56,20 +66,34 @@ export default function UsersTable() {
             <table className="w-full text-left rounded-lg">
               <thead>
                 <tr>
+                  <th className="px-6 py-4 font-normal">Imagen</th>
                   <th className="px-6 py-4 font-normal">Nombre</th>
                   <th className="px-6 py-4 font-normal">Email</th>
+                  <th className="px-6 py-4 font-normal">Role</th>
                   <th className="px-6 py-4 font-normal w-50">Acciones</th>
                 </tr>
               </thead>
               <tbody>
-                {users?.map(({ name, email, id }) => {
+                {users?.map(({ name, email, id, role, image_url }) => {
                   return (
                     <tr
                       key={id}
                       className="transition-colors duration-300 hover:bg-gray-50 border-t border-gray-200"
                     >
+                      <td className="px-6 py-4">
+                        <img
+                          src={image_url}
+                          className="w-10 rounded-full"
+                          alt={name}
+                        />
+                      </td>
                       <td className="px-6 py-4">{name}</td>
                       <td className="px-6 py-4">{email}</td>
+                      <td className="px-6 py-4">
+                        <div className="uppercase text-xs font-semibold">
+                          {role.name}
+                        </div>
+                      </td>
                       <td className="px-6 py-4">
                         <div className="flex gap-4 items-center">
                           <EditUser userId={id} />

@@ -5,8 +5,9 @@ import { Skeleton } from "antd";
 import { useState } from "react";
 import EditProperty from "@components/EditProperty";
 import DeleteProperty from "@components/DeleteProperty";
-import { PropertyState } from "@types/propertyState";
+import { PropertyState, Permissions } from "@types/propertyState";
 import { Icon } from "@iconify/react";
+import CheckPermission from "@components/CheckPermission";
 
 type Property = {
   id: string;
@@ -85,7 +86,11 @@ const fetcher = async (): Promise<Property[]> => {
   return data;
 };
 
-export default function PropertiesList() {
+export default function AdminPropertiesList({
+  userRoleId,
+}: {
+  userRoleId: string;
+}) {
   const {
     data: properties,
     error,
@@ -99,12 +104,21 @@ export default function PropertiesList() {
         gridTemplateColumns: "repeat(auto-fit, minmax(336px, 1fr))",
       }}
     >
-      <a
-        href="/admin/property/add"
-        className="h-[320px] flex justify-center items-center rounded-lg bg-gray-100 hover:bg-gray-200 active:bg-gray-300 transition-colors"
+      <CheckPermission
+        userRoleId={userRoleId}
+        requiredPermission={Permissions.CREAR_INMUEBLE}
       >
-        <Icon icon="material-symbols-light:add-2-rounded" className="text-xl" />
-      </a>
+        <a
+          href="/admin/property/add"
+          className="h-[320px] flex justify-center items-center rounded-lg bg-gray-100 hover:bg-gray-200 active:bg-gray-300 transition-colors"
+        >
+          <Icon
+            icon="material-symbols-light:add-2-rounded"
+            className="text-xl"
+          />
+        </a>
+      </CheckPermission>
+
       {Array.isArray(properties) &&
         properties.map((property) => {
           const { id, title, state, phase } = property;

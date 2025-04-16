@@ -29,7 +29,7 @@ export async function syncUserWithDb(context: APIContext ): Promise<SyncResult |
   try {
     console.info(`syncUserWithDb: Checking/syncing user ${email}...`);
 
-    const { data: existingUser, error } = await supabase
+    const { data: existingUser } = await supabase
     .from("user")
     .select()
     .eq("email", email).single();
@@ -37,8 +37,7 @@ export async function syncUserWithDb(context: APIContext ): Promise<SyncResult |
 
     if (!existingUser) {
       try {
-        const { data: createdUser, error: errorSupabase } = await supabase.from("user").insert([{
-        provider: "google",
+        const { data: createdUser } = await supabase.from("user").insert([{
         email,
         name,
         username: email,
@@ -46,6 +45,7 @@ export async function syncUserWithDb(context: APIContext ): Promise<SyncResult |
         }]).select().single();
 
         context.locals.currentUserId = createdUser.id
+        context.locals.currentUserRoleId = createdUser.role_id
         console.info(`syncUserWithDb: User ${createdUser.email} created successfully.`);
         
       } catch (error) {
@@ -54,6 +54,7 @@ export async function syncUserWithDb(context: APIContext ): Promise<SyncResult |
       }
     } else {
       context.locals.currentUserId = existingUser.id
+      context.locals.currentUserRoleId = existingUser.role_id
       console.log(`syncUserWithDb: User ${email} already exists.`);
       return { success: true, message: 'User already exists.', user: session.user };
     }
