@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import { SignIn, SignOut } from "auth-astro/components";
 import { getSession } from "auth-astro/server";
 
@@ -31,27 +32,37 @@ const user = session?.user;
             <p class="text-center text-sm font-semibold w-full">{user?.name}</p>
           </li>
           <li>
-            <a href="/" class="block py-2 px-6 hover:bg-gray-50">
-              Home
+            <a
+              href="/"
+              class="py-2 px-6 hover:bg-gray-50 flex items-center gap-3.5"
+            >
+              <Icon name="solar:home-smile-angle-broken" />
+              <span>Home</span>
             </a>
           </li>
           <li>
             <a
               title="Favoritos"
               href="/inmuebles/favoritos"
-              class="block py-2 px-6 hover:bg-gray-50"
+              class="flex items-center gap-3.5 py-2 px-6 hover:bg-gray-50"
             >
-              Favoritos
+              <Icon name="solar:clipboard-heart-broken" />
+              <span>Favoritos</span>
             </a>
           </li>
           <li>
-            <a href="/admin/property" class="block py-2 px-6 hover:bg-gray-50">
-              Admin
+            <a
+              href="/admin/property"
+              class="flex gap-3.5 items-center py-2 px-6 hover:bg-gray-50"
+            >
+              <Icon name="solar:settings-minimalistic-broken" />
+              <span>Admin</span>
             </a>
           </li>
           <li class="border-t border-gray-100">
-            <SignOut class="relative w-full px-5 py-5 text-left hover:text-gray-500 transition-colors">
-              Salir
+            <SignOut class="relative w-full px-6 py-4 flex items-center gap-3.5 text-left hover:text-gray-500 transition-colors">
+              <Icon name="solar:inbox-out-linear" class="-rotate-90" />
+              <span>Salir</span>
             </SignOut>
           </li>
         </ul>
