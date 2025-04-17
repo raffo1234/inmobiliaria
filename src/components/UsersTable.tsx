@@ -55,7 +55,10 @@ export default function UsersTable() {
           >
             {users?.map(({ name, email, id, role, image_url }) => {
               return (
-                <div className="border border-gray-200 hover:bg-gray-50 rounded-2xl p-4">
+                <div
+                  key={id}
+                  className="border border-gray-200 hover:bg-gray-50 rounded-2xl p-4"
+                >
                   <img
                     src={image_url}
                     className="w-11 h-11 rounded-full mb-3 mx-auto"
