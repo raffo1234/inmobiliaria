@@ -11,15 +11,6 @@ const permissionFetcher = async (slug: string) => {
   return data;
 };
 
-// const permissionsFetcher = async () => {
-//   const { data, error } = await supabase
-//     .from("permission")
-//     .select("*")
-//     .order("name", { ascending: true });
-//   if (error) throw error;
-//   return data;
-// };
-
 const rolePermissionFetcher = async (roleId: string, permissionId: string) => {
   const { count, error } = await supabase
     .from("role_permission")

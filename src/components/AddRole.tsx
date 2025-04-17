@@ -3,6 +3,7 @@ import { supabase } from "@lib/supabase";
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { mutate } from "swr";
+import PrimaryButton from "./PrimaryButton";
 
 type Inputs = {
   name: string;
@@ -34,7 +35,7 @@ export default function AddRole() {
         >
           <fieldset className="flex flex-col gap-4">
             <div>
-              <label htmlFor="name" className="inline-block font-semibold mb-2">
+              <label htmlFor="name" className="inline-block mb-2 text-sm">
                 Nombre
               </label>
               <input
@@ -42,13 +43,13 @@ export default function AddRole() {
                 id="name"
                 {...register("name")}
                 required
-                className="w-full px-5 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
               />
             </div>
             <div>
               <label
                 htmlFor="description"
-                className="inline-block font-semibold mb-2"
+                className="inline-block mb-2 text-sm"
               >
                 Descripcion
               </label>
@@ -57,7 +58,7 @@ export default function AddRole() {
                 id="description"
                 {...register("description")}
                 required
-                className="w-full px-5 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
               />
             </div>
           </fieldset>
@@ -65,17 +66,11 @@ export default function AddRole() {
             <button
               onClick={() => setDisplayForm(false)}
               type="button"
-              className="disabled:border-gray-100 disabled:bg-gray-100 inline-block py-2 px-6 bg-white text-sm border border-gray-200 rounded-lg transition-colors hover:border-gray-300 active:border-gray-400"
+              className="font-semibold disabled:border-gray-100 disabled:bg-gray-100 inline-block py-3 px-10 bg-white text-sm border border-gray-100 rounded-lg transition-colors hover:border-gray-200 duration-500 active:border-gray-300"
             >
               Cancelar
             </button>
-            <button
-              disabled={isLoading}
-              type="submit"
-              className="disabled:border-gray-100 disabled:bg-gray-100 inline-block py-2 px-6 text-sm bg-cyan-100 border border-cyan-500 rounded-md"
-            >
-              Agregar
-            </button>
+            <PrimaryButton label="Agregar" isLoading={isLoading} />
           </div>
         </form>
       ) : (
