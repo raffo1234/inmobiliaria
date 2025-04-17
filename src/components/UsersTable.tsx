@@ -47,49 +47,34 @@ export default function UsersTable() {
               Agregar
             </a>
           </div>
-          <div className="rounded-lg border border-gray-200">
-            <table className="w-full text-left rounded-lg">
-              <thead>
-                <tr>
-                  <th className="px-6 py-4 font-normal">Imagen</th>
-                  <th className="px-6 py-4 font-normal">Nombre</th>
-                  <th className="px-6 py-4 font-normal">Email</th>
-                  <th className="px-6 py-4 font-normal">Role</th>
-                  <th className="px-6 py-4 font-normal w-50">Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users?.map(({ name, email, id, role, image_url }) => {
-                  return (
-                    <tr
-                      key={id}
-                      className="transition-colors duration-300 hover:bg-gray-50 border-t border-gray-200"
-                    >
-                      <td className="px-6 py-4">
-                        <img
-                          src={image_url}
-                          className="w-10 rounded-full"
-                          alt={name}
-                        />
-                      </td>
-                      <td className="px-6 py-4">{name}</td>
-                      <td className="px-6 py-4">{email}</td>
-                      <td className="px-6 py-4">
-                        <div className="uppercase text-xs font-semibold">
-                          {role.name}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex gap-4 items-center">
-                          <EditUser userId={id} />
-                          <DeleteUser userId={id} />
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+          <div
+            className="grid gap-3"
+            style={{
+              gridTemplateColumns: "repeat(auto-fill, minmax(170px, 1fr))",
+            }}
+          >
+            {users?.map(({ name, email, id, role, image_url }) => {
+              return (
+                <div className="border border-gray-200 hover:bg-gray-50 rounded-2xl p-4">
+                  <img
+                    src={image_url}
+                    className="w-11 h-11 rounded-full mb-3 mx-auto"
+                    alt={name}
+                  />
+                  <div className="font-semibold w-full mb-1 text-center truncate">
+                    {name}
+                  </div>
+                  {/* {email} */}
+                  <div className="text-sm text-gray-500 w-full text-center mb-4">
+                    {role.name}
+                  </div>
+                  <div className="flex gap-2 items-center justify-center">
+                    <EditUser userId={id} />
+                    <DeleteUser userId={id} />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </>
       )}

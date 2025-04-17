@@ -1,6 +1,7 @@
 import { message } from "antd";
 import { supabase } from "@lib/supabase";
 import { mutate } from "swr";
+import { Icon } from "@iconify/react";
 
 export default function DeleteUser({ userId }: { userId: string }) {
   const [messageApi] = message.useMessage();
@@ -41,9 +42,9 @@ export default function DeleteUser({ userId }: { userId: string }) {
         disabled
         onClick={deleteUser}
         type="button"
-        className="disabled:pointer-events-none inline-block py-2 px-6 bg-red-50 text-sm border border-red-100 rounded-lg transition-colors hover:border-red-200 active:border-red-300"
+        className="w-11 h-11 rounded-full border-gray-100 border text-red-500 flex items-center justify-center"
       >
-        Delete
+        <Icon icon="tdesign:delete" fontSize={24} />
       </button>
     </div>
   );

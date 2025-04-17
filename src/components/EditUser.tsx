@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Modal, message } from "antd";
 import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
+import { Icon } from "@iconify/react";
 
 async function fetcher(userId: string) {
   const { data, error } = await supabase
@@ -95,9 +96,9 @@ export default function EditUser({ userId }: { userId: string }) {
         type="button"
         disabled={isLoading}
         onClick={showModal}
-        className="inline-block py-2 px-6 bg-white text-sm border border-gray-200 rounded-lg transition-colors hover:border-gray-300 active:border-gray-400"
+        className="rounded-full w-11 h-11 border-gray-100 border flex items-center justify-center"
       >
-        Edit
+        <Icon icon="tdesign:edit-2" fontSize={24} />
       </button>
       {contextHolder}
       <Modal
