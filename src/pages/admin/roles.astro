@@ -1,13 +1,13 @@
 ---
 import Dashboard from "@layouts/Dashboard.astro";
-import Roles from "@components/Roles";
+import AdminRoles from "@components/AdminRoles";
 ---
 
 <Dashboard pageTitle="Roles">
   <div class="max-w-[1200px] mx-auto w-full">
     <div class="border border-gray-200 rounded-md">
       <div class="px-7 py-4">Roles adiministrados por Rafucho</div>
-      <Roles client:load />
+      <AdminRoles client:load />
     </div>
   </div>
 </Dashboard>

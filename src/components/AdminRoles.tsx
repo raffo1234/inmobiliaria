@@ -4,6 +4,7 @@ import { supabase } from "@lib/supabase";
 import { Skeleton } from "antd";
 import { useState } from "react";
 import useSWR from "swr";
+import AddRole from "./AddRole";
 
 const permissionsFetcher = async () => {
   const { data, error } = await supabase
@@ -139,7 +140,7 @@ const rolesFetcher = async () => {
   return data;
 };
 
-export default function Roles() {
+export default function AdminRoles() {
   const { data: roles, error, isLoading } = useSWR("admin-roles", rolesFetcher);
 
   if (error) return null;
@@ -150,7 +151,16 @@ export default function Roles() {
       </div>
     );
 
-  return roles?.map((role) => {
-    return <Role key={role.id} role={role} />;
-  });
+  return (
+    <>
+      {roles?.map((role) => {
+        return <Role key={role.id} role={role} />;
+      })}
+      <AddRole />
+    </>
+  );
 }
+
+
+
+
