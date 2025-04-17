@@ -39,20 +39,18 @@ const { pageTitle } = Astro.props;
     </title>
     <ClientRouter />
   </head>
-  <body class="bg-neutral-100" id="dashboard">
-    <div class="flex w-full">
+  <body id="dashboard">
+    <header class="border-b p-5 flex justify-between relative z-20">
+      <div class="max-w-[1360px] mx-auto w-full px-4 flex justify-between">
+        <h1 class="text-4xl font-semibold">{pageTitle}</h1>
+        <ProfilePopover />
+      </div>
+    </header>
+    <main class="flex items-start max-w-[1360px] mx-auto w-full px-4 min-h-lvh">
       <Aside />
-      <main class="flex-grow bg-white min-h-lvh">
-        <header
-          class="border-neutral-200 border-b p-5 flex justify-between relative z-20"
-        >
-          <h1 class="text-4xl font-semibold">{pageTitle}</h1>
-          <ProfilePopover />
-        </header>
-        <section class="w-full mx-auto p-5 relative z-10">
-          <slot />
-        </section>
-      </main>
-    </div>
+      <section class="flex-grow p-5 relative z-10">
+        <slot />
+      </section>
+    </main>
   </body>
 </html>

@@ -98,7 +98,7 @@ export default function EditUser({ userId }: { userId: string }) {
         onClick={showModal}
         className="rounded-full w-11 h-11 border-gray-100 border flex items-center justify-center"
       >
-        <Icon icon="tdesign:edit-2" fontSize={24} />
+        <Icon icon="solar:clapperboard-edit-broken" fontSize={24} />
       </button>
       {contextHolder}
       <Modal

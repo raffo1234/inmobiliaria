@@ -31,7 +31,7 @@ export default function AddRole() {
       {displayForm ? (
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-full items-center text-left hover:bg-gray-50 transition-colors duration-300 px-7 pt-4 pb-6 border-t border-gray-200"
+          className="w-full items-center text-left hover:bg-gray-50 rounded-bl-xl rounded-br-xl transition-colors duration-300 px-7 pt-4 pb-6 border-t border-gray-200"
         >
           <fieldset className="flex flex-col gap-4">
             <div>
