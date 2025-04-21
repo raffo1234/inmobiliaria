@@ -40,6 +40,7 @@ export default function Like({
   hasCounter?: boolean;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLiking, setIsLiking] = useState(false);
   const keyByUser = `${userId}-${propertyId}-user-like`;
   const keyByProperty = `${userId}-${propertyId}-property-like`;
 
@@ -53,15 +54,11 @@ export default function Like({
 
   const {
     data: countByUser,
-    isValidating: isValidatingByUser,
     isLoading: isLoadingByUser,
     mutate: mutateByUser,
   } = useSWR(
     keyByUser,
-    () => (userId ? fetcherByUser(propertyId, userId) : null),
-    {
-      revalidateOnReconnect: false,
-    }
+    () => (userId ? fetcherByUser(propertyId, userId) : null)
   );
 
   const { data: countByProperty, mutate: mutateByProperty } = useSWR(
@@ -71,12 +68,13 @@ export default function Like({
 
   const handleLike = async (propertyId: string) => {
     const lastSlashValue = getLastSlashValueFromCurrentUrl() || "";
-
+    
     if (!userId) {
       showModal();
       return;
     }
-
+    
+    setIsLiking(true)
     if (countByUser === 0) {
       await supabase.from("like").insert([
         {
@@ -86,6 +84,7 @@ export default function Like({
       ]);
       await mutateByUser();
       await mutateByProperty();
+      setIsLiking(false)
 
       if (!lastSlashValue.includes("favorito")) {
         await mutate(`${userId}-likes-properties`, null);
@@ -98,6 +97,7 @@ export default function Like({
         .eq("user_id", userId);
       await mutateByUser();
       await mutateByProperty();
+      setIsLiking(false)
 
       if (!lastSlashValue.includes("favorito")) {
         await mutate(`${userId}-likes-properties`, null);
@@ -109,12 +109,11 @@ export default function Like({
     <>
       <button
         onClick={() => handleLike(propertyId)}
-        disabled={isValidatingByUser}
         className={`${size === "medium" && countByUser ? "bg-cyan-50 text-cyan-300" : "bg-gray-50 hover:text-gray-500"} 
           ${isLoadingByUser ? "opacity-0" : "opacity-100"}          
           transition-all p-3 rounded-full duration-500 flex gap-1 items-center`}
       >
-        {isValidatingByUser ? (
+        {isLiking ? (
           <Icon
             icon="line-md:loading-twotone-loop"
             className={`${size === "small" ? "text-lg text-gray-500" : "text-2xl"}`}
