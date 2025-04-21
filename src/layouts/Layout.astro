@@ -1,4 +1,6 @@
 ---
+import Header from "@components/Header.astro";
+import Main from "@components/Main.astro";
 import "@fontsource-variable/cinzel";
 import "@fontsource/nixie-one";
 
@@ -36,6 +38,9 @@ const { pageTitle } = Astro.props;
     </title>
   </head>
   <body id="app" class="font-inter-tight">
-    <slot />
+    <Header />
+    <Main>
+      <slot />
+    </Main>
   </body>
 </html>

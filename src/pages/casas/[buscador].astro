@@ -12,10 +12,9 @@ const pathnameArray = pathname.split("/").filter((segment) => segment !== "");
 ---
 
 <Layout>
-  <Header />
-  <Main>
+
     <SearchForm client:load pathnameArray={pathnameArray} />
     <HightLightSelect client:load />
     <PropertiesResult client:only userId={userId} />
-  </Main>
+
 </Layout>

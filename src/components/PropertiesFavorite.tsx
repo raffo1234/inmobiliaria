@@ -3,7 +3,6 @@ import useSWR from "swr";
 import { useEffect, useState } from "react";
 import Property from "./Property";
 import PropertyItem from "./PropertyItem";
-import { PropertyState } from "@types/propertyState";
 import PropertyDetail from "./PropertyDetail";
 import PropertiesGrid from "./PropertiesGrid";
 import { Icon } from "@iconify/react";
@@ -18,57 +17,14 @@ type Property = {
   };
 };
 
-const fetcher = async (userId: string) => {
-  const { data, error } = await supabase
-    .from("like")
-    .select(
-      `
-      property(
-        id,
-        title,
-        description,
-        state,
-        user_id,
-        created_at,
-        location,
-        user!property_user_id_fkey (
-          id,
-          email,
-          name,
-          image_url
-        ),
-        company!property_company_id_fkey (
-          id,
-          name,
-          image_url,
-          logo_url
-        )
-      )
-    `
-    )
-    .eq("property.state", PropertyState.ACTIVE)
-    .eq("user_id", userId)
-    .order("created_at", { ascending: false });
-
-  if (error) throw error;
-  return data;
-};
-
-export default function PropertiesFavorite({ userId }: { userId: string }) {
+export default function PropertiesFavorite({ userId, likes }: { userId: string; likes: { property: Property[] }[] }) {
   const [showDetail, setShowDetail] = useState(false);
   const [propertyValue, setPropertyValue] = useState<Property | undefined>();
   const [currentHref, setCurrentHref] = useState("");
 
-  const { data: likes = [], isLoading } = useSWR(
-    `${userId}-likes-properties`,
-    () => (userId ? fetcher(userId) : null)
-  );
-
   useEffect(() => {
     setCurrentHref(window.location.href);
   }, []);
-
-  if (isLoading) return null;
 
   if (likes?.length === 0) {
     return (

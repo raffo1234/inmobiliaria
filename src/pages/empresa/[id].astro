@@ -68,34 +68,26 @@ if (!id || !company) {
 ---
 
 <Layout>
-  <Header />
-  <Main>
-    <SearchForm client:load />
-    <div class="mb-5">
-      <img
-        src={company.logo_url}
-        width="300px"
-        class="mb-5"
-        alt={company.name}
-      />
-      <h1 class="text-3xl font-semibold mb-4">
-        {company.name}
-      </h1>
-      <p class="text-lg">{company.description}</p>
-    </div>
-    <div class="mb-8">
-      <GetInTouch
-        client:load
-        companyId={company.id}
-        companyName={company.name}
-        companyLogo={company.logo_url}
-      />
-    </div>
-    <PropertiesListByCompany
+  <SearchForm client:load />
+  <div class="mb-5">
+    <img src={company.logo_url} width="300px" class="mb-5" alt={company.name} />
+    <h1 class="text-3xl font-semibold mb-4">
+      {company.name}
+    </h1>
+    <p class="text-lg">{company.description}</p>
+  </div>
+  <div class="mb-8">
+    <GetInTouch
       client:load
-      userId={userId}
-      properties={properties}
       companyId={company.id}
+      companyName={company.name}
+      companyLogo={company.logo_url}
     />
-  </Main>
+  </div>
+  <PropertiesListByCompany
+    client:load
+    userId={userId}
+    properties={properties}
+    companyId={company.id}
+  />
 </Layout>

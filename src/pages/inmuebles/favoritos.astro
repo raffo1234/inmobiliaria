@@ -1,42 +1,70 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import Header from "@components/Header.astro";
-import Main from "@components/Main.astro";
 import PropertiesFavorite from "@components/PropertiesFavorite";
 import SearchForm from "@components/SearchForm";
 import { SignIn } from "auth-astro/components";
 import { Icon } from "astro-icon/components";
+import { supabase } from "@lib/supabase";
+import { PropertyState } from "@types/propertyState";
 
 const userId = Astro.locals.currentUserId;
+
+const { data: likes } = await supabase
+  .from("like")
+  .select(
+    `
+      property(
+        id,
+        title,
+        description,
+        state,
+        user_id,
+        created_at,
+        location,
+        user!property_user_id_fkey (
+          id,
+          email,
+          name,
+          image_url
+        ),
+        company!property_company_id_fkey (
+          id,
+          name,
+          image_url,
+          logo_url
+        )
+      )
+    `,
+  )
+  .eq("property.state", PropertyState.ACTIVE)
+  .eq("user_id", userId)
+  .order("created_at", { ascending: false });
 ---
 
 <Layout>
-  <Header />
-  <Main>
-    <SearchForm client:load />
-    {
-      userId ? (
-        <PropertiesFavorite client:load userId={userId} />
-      ) : (
-        <div class="max-w-md mx-auto items-center flex flex-col gap-10">
-          <div class="flex justify-center w-[300px] rounded-full items-center mx-auto bg-cyan-500 aspect-square bg-opacity-5">
-            <Icon
-              name="material-symbols-light:bookmark-heart-outline"
-              class="text-[200px] text-cyan-500"
-            />
-          </div>
-          <h1 class="text-center">
-            Necesitas iniciar sesión para poder ver tu lista de inmuebles
-            favoritos.
-          </h1>
-          <SignIn
-            class="block px-6 py-2 bg-black text-white rounded-full transition-colors duration-700 hover:bg-gray-800 active:bg-gray-900"
-            provider="google"
-          >
-            Iniciar sesión
-          </SignIn>
+  <SearchForm client:load />
+  {
+    userId ? (
+      <PropertiesFavorite likes={likes} client:load userId={userId} />
+    ) : (
+      <div class="max-w-md mx-auto items-center flex flex-col gap-10">
+        <div class="flex justify-center w-[300px] rounded-full items-center mx-auto bg-cyan-500 aspect-square bg-opacity-5">
+          <Icon
+            name="material-symbols-light:bookmark-heart-outline"
+            class="text-[200px] text-cyan-500"
+          />
         </div>
-      )
-    }
-  </Main>
+        <h1 class="text-center">
+          Necesitas iniciar sesión para poder ver tu lista de inmuebles
+          favoritos.
+        </h1>
+        <SignIn
+          class="block px-6 py-2 bg-black text-white rounded-full transition-colors duration-700 hover:bg-gray-800 active:bg-gray-900"
+          provider="google"
+        >
+          Iniciar sesión
+        </SignIn>
+      </div>
+    )
+  }
 </Layout>

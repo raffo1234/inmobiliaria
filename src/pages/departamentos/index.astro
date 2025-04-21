@@ -11,9 +11,6 @@ const pathnameArray = pathname.split("/").filter((segment) => segment !== "");
 ---
 
 <Layout>
-  <Header />
-  <Main>
-    <SearchForm client:load pathnameArray={pathnameArray} />
-    <PropertiesResult client:only userId={userId} />
-  </Main>
+  <SearchForm client:load pathnameArray={pathnameArray} />
+  <PropertiesResult client:only userId={userId} />
 </Layout>
