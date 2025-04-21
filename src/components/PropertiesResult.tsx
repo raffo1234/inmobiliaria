@@ -53,16 +53,16 @@ const fetcher = async (searchTerms: string) => {
 
   const { data, error } = searchTerms
     ? await supabase
-        .from("property")
-        .select(query)
-        .eq("state", PropertyState.ACTIVE)
-        .or(orConditions)
-        .order("created_at", { ascending: false })
+      .from("property")
+      .select(query)
+      .eq("state", PropertyState.ACTIVE)
+      .or(orConditions)
+      .order("created_at", { ascending: false })
     : await supabase
-        .from("property")
-        .select(query)
-        .eq("state", PropertyState.ACTIVE)
-        .order("created_at", { ascending: false });
+      .from("property")
+      .select(query)
+      .eq("state", PropertyState.ACTIVE)
+      .order("created_at", { ascending: false });
 
   if (error) throw error;
   return data;
@@ -84,30 +84,18 @@ export default function PropertiesResult({ userId }: { userId: string }) {
   }, []);
 
   return (
-    <>
-      {propertyValue ? (
-        <PropertyDetail
-          userId={userId}
-          showDetail={showDetail}
-          setShowDetail={setShowDetail}
-          propertyValue={propertyValue}
-          setPropertyValue={setPropertyValue}
-          currentHref={currentHref}
-        />
-      ) : null}
-      <PropertiesGrid>
-        {properties.map((property) => {
-          return (
-            <PropertyItem
-              key={property.id}
-              userId={userId}
-              property={property}
-              setShowDetail={setShowDetail}
-              setPropertyValue={setPropertyValue}
-            />
-          );
-        })}
-      </PropertiesGrid>
-    </>
+    <PropertiesGrid>
+      {properties.map((property) => {
+        return (
+          <PropertyItem
+            key={property.id}
+            userId={userId}
+            property={property}
+            setShowDetail={setShowDetail}
+            setPropertyValue={setPropertyValue}
+          />
+        );
+      })}
+    </PropertiesGrid>
   );
 }

@@ -21,31 +21,19 @@ export default function PropertiesList({ userId, properties }: { userId: string;
   }, []);
 
   return (
-    <>
-      {propertyValue ? (
-        <PropertyDetail
-          userId={userId}
-          showDetail={showDetail}
-          setShowDetail={setShowDetail}
-          propertyValue={propertyValue}
-          setPropertyValue={setPropertyValue}
-          currentHref={currentHref}
-        />
-      ) : null}
-      <PropertiesGrid>
-        {properties.map((property) => {
-          return (
-            <PropertyItem
-              key={property.id}
-              userId={userId}
-              property={property}
-              setShowDetail={setShowDetail}
-              setPropertyValue={setPropertyValue}
-              isLoading={false}
-            />
-          );
-        })}
-      </PropertiesGrid>
-    </>
+    <PropertiesGrid>
+      {properties.map((property) => {
+        return (
+          <PropertyItem
+            key={property.id}
+            userId={userId}
+            property={property}
+            setShowDetail={setShowDetail}
+            setPropertyValue={setPropertyValue}
+            isLoading={false}
+          />
+        );
+      })}
+    </PropertiesGrid>
   );
 }

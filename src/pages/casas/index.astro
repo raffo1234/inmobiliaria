@@ -1,9 +1,7 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import Header from "@components/Header.astro";
 import SearchForm from "@components/SearchForm";
 import PropertiesResult from "@components/PropertiesResult";
-import Main from "@components/Main.astro";
 
 const userId = Astro.locals.currentUserId;
 const pathname = Astro.url.pathname;
@@ -11,9 +9,6 @@ const pathnameArray = pathname.split("/").filter((segment) => segment !== "");
 ---
 
 <Layout>
-  <Header />
-  <Main>
-    <SearchForm client:load pathnameArray={pathnameArray} />
-    <PropertiesResult client:only userId={userId} />
-  </Main>
+  <SearchForm client:load pathnameArray={pathnameArray} />
+  <PropertiesResult client:only userId={userId} />
 </Layout>

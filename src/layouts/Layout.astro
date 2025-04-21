@@ -1,10 +1,12 @@
 ---
 import Header from "@components/Header.astro";
 import Main from "@components/Main.astro";
+import PropertyPreview from "@components/PropertyPreview";
 import "@fontsource-variable/cinzel";
 import "@fontsource/nixie-one";
 
 const { pageTitle } = Astro.props;
+const userId = Astro.locals.currentUserId;
 ---
 
 <!doctype html>
@@ -34,7 +36,7 @@ const { pageTitle } = Astro.props;
     <title>
       {pageTitle}
       {pageTitle ? " | " : ""}
-      Rafael Meza | Web Developer
+      Inmuebles
     </title>
   </head>
   <body id="app" class="font-inter-tight">
@@ -42,5 +44,6 @@ const { pageTitle } = Astro.props;
     <Main>
       <slot />
     </Main>
+    <PropertyPreview userId={userId} currentHref={" "} client:load />
   </body>
 </html>

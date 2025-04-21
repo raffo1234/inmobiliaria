@@ -51,31 +51,20 @@ export default function PropertiesFavorite({ userId, likes }: { userId: string; 
   }
 
   return (
-    <>
-      {propertyValue ? (
-        <PropertyDetail
-          userId={userId}
-          showDetail={showDetail}
-          setShowDetail={setShowDetail}
-          propertyValue={propertyValue}
-          setPropertyValue={setPropertyValue}
-          currentHref={currentHref}
-        />
-      ) : null}
-      <PropertiesGrid>
-        {likes?.map(({ property }) => {
-          if (property)
-            return (
-              <PropertyItem
-                key={property.id}
-                userId={userId}
-                property={property}
-                setShowDetail={setShowDetail}
-                setPropertyValue={setPropertyValue}
-              />
-            );
-        })}
-      </PropertiesGrid>
-    </>
+    <PropertiesGrid>
+      {likes?.map(({ property }) => {
+        if (property)
+          return (
+            <PropertyItem
+              key={property.id}
+              userId={userId}
+              property={property}
+              setShowDetail={setShowDetail}
+              setPropertyValue={setPropertyValue}
+            />
+          );
+      })}
+    </PropertiesGrid>
+
   );
 }

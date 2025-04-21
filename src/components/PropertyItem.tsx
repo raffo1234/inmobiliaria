@@ -1,7 +1,7 @@
 import { Skeleton } from "antd";
 import hero from "@assets/hero.jpg";
-import { useState } from "react";
 import Like from "./Like";
+import { useGlobalState } from "@lib/globalState";
 
 interface Property {
   id: string;
@@ -36,21 +36,29 @@ export default function PropertyItem({
   isLoading: boolean;
 }) {
   const { id, title, company } = property;
+  const { propertyId, setPropertyId, toggle, isDisplayed } = useGlobalState()
 
   const onDisplayPropertyDetail = (
     event: React.MouseEvent<HTMLAnchorElement>,
-    property: Property
+    propertyId: string
   ) => {
     event.preventDefault();
 
+    setPropertyId(id)
+    toggle()
+
+    /*
     setShowDetail(true);
     setPropertyValue(property);
+    */
+
     const newUrl = `/inmueble/${property.id}`;
     const newState = { page: "property" };
     const newTitle = property.title;
     const app = document.getElementById("app") as HTMLElement;
     app.classList.add("overflow-hidden");
     window.history.pushState(newState, newTitle, newUrl);
+
   };
 
   if (isLoading) {
@@ -62,7 +70,8 @@ export default function PropertyItem({
       <div className="relative mb-4">
         <a
           href={`/inmueble/${id}`}
-          onClick={(event) => onDisplayPropertyDetail(event, property)}
+          onClick={(event) => onDisplayPropertyDetail(event, id)}
+
         >
           <img
             src={hero.src}
