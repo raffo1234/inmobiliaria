@@ -2,6 +2,7 @@ import { Skeleton } from "antd";
 import hero from "@assets/hero.jpg";
 import { useState } from "react";
 import Like from "./Like";
+
 interface Property {
   id: string;
   title: string;
@@ -11,7 +12,7 @@ interface Property {
     name: string;
     logo_url: string;
   };
-  user: {
+  user?: {
     id: string;
     email: string;
     name: string;
@@ -19,20 +20,7 @@ interface Property {
   };
 }
 
-const PropertyImage = ({ src, alt }: { src: string; alt: string }) => {
-  const [loading, setLoading] = useState(true);
 
-  return (
-    <img
-      src={src}
-      onLoad={() => setLoading(false)}
-      alt={alt}
-      title={alt}
-      loading="lazy"
-      className={`transition-opacity w-full aspect-[5/4] object-cover rounded-lg ${loading ? "opacity-0" : "opacity-100"}`}
-    />
-  );
-};
 
 export default function PropertyItem({
   userId,
@@ -76,7 +64,13 @@ export default function PropertyItem({
           href={`/inmueble/${id}`}
           onClick={(event) => onDisplayPropertyDetail(event, property)}
         >
-          <PropertyImage src={hero.src} alt={title} />
+          <img
+            src={hero.src}
+            alt={property.title}
+            title={property.title}
+            loading="lazy"
+            className="transition-opacity w-full aspect-[5/4] object-cover rounded-lg"
+          />
         </a>
         <div className="absolute right-0 top-0 p-4 gap-2 flex items-center">
           {/* <button className="p-3 hover:text-gray-500 bg-white rounded-full transition-colors duration-700 ease-in-out">

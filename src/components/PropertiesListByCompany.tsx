@@ -55,17 +55,15 @@ type Property = {
 export default function PropertiesListByCompany({
   userId,
   companyId,
+  properties
 }: {
   userId: string;
   companyId: string;
+  properties: Property[];
 }) {
   const [showDetail, setShowDetail] = useState(false);
   const [currentHref, setCurrentHref] = useState("");
   const [propertyValue, setPropertyValue] = useState<Property>();
-  const { data: properties = [], isLoading } = useSWR(
-    `${companyId}-company`,
-    () => fetcher(companyId)
-  );
 
   useEffect(() => {
     setCurrentHref(window.location.href);
@@ -92,7 +90,7 @@ export default function PropertiesListByCompany({
               property={property}
               setShowDetail={setShowDetail}
               setPropertyValue={setPropertyValue}
-              isLoading={isLoading}
+              isLoading={false}
             />
           );
         })}
