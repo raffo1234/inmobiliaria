@@ -5,8 +5,32 @@ import Header from "@components/Header.astro";
 import SearchForm from "@components/SearchForm";
 import Main from "@components/Main.astro";
 import HightLightSelect from "@components/HighLightSelect";
+import { supabase } from "@lib/supabase";
+import { PropertyState } from "@types/propertyState";
 
 const { currentUserId: userId } = Astro.locals;
+
+const { data: properties, error } = await supabase
+  .from("property")
+  .select(
+    `
+      id,
+      title,
+      user!property_user_id_fkey (
+        id,
+        email,
+        name,
+        image_url
+      ),
+      company!property_company_id_fkey (
+        id,
+        name,
+        logo_url
+      )
+    `,
+  )
+  .eq("state", PropertyState.ACTIVE)
+  .order("created_at", { ascending: false });
 ---
 
 <Layout>
@@ -22,6 +46,6 @@ const { currentUserId: userId } = Astro.locals;
     </h2>
     <SearchForm client:load />
     <HightLightSelect client:load />
-    <PropertiesList client:load userId={userId} />
+    <PropertiesList properties={properties} client:load userId={userId} />
   </Main>
 </Layout>
