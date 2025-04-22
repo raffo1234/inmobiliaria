@@ -7,7 +7,7 @@ export default function TypologiesGrid({
     <section
       className="grid gap-8"
       style={{
-        gridTemplateColumns: "repeat(auto-fit, minmax(236px, 1fr))",
+        gridTemplateColumns: "repeat(auto-fill, minmax(236px, 1fr))",
       }}
     >
       {children}
