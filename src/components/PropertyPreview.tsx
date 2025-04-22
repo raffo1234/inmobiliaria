@@ -8,7 +8,7 @@ import { PropertyState } from "@types/propertyState";
 import { supabase } from "@lib/supabase";
 
 const fetcher = async (propertyId: string) => {
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from("property")
     .select(
       `
@@ -30,11 +30,10 @@ const fetcher = async (propertyId: string) => {
     .eq("state", PropertyState.ACTIVE)
     .eq("id", propertyId)
     .order("created_at", { ascending: false })
-    .single()
+    .single();
 
   return data;
-}
-
+};
 
 interface Property {
   id: string;
@@ -66,12 +65,9 @@ export default function PropertyPreview({
   currentHref: string;
   userId: string;
 }) {
-  const { propertyId, toggle, isDisplayed } = useGlobalState()
+  const { propertyId, toggle, isDisplayed } = useGlobalState();
 
-  const { data: property } = useSWR(
-    propertyId,
-    () => fetcher(propertyId)
-  );
+  const { data: property } = useSWR(propertyId, () => fetcher(propertyId));
   const onClose = (event?: React.MouseEvent<HTMLElement>) => {
     if (!isDisplayed) return;
 

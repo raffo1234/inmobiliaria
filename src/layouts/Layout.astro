@@ -30,7 +30,7 @@ const userId = Astro.locals.currentUserId;
     <meta property="og:title" content="Rafael Meza" />
     <meta
       property="og:description"
-      content="Rafael Meza is a skilled web developer specializing in responsive web design, advanced CSS techniques, and building powerful user interfaces with React.js and JavaScript. Offering custom web development solutions that are fast, scalable, and tailored to your needs."
+      content="La app inmobiliaria más fail de usar para encontrar propiedades a tu medida. Busca inmuebles (incluyendo casas y departamentos) en venta y alquiler con herramientas de búsqueda optimizadas para tu facil uso. Visualiza cada propiedad con galerías de fotos y detalles clave. Guarda tus inmuebles favoritos y recibe notificaciones personalizadas. Simplifica tu proceso de buscar propiedades y encuentra tu espacio ideal."
     />
     <meta property="og:image" content="https://www.rafaelmeza.com/rafael.png" />
     <title>
@@ -44,6 +44,6 @@ const userId = Astro.locals.currentUserId;
     <Main>
       <slot />
     </Main>
-    <PropertyPreview userId={userId} currentHref={" "} client:load />
+    <PropertyPreview userId={userId} currentHref={Astro.url.href} client:load />
   </body>
 </html>
