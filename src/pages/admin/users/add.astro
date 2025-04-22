@@ -37,10 +37,11 @@ if (Astro.request.method === "POST") {
 ---
 
 <Dashboard pageTitle="Nuevo usuario">
+  <h1 class="mb-6 font-semibold text-lg block">Agregar Usuario</h1>
   <form method="post" action="/admin/users/add">
-    <div class="flex flex-col gap-4 mt-16">
+    <div class="flex flex-col gap-4">
       <fieldset>
-        <label for="username" class="block font-bold mb-2 font-manrope"
+        <label for="username" class="inline-block mb-2 text-sm"
           >Username</label
         >
         <input
@@ -48,11 +49,11 @@ if (Astro.request.method === "POST") {
           id="username"
           name="username"
           required
-          class="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+          class="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
         />
       </fieldset>
       <fieldset>
-        <label for="email" class="block mb-2.5 font-manrope font-bold"
+        <label for="email" class="inline-block mb-2 text-sm"
           >Email</label
         >
         <input
@@ -60,11 +61,11 @@ if (Astro.request.method === "POST") {
           id="email"
           name="email"
           required
-          class="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+          class="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
         />
       </fieldset>
       <fieldset>
-        <label for="password" class="block mb-2.5 font-manrope font-bold"
+        <label for="password" class="inline-block mb-2 text-sm"
           >Password</label
         >
         <input
@@ -72,7 +73,7 @@ if (Astro.request.method === "POST") {
           id="password"
           name="password"
           required
-          class="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+          class="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
         />
       </fieldset>
     </div>
@@ -99,12 +100,12 @@ if (Astro.request.method === "POST") {
     <footer class="mt-10">
       <a
         href="/admin/users"
-        class="inline-block text-center font-bold text-sm flex-grow px-6 py-2 border-gray-200 bg-white border-width-2 border rounded-md"
+        class="font-semibold disabled:border-gray-100 disabled:bg-gray-100 inline-block py-3 px-10 bg-white text-sm border border-gray-100 rounded-lg transition-colors hover:border-gray-200 duration-500 active:border-gray-300"
         >Cancel</a
       >
       <button
         type="submit"
-        class="inline-block px-6 flex-grow font-bold text-sm py-2 bg-blue-500 text-white rounded-md"
+        class="text-white font-semibold disabled:border-gray-100 disabled:bg-gray-100 inline-block py-3 px-10 text-sm bg-cyan-500 hover:bg-cyan-400 transition-colors duration-500 rounded-lg"
         >Save</button
       >
     </footer>

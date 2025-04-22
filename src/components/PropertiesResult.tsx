@@ -63,7 +63,7 @@ const fetcher = async (searchTerms: string) => {
 export default function PropertiesResult({ userId }: { userId: string }) {
   const searchTerms = getLastSlashValueFromCurrentUrl() || "";
 
-  const { data: properties = [] } = useSWR(
+  const { data: properties } = useSWR(
     `${userId}-${searchTerms}-result-properties`,
     () => fetcher(searchTerms),
   );
@@ -92,7 +92,7 @@ export default function PropertiesResult({ userId }: { userId: string }) {
 
   return (
     <PropertiesGrid>
-      {properties.map((property) => {
+      {properties?.map((property) => {
         return (
           <PropertyItem key={property.id} userId={userId} property={property} />
         );

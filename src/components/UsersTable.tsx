@@ -3,6 +3,7 @@ import DeleteUser from "@components//DeleteUser";
 import EditUser from "@components/EditUser";
 import TableSkeleton from "@components/TableSkeleton";
 import useSWR from "swr";
+import { Icon } from "@iconify/react";
 
 const fetchUsers = async () => {
   const { data, error } = await supabase
@@ -16,7 +17,7 @@ const fetchUsers = async () => {
       email,
       role_id,
       role(*)  
-      `
+      `,
     )
     .order("created_at", { ascending: false });
   if (error) throw error;
@@ -24,12 +25,7 @@ const fetchUsers = async () => {
 };
 
 export default function UsersTable() {
-  const {
-    data: users = [],
-    error,
-    isLoading,
-    mutate,
-  } = useSWR("users", fetchUsers);
+  const { data: users = [], error, isLoading } = useSWR("users", fetchUsers);
 
   if (error) return null;
 
@@ -39,21 +35,28 @@ export default function UsersTable() {
         <TableSkeleton cols={3} rows={3} />
       ) : (
         <>
-          <div className="flex justify-end mb-2">
-            <a
-              href="/admin/users/add"
-              className="inline-block py-2 px-6 text-sm bg-cyan-100 border border-cyan-500 rounded-md"
-            >
-              Agregar
-            </a>
-          </div>
+          <h1 className="mb-6 font-semibold text-lg block">Usuarios</h1>
           <div
             className="grid gap-3"
             style={{
               gridTemplateColumns: "repeat(auto-fill, minmax(170px, 1fr))",
             }}
           >
-            {users?.map(({ name, email, id, role, image_url }) => {
+            <a
+              href="/admin/users/add"
+              title="Agregar Usuario"
+              className="border-dashed border border-gray-200 hover:bg-gray-50 rounded-2xl p-4 flex hover:text-cyan-500 justify-center items-center"
+            >
+              <span className="text-center">
+                <Icon
+                  icon="solar:add-square-broken"
+                  fontSize={18}
+                  className="mx-auto mb-2"
+                />
+                <span>Agregar Usuario</span>
+              </span>
+            </a>
+            {users?.map(({ name, id, role, image_url }) => {
               return (
                 <div
                   key={id}
@@ -63,11 +66,14 @@ export default function UsersTable() {
                     src={image_url}
                     className="w-11 h-11 rounded-full mb-3 mx-auto"
                     alt={name}
+                    title={name}
                   />
-                  <div className="font-semibold w-full mb-1 text-center truncate">
+                  <div
+                    className="font-semibold w-full mb-1 text-center truncate"
+                    title={name}
+                  >
                     {name}
                   </div>
-                  {/* {email} */}
                   <div className="text-sm text-gray-500 w-full text-center mb-4">
                     {role.name}
                   </div>

@@ -73,7 +73,7 @@ export default function UserEditForm({ userId }: { userId: string }) {
             name="username"
             required
             defaultValue={user.username}
-            className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+            className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
           />
         </fieldset>
         <fieldset>
@@ -89,7 +89,7 @@ export default function UserEditForm({ userId }: { userId: string }) {
             name="email"
             defaultValue={user.email}
             required
-            className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:outline-2 focus:ring focus:ring-blue-500 focus:border-blue-500"
+            className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
           />
         </fieldset>
       </div>

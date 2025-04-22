@@ -5,14 +5,14 @@ export default function HightLightSelect() {
     <a
       href="/inmuebles/favoritos"
       title="Favoritos"
-      className="mb-8  py-2 text-sm px-4 border inline-block border-gray-300 rounded-lg transition-colors hover:border-gray-400 active:border-gray-600"
+      className="mb-8 py-1 pt-[5px] group px-6 border inline-block border-gray-300 rounded-lg transition-colors hover:border-cyan-300 active:border-cyan-400"
     >
-      <span className="flex items-center gap-1">
-        <span>Favoritos</span>
+      <span className="flex items-center gap-2">
+        <span className="pb-1">Favoritos</span>
         <Icon
-          fontSize={24}
-          icon="stash:chevron-down-light"
-          className="-rotate-90"
+          fontSize={18}
+          icon="solar:heart-bold"
+          className="group-hover:text-cyan-300 transition-colors "
         />
       </span>
     </a>

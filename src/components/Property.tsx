@@ -79,16 +79,19 @@ export default function Property({
   return (
     <>
       <div className="mx-auto max-w-[1250px] w-full mb-6">
-        <div className="flex items-center justify-between w-full mb-6">
-          <div className="flex items-center gap-2">
-            <a href={`/empresa/${company.id}`} title={company.name}>
-              <img src={company.logo_url} alt={company.name} className="w-28" />
-            </a>
-            <div>
-              <h2 className="text-2xl font-semibold mb-1">{title}</h2>
-              <p className="text-sm">{location}</p>
-            </div>
-          </div>
+        <div className="mb-4">
+          <h2 className="md:text-2xl text-lg font-semibold">{title}</h2>
+          {location ? <p className="text-sm mt-1">{location}</p> : null}
+        </div>
+        <div className="flex items-center gap-3 w-full justify-between mb-4">
+          <a
+            href={`/empresa/${company.id}`}
+            title={company.name}
+            className="flex items-center gap-2"
+          >
+            <img src={company.logo_url} alt={company.name} className="w-24" />
+            <span>{company.name}</span>
+          </a>
           <div className="flex gap-3">
             <Like propertyId={id} userId={userId} />
             <GetInTouch

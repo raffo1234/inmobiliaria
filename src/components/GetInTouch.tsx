@@ -7,6 +7,7 @@ import useSWR from "swr";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import InputError from "./InputError";
+import { Icon } from "@iconify/react";
 
 const fetcher = async (companyId: string) => {
   const { data, error } = await supabase
@@ -138,7 +139,12 @@ export default function GetInTouch({
         type="button"
         className="block px-6 py-2 bg-black text-white rounded-full transition-colors duration-700 hover:bg-gray-800 active:bg-gray-900"
       >
-        Contactar
+        <Icon
+          icon="solar:document-add-broken"
+          fontSize={24}
+          className="lg:hidden block"
+        />
+        <span className="hidden lg:block">Contactar</span>
       </button>
       <Modal
         footer={null}

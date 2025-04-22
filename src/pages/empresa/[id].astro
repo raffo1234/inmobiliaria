@@ -68,10 +68,13 @@ if (!id || !company) {
 <Layout>
   <SearchForm client:load />
   <div class="mb-5">
-    <img src={company.logo_url} width="300px" class="mb-5" alt={company.name} />
-    <h1 class="text-3xl font-semibold mb-4">
-      {company.name}
-    </h1>
+    <div class="flex items-center gap-3.5">
+
+      <img src={company.logo_url} width="150px" class="mb-5" alt={company.name} />
+      <h1 class="text-md lg:text-2xl font-semibold mb-4">
+        {company.name}
+      </h1>
+    </div>
     <p class="text-lg">{company.description}</p>
   </div>
   <div class="mb-8">
