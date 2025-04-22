@@ -50,7 +50,7 @@ export default function UsersTable() {
               <span className="text-center">
                 <Icon
                   icon="solar:add-square-broken"
-                  fontSize={18}
+                  fontSize={24}
                   className="mx-auto mb-2"
                 />
                 <span>Agregar Usuario</span>
