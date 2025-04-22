@@ -76,9 +76,9 @@ export default function AddRole() {
       ) : (
         <button
           onClick={() => setDisplayForm((prev) => !prev)}
-          className="w-full flex gap-1 items-center text-left hover:bg-gray-50 transition-colors duration-300 px-6 py-4 border-t border-gray-200"
+          className="w-full flex gap-3.5 items-center text-left hover:bg-gray-50 transition-colors duration-300 px-6 py-4 border-t border-gray-200"
         >
-          <Icon icon="basil:plus-solid" fontSize={18} />
+          <Icon icon="solar:add-square-broken" fontSize={18} />
           <span className="pb-1">Agregar Rol</span>
         </button>
       )}
