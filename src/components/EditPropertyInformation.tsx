@@ -22,6 +22,7 @@ type Inputs = {
   area: boolean;
   bathroom_count: string;
   bedroom_count: string;
+  company_id: string;
   size: string;
   price: string;
   created_at: string;
@@ -38,21 +39,35 @@ async function fetcher(id: string) {
   return data;
 }
 
+async function fetcherCompany(userId: string) {
+  const { data, error } = await supabase
+    .from("company")
+    .select("id, name")
+    .eq("user_id", userId);
+  if (error) throw error;
+  return data;
+}
+
 export default function EditPropertyInformation({
   id,
+  userId,
   hideModal,
 }: {
   id: string;
+  userId: string;
   hideModal: () => void;
 }) {
   const [messageApi, contextHolder] = message.useMessage();
+  const { data: companies } = useSWR(`${userId}-companies`, () =>
+    fetcherCompany(userId),
+  );
   const { data, error, isLoading } = useSWR(id, () => fetcher(id));
 
   const { reset, register, handleSubmit } = useForm<Inputs>({
     mode: "onBlur",
     defaultValues: useMemo(() => {
       return data;
-    }, [data]),
+    }, [data, companies]),
   });
 
   const success = () => {
@@ -74,8 +89,7 @@ export default function EditPropertyInformation({
       await mutate("admin-properties");
       success();
       hideModal();
-      console.error(error);
-    } catch (error) {
+    } catch {
       console.error(error);
       hideModal();
     }
@@ -83,7 +97,7 @@ export default function EditPropertyInformation({
 
   useEffect(() => {
     reset(data);
-  }, [data]);
+  }, [data, companies]);
 
   if (error) return <div>Error cargando datos ...</div>;
 
@@ -118,6 +132,28 @@ export default function EditPropertyInformation({
               <option>{PropertyState.DRAFT}</option>
               <option>{PropertyState.PENDING}</option>
               <option>{PropertyState.ACTIVE}</option>
+            </select>
+          </div>
+          <div>
+            <label
+              htmlFor="company_id"
+              className="block font-bold mb-2 font-manrope"
+            >
+              Empresa
+            </label>
+            <select
+              id="company_id"
+              {...register("company_id")}
+              required
+              className="w-full px-4 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+            >
+              {companies?.map(({ id, name }) => {
+                return (
+                  <option key={id} value={id}>
+                    {name}
+                  </option>
+                );
+              })}
             </select>
           </div>
           <div>

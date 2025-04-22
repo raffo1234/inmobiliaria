@@ -6,7 +6,13 @@ import { useState } from "react";
 import PropertyTypes from "./PropertyTypologies";
 import { Icon } from "@iconify/react";
 
-export default function EditProperty({ id }: { id: string }) {
+export default function EditProperty({
+  id,
+  userId,
+}: {
+  id: string;
+  userId: string;
+}) {
   const [open, setOpen] = useState(false);
 
   const showModal = () => {
@@ -21,7 +27,13 @@ export default function EditProperty({ id }: { id: string }) {
     {
       key: "1",
       label: "General",
-      children: <EditPropertyInformation id={id} hideModal={hideModal} />,
+      children: (
+        <EditPropertyInformation
+          id={id}
+          userId={userId}
+          hideModal={hideModal}
+        />
+      ),
     },
     {
       key: "2",

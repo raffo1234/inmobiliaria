@@ -3,8 +3,9 @@ import AdminPropertiesList from "@components/AdminPropertiesList";
 import Dashboard from "@layouts/Dashboard.astro";
 
 const userRoleId = Astro.locals.currentUserRoleId;
+const userId = Astro.locals.currentUserId;
 ---
 
 <Dashboard pageTitle="Propiedades">
-  <AdminPropertiesList client:load userRoleId={userRoleId} />
+  <AdminPropertiesList client:load userRoleId={userRoleId} userId={userId} />
 </Dashboard>

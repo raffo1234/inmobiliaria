@@ -16,7 +16,7 @@ type Property = {
   phase: string;
 };
 
-const PropertyItem = ({ id }: { id: string }) => {
+const PropertyItem = ({ id, userId }: { id: string; userId: string }) => {
   const [hover, setHover] = useState(false);
   return (
     <div
@@ -50,7 +50,7 @@ const PropertyItem = ({ id }: { id: string }) => {
             />
           </a>
           <div className="flex gap-1 item-center">
-            <EditProperty id={id} />
+            <EditProperty id={id} userId={userId} />
             <DeleteProperty id={id} />
           </div>
         </div>
@@ -78,7 +78,7 @@ const fetcher = async (): Promise<Property[]> => {
         size,
         image
       )
-    `
+    `,
     )
     .order("created_at", { ascending: false });
 
@@ -87,9 +87,11 @@ const fetcher = async (): Promise<Property[]> => {
 };
 
 export default function AdminPropertiesList({
+  userId,
   userRoleId,
 }: {
   userRoleId: string;
+  userId: string;
 }) {
   const {
     data: properties,
@@ -128,7 +130,7 @@ export default function AdminPropertiesList({
 
           return (
             <article key={id}>
-              <PropertyItem id={id} />
+              <PropertyItem id={id} userId={userId} />
               <div className="flex flex-col gap-3">
                 <h3 className="flex gap-4 justify-between w-full">
                   <a href={`inmueble/${id}`} className="font-semibold">

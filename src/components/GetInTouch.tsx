@@ -15,7 +15,7 @@ const fetcher = async (companyId: string) => {
       `
       id,
       title
-    `
+    `,
     )
     .eq("company_id", companyId)
     .eq("state", PropertyState.ACTIVE)
@@ -98,7 +98,7 @@ export default function GetInTouch({
 
   const { data: properties = [], isLoading } = useSWR(
     `${companyId || propertyId}-get-in-touch-company`,
-    () => (companyId ? fetcher(companyId) : null)
+    () => (companyId ? fetcher(companyId) : null),
   );
 
   const showModal = () => {
@@ -126,7 +126,6 @@ export default function GetInTouch({
         success();
       }
     } catch (error) {
-      error();
       console.error(error);
     }
   };
