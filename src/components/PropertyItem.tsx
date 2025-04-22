@@ -55,8 +55,8 @@ export default function PropertyItem({
   }
 
   return (
-    <article key={id} className="self-end">
-      <div className="relative mb-4">
+    <article>
+      <div className="relative mb-1">
         <a
           href={`/inmueble/${id}`}
           onClick={(event) => onDisplayPropertyDetail(event, id)}
@@ -76,11 +76,15 @@ export default function PropertyItem({
           <Like propertyId={id} userId={userId} />
         </div>
       </div>
-      <div className="flex items-center gap-2 mb-2">
-        <a href={`/empresa/${company.id}`} title={company.name}>
+      <div className="flex items-center gap-2">
+        <a
+          href={`/empresa/${company.id}`}
+          title={company.name}
+          className="flex-shrink-0"
+        >
           <img
             src={company.logo_url}
-            className="w-6 h-6 object-cover rounded-full"
+            className="w-8 h-8 object-cover rounded-full"
             alt={company.name}
             title={company.name}
           />

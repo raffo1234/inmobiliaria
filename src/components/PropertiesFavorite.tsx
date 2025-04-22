@@ -37,7 +37,7 @@ export default function PropertiesFavorite({
           href="/"
           className="text-lg flex items-center gap-2 px-6 pb-4 pt-3 bg-black text-white rounded-full transition-colors duration-700 hover:bg-gray-800 active:bg-gray-900"
         >
-          <Icon icon="octicon:home-24" fontSize={24}></Icon>
+          <Icon icon="solar:home-smile-angle-broken" fontSize={24}></Icon>
           <span>Ir al Inicio</span>
         </a>
       </div>
