@@ -1,18 +1,18 @@
-import { PropertyType } from "@types/propertyState";
-import { useState } from "react";
-import { create } from 'zustand';
+import { create } from "zustand";
 
 type GlobalState = {
-    propertyId: string;
-    toggle: () => void;
+    propertyId: string | undefined;
+    show: () => void;
+    hide: () => void;
     setPropertyId: (id: string) => void;
     isDisplayed: boolean;
 }
 
 export const useGlobalState = create<GlobalState>((set) => ({
-    propertyId: "",
+    propertyId: undefined,
     setPropertyId: (id) => set(() => ({ propertyId: id })),
-    toggle: () => set((state) => ({ isDisplayed: !state.isDisplayed })),
+    show: () => set(() => ({ isDisplayed: true })),
+    hide: () => set(() => ({ isDisplayed: false })),
     isDisplayed: false
 }));
 

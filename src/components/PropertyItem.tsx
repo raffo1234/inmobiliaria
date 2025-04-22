@@ -20,13 +20,9 @@ interface Property {
   };
 }
 
-
-
 export default function PropertyItem({
   userId,
   property,
-  setShowDetail,
-  setPropertyValue,
   isLoading,
 }: {
   userId: string;
@@ -36,21 +32,17 @@ export default function PropertyItem({
   isLoading: boolean;
 }) {
   const { id, title, company } = property;
-  const { propertyId, setPropertyId, toggle, isDisplayed } = useGlobalState()
+  const { setPropertyId, show, isDisplayed } = useGlobalState();
 
   const onDisplayPropertyDetail = (
     event: React.MouseEvent<HTMLAnchorElement>,
-    propertyId: string
+    id: string,
   ) => {
     event.preventDefault();
+    setPropertyId(id);
+    show();
 
-    setPropertyId(id)
-    toggle()
-
-    /*
-    setShowDetail(true);
-    setPropertyValue(property);
-    */
+    if (isDisplayed) return;
 
     const newUrl = `/inmueble/${property.id}`;
     const newState = { page: "property" };
@@ -58,7 +50,6 @@ export default function PropertyItem({
     const app = document.getElementById("app") as HTMLElement;
     app.classList.add("overflow-hidden");
     window.history.pushState(newState, newTitle, newUrl);
-
   };
 
   if (isLoading) {
@@ -71,7 +62,6 @@ export default function PropertyItem({
         <a
           href={`/inmueble/${id}`}
           onClick={(event) => onDisplayPropertyDetail(event, id)}
-
         >
           <img
             src={hero.src}

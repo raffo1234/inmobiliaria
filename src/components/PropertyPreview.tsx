@@ -65,9 +65,11 @@ export default function PropertyPreview({
   currentHref: string;
   userId: string;
 }) {
-  const { propertyId, toggle, isDisplayed } = useGlobalState();
+  const { propertyId, hide, isDisplayed } = useGlobalState();
 
-  const { data: property } = useSWR(propertyId, () => fetcher(propertyId));
+  const { data: property } = useSWR(propertyId, () =>
+    propertyId ? fetcher(propertyId) : null,
+  );
   const onClose = (event?: React.MouseEvent<HTMLElement>) => {
     if (!isDisplayed) return;
 
@@ -81,7 +83,7 @@ export default function PropertyPreview({
   };
 
   const handleClose = () => {
-    toggle();
+    hide();
     const app = document.getElementById("app") as HTMLElement;
     app.classList.remove("overflow-hidden");
     window.history.pushState({}, "", currentHref);
@@ -95,14 +97,28 @@ export default function PropertyPreview({
 
   useEffect(() => {
     document.addEventListener("keyup", function (event) {
-      if (!isDisplayed) return;
-      handleEscape(event);
+      if (isDisplayed) {
+        handleEscape(event);
+      }
+    });
+
+    document.addEventListener("popstate", function () {
+      if (isDisplayed) {
+        handleClose();
+      }
     });
 
     return () => {
       document.removeEventListener("keyup", function (event) {
-        if (!isDisplayed) return;
-        handleEscape(event);
+        if (isDisplayed) {
+          handleEscape(event);
+        }
+      });
+
+      document.removeEventListener("popstate", function () {
+        if (isDisplayed) {
+          handleClose();
+        }
       });
     };
   }, [isDisplayed]);
