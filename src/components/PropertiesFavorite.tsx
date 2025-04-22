@@ -25,7 +25,7 @@ export default function PropertiesFavorite({
       <div className="max-w-md mx-auto items-center flex flex-col gap-10">
         <div className="flex justify-center w-[300px] rounded-full items-center mx-auto bg-cyan-500 aspect-square bg-opacity-5">
           <Icon
-            icon="material-symbols-light:bookmark-heart-outline"
+            icon="solar:gallery-favourite-bold"
             className="text-[200px] text-cyan-500"
           />
         </div>
@@ -35,6 +35,7 @@ export default function PropertiesFavorite({
         </h1>
         <a
           href="/"
+          title="Ir al Inicio"
           className="text-lg flex items-center gap-2 px-6 pb-4 pt-3 bg-black text-white rounded-full transition-colors duration-700 hover:bg-gray-800 active:bg-gray-900"
         >
           <Icon icon="solar:home-smile-angle-broken" fontSize={24}></Icon>
