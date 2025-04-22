@@ -16,12 +16,12 @@ export default function Aside({
     <>
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className={`${isOpen ? "text-cyan-500" : ""} lg:invisible visible absolute right-2 top-[98px] bg-white z-30 w-12 h-12 border border-gray-200 rounded-xl flex justify-center items-center`}
+        className={`${isOpen ? "text-cyan-500" : ""} lg:invisible z-20 visible absolute right-2 top-4 bg-white w-12 h-12 border border-gray-200 rounded-xl flex justify-center items-center`}
       >
         <Icon icon="solar:hamburger-menu-broken" fontSize={24} />
       </button>
       <section
-        className={`${isOpen ? "opacity-100 visible translate-x-0" : "invisible opacity-0 lg:visible lg:opacity-100 lg:translate-x-0 -translate-x-2"} transition-all lg:w-[286px] min-h-lvh w-full absolute left-0 top-[89px] z-20 lg:static py-8 px-5 bg-white`}
+        className={`${isOpen ? "opacity-100 visible translate-x-0" : "invisible opacity-0 lg:visible lg:opacity-100 lg:translate-x-0 -translate-x-2"} transition-all lg:w-[286px] min-h-lvh w-full absolute left-0 top-0 lg:static py-8 px-5 bg-white z-10`}
       >
         <header className="mb-20">
           <div className="flex gap-4 items-center">

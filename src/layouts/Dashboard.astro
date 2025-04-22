@@ -51,7 +51,7 @@ const currentPath = Astro.url.pathname;
         <ProfilePopover />
       </div>
     </header>
-    <main class="flex items-start max-w-[1360px] mx-auto w-full min-h-lvh">
+    <main class="flex items-start max-w-[1360px] mx-auto w-full z-10 min-h-lvh relative">
       {
         user && user?.name && user?.image ? (
           <Aside
@@ -63,7 +63,7 @@ const currentPath = Astro.url.pathname;
         ) : null
       }
       <section
-        class="flex-grow relative z-10 px-4 pt-12 pb-4 lg:border-l min-h-lvh lg:border-gray-200"
+        class="flex-grow relative px-4 pt-12 pb-4 lg:border-l min-h-lvh lg:border-gray-200"
       >
         <slot />
       </section>
