@@ -4,9 +4,10 @@ import { ClientRouter } from "astro:transitions";
 import "@ant-design/v5-patch-for-react-19";
 import Aside from "../components/Aside";
 import ProfilePopover from "@components/ProfilePopover.astro";
+import { getSession } from "auth-astro/server";
+import { Icon } from "astro-icon/components";
 
 const { pageTitle } = Astro.props;
-import { getSession } from "auth-astro/server";
 const session = await getSession(Astro.request);
 const user = session?.user;
 
@@ -47,9 +48,16 @@ app inmobiliaria, aplicación inmobiliaria, inmobiliaria online, plataforma inmo
     <ClientRouter />
   </head>
   <body id="dashboard">
-    <header class="border-b p-5 flex justify-between relative z-20">
-      <div class="max-w-[1360px] mx-auto w-full px-4 flex justify-between">
-        <h1 class="text-4xl font-semibold">{pageTitle}</h1>
+    <header class="border-b py-3 flex justify-between relative z-20">
+      <div class="max-w-[1360px] px-4 mx-auto w-full flex justify-between items-center">
+        <h1 class="block">
+          <a href="/" title="Inicio | Inmobiliaria" class="flex items-center gap-2 text-sm font-semibold uppercase">
+            <span class="p-2 rounded-xl bg-cyan-500 block">
+              <Icon name="solar:home-smile-bold" class="text-3xl text-white" />
+            </span>
+            <span>Home</span>
+          </a>
+        </h1>
         <ProfilePopover />
       </div>
     </header>

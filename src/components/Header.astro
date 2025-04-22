@@ -1,6 +1,5 @@
 ---
-import { Image } from "astro:assets";
-import logo from "@assets/logo.png";
+import { Icon } from "astro-icon/components";
 import ProfilePopover from "@components/ProfilePopover.astro";
 ---
 
@@ -10,12 +9,11 @@ import ProfilePopover from "@components/ProfilePopover.astro";
   >
     <ul class="flex items-center gap-4 mr-4">
       <li>
-        <a href="/" class="block" title="Home">
-          <Image
-            src={logo}
-            class="w-20 object-cover object-top"
-            alt="Inmobiliaria"
-          />
+        <a href="/" title="Inicio | Inmobiliaria" class="flex items-center gap-2 text-sm font-semibold uppercase">
+          <span class="p-2 rounded-xl bg-cyan-500 block">
+            <Icon name="solar:home-smile-bold" class="text-3xl text-white" />
+          </span>
+          <span>Home</span>
         </a>
       </li>
     </ul>
