@@ -53,47 +53,34 @@ const fetcher = async (searchTerms: string) => {
 
   const { data, error } = searchTerms
     ? await supabase
-      .from("property")
-      .select(query)
-      .eq("state", PropertyState.ACTIVE)
-      .or(orConditions)
-      .order("created_at", { ascending: false })
+        .from("property")
+        .select(query)
+        .eq("state", PropertyState.ACTIVE)
+        .or(orConditions)
+        .order("created_at", { ascending: false })
     : await supabase
-      .from("property")
-      .select(query)
-      .eq("state", PropertyState.ACTIVE)
-      .order("created_at", { ascending: false });
+        .from("property")
+        .select(query)
+        .eq("state", PropertyState.ACTIVE)
+        .order("created_at", { ascending: false });
 
   if (error) throw error;
   return data;
 };
 
 export default function PropertiesResult({ userId }: { userId: string }) {
-  const [showDetail, setShowDetail] = useState(false);
-  const [currentHref, setCurrentHref] = useState("");
-  const [propertyValue, setPropertyValue] = useState<Property>();
   const searchTerms = getLastSlashValueFromCurrentUrl() || "";
 
   const { data: properties = [] } = useSWR(
     `${userId}-${searchTerms}-result-properties`,
-    () => fetcher(searchTerms)
+    () => fetcher(searchTerms),
   );
-
-  useEffect(() => {
-    setCurrentHref(window.location.href);
-  }, []);
 
   return (
     <PropertiesGrid>
       {properties.map((property) => {
         return (
-          <PropertyItem
-            key={property.id}
-            userId={userId}
-            property={property}
-            setShowDetail={setShowDetail}
-            setPropertyValue={setPropertyValue}
-          />
+          <PropertyItem key={property.id} userId={userId} property={property} />
         );
       })}
     </PropertiesGrid>

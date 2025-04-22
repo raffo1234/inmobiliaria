@@ -28,7 +28,7 @@ const { data: company } = await supabase
   .eq("id", Astro.params.id)
   .single();
 
-const { data: properties, error } = await supabase
+const { data: properties } = await supabase
   .from("property")
   .select(
     `

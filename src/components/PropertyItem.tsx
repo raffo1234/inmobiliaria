@@ -27,8 +27,6 @@ export default function PropertyItem({
 }: {
   userId: string;
   property: Property;
-  setShowDetail: (value: boolean) => void;
-  setPropertyValue: (property: Property) => void;
   isLoading: boolean;
 }) {
   const { id, title, company } = property;

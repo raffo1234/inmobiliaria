@@ -1,9 +1,5 @@
-import { supabase } from "../lib/supabase";
-import useSWR from "swr";
-import { useEffect, useState } from "react";
 import Property from "./Property";
 import PropertyItem from "./PropertyItem";
-import PropertyDetail from "./PropertyDetail";
 import PropertiesGrid from "./PropertiesGrid";
 import { Icon } from "@iconify/react";
 
@@ -17,15 +13,13 @@ type Property = {
   };
 };
 
-export default function PropertiesFavorite({ userId, likes }: { userId: string; likes: { property: Property[] }[] }) {
-  const [showDetail, setShowDetail] = useState(false);
-  const [propertyValue, setPropertyValue] = useState<Property | undefined>();
-  const [currentHref, setCurrentHref] = useState("");
-
-  useEffect(() => {
-    setCurrentHref(window.location.href);
-  }, []);
-
+export default function PropertiesFavorite({
+  userId,
+  likes,
+}: {
+  userId: string;
+  likes: { property: Property[] }[];
+}) {
   if (likes?.length === 0) {
     return (
       <div className="max-w-md mx-auto items-center flex flex-col gap-10">
@@ -59,12 +53,9 @@ export default function PropertiesFavorite({ userId, likes }: { userId: string; 
               key={property.id}
               userId={userId}
               property={property}
-              setShowDetail={setShowDetail}
-              setPropertyValue={setPropertyValue}
             />
           );
       })}
     </PropertiesGrid>
-
   );
 }

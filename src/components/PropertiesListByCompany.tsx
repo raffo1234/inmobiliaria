@@ -36,7 +36,7 @@ const fetcher = async (companyId: string) => {
         logo_url,
         image_url
       )
-    `
+    `,
     )
     .eq("company_id", companyId)
     .eq("state", PropertyState.ACTIVE)
@@ -55,34 +55,27 @@ type Property = {
 export default function PropertiesListByCompany({
   userId,
   companyId,
-  properties
+  properties,
 }: {
   userId: string;
   companyId: string;
   properties: Property[];
 }) {
-  const [showDetail, setShowDetail] = useState(false);
-  const [currentHref, setCurrentHref] = useState("");
-  const [propertyValue, setPropertyValue] = useState<Property>();
-
-  useEffect(() => {
-    setCurrentHref(window.location.href);
-  }, []);
-
   return (
-    <PropertiesGrid>
-      {properties.map((property) => {
-        return (
-          <PropertyItem
-            key={property.id}
-            userId={userId}
-            property={property}
-            setShowDetail={setShowDetail}
-            setPropertyValue={setPropertyValue}
-            isLoading={false}
-          />
-        );
-      })}
-    </PropertiesGrid>
+    <>
+      {companyId}
+      <PropertiesGrid>
+        {properties.map((property) => {
+          return (
+            <PropertyItem
+              key={property.id}
+              userId={userId}
+              property={property}
+              isLoading={false}
+            />
+          );
+        })}
+      </PropertiesGrid>
+    </>
   );
 }
