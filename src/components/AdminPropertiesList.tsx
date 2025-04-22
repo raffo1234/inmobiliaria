@@ -112,15 +112,19 @@ export default function AdminPropertiesList({
       >
         <a
           href="/admin/property/add"
-          className="h-[320px] flex justify-center items-center rounded-lg bg-gray-100 hover:bg-gray-200 active:bg-gray-300 transition-colors"
+          title="Agregar Inmueble"
+          className="border-dashed border border-gray-200 hover:bg-gray-50 rounded-2xl p-4 flex hover:text-cyan-500 justify-center items-center"
         >
-          <Icon
-            icon="material-symbols-light:add-2-rounded"
-            className="text-xl"
-          />
+          <span className="text-center">
+            <Icon
+              icon="solar:add-square-broken"
+              fontSize={24}
+              className="mx-auto mb-2"
+            />
+            <span>Agregar Inmueble</span>
+          </span>
         </a>
       </CheckPermission>
-
       {Array.isArray(properties) &&
         properties.map((property) => {
           const { id, title, state, phase } = property;
