@@ -77,6 +77,14 @@ interface Property {
     name: string;
     image_url: string;
   };
+  company: {
+    id: string;
+    name: string;
+  };
+  typology: {
+    id: string;
+    name: string;
+  }
 }
 
 export default function PropertyPreview({
@@ -123,7 +131,7 @@ export default function PropertyPreview({
       }
     });
 
-    document.addEventListener("popstate", function () {
+    window.addEventListener("popstate", function () {
       if (isDisplayed) {
         handleClose();
       }
@@ -136,7 +144,7 @@ export default function PropertyPreview({
         }
       });
 
-      document.removeEventListener("popstate", function () {
+      window.removeEventListener("popstate", function () {
         if (isDisplayed) {
           handleClose();
         }
