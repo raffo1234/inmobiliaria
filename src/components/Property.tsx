@@ -137,7 +137,7 @@ export default function Property({
               </div>
               <div className="text-xs text-gray-400 mb-1">{phase}</div>
               {phase === PropertyPhase.PLANOS ||
-              phase === PropertyPhase.CONSTRUCCION ? (
+                phase === PropertyPhase.CONSTRUCCION ? (
                 <div className="text-sm">
                   <span className="text-xs">Entrega:</span>{" "}
                   <span className="font-semibold">
@@ -183,8 +183,13 @@ export default function Property({
           </section>
         </div>
       </div>
-      <h3 className="mb-6 text-xl font-semibold">Conoce mas:</h3>
-      <p className="leading-relaxed">{property.description}</p>
+      {property.description ? (
+        <>
+          <h3 className="mb-6 text-xl font-semibold">Conoce mas:</h3>
+          <p className="leading-relaxed">{property.description}</p>
+        </>
+      ) : null}
+
       <Typologies propertyId={property.id} />
     </>
   );

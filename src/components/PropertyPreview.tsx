@@ -14,6 +14,17 @@ const fetcher = async (propertyId: string) => {
       `
       id,
       title,
+      description,
+      state,
+      user_id,
+      size,
+      delivery_at,
+      bathroom_count,
+      phase,
+      price,
+      location,
+      bedroom_count,
+      company_id,
       user!property_user_id_fkey (
         id,
         email,
@@ -24,6 +35,16 @@ const fetcher = async (propertyId: string) => {
         id,
         name,
         logo_url
+      ),
+      typology (
+        id,
+        name,
+        description,
+        price,
+        size,
+        stock,
+        bathroom_count,
+        bedroom_count
       )
     `,
     )

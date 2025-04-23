@@ -49,6 +49,16 @@ const { data: property, error } = await supabase
         id,
         name,
         logo_url
+      ),
+      typology (
+        id,
+        name,
+        description,
+        price,
+        size,
+        stock,
+        bathroom_count,
+        bedroom_count
       )
     `,
   )
