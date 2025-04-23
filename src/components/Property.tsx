@@ -189,7 +189,25 @@ export default function Property({
           <p className="leading-relaxed">{property.description}</p>
         </>
       ) : null}
-
+      <div className="py-20">
+        <div className="relative w-full py-12">
+          <div className="absolute top-1/2 -translate-y-1/2 w-full h-[2px] bg-gray-100" />
+          <a href={`/empresa/${company.id}`} title={company.name} className="left-1/2 -translate-x-1/2 absolute top-1/2 -translate-y-1/2 p-3 bg-white">
+            <img src={company.logo_url} alt={company.name} className="h-20" />
+          </a>
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          <a href={`/empresa/${company.id}`} title={company.name}>{company.name}</a>
+          <div>
+          <GetInTouch
+            propertyId={id}
+            companyName={company.name}
+            companyLogo={company.logo_url}
+            propertyTitle={property.title}
+            />
+          </div>
+        </div>
+      </div>
       <Typologies propertyId={property.id} />
     </>
   );

@@ -110,7 +110,7 @@ export default function Typologies({ propertyId }: { propertyId: string }) {
 
   return typologies.length > 0 ? (
     <>
-      <h3 className="mt-10 mb-6 text-xl font-semibold">
+      <h3 className="mb-6 text-xl font-semibold">
         Encuentra tu modelo ideal:
       </h3>
       <TypologiesGrid>
