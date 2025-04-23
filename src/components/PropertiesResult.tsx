@@ -2,7 +2,7 @@ import { supabase } from "../lib/supabase";
 import useSWR from "swr";
 import PropertyItem from "./PropertyItem";
 import getLastSlashValueFromCurrentUrl from "src/utils/getLastSlashValueFromCurrentUrl";
-import { PropertyState } from "@types/propertyState";
+import { PropertyState, PropertyType } from "@types/propertyState";
 import PropertiesGrid from "./PropertiesGrid";
 import { Icon } from "@iconify/react";
 
@@ -10,9 +10,9 @@ const columnsToSearch = [
   "title",
   "description",
   "location",
-  "type",
   "price",
   "state",
+  "type",
   "phase",
   "size",
   "bathroom_count",
@@ -24,6 +24,7 @@ const query = `
           title,
           description,
           user_id,
+          type,
           user!property_user_id_fkey (
             id,
             email,
@@ -38,21 +39,26 @@ const query = `
           )
         `;
 
-const fetcher = async (searchTerms: string) => {
+const fetcher = async (searchTerms: string, pathnameArray: string[]) => {
   const orConditions = columnsToSearch
     .map((column) => `${column}.ilike.%${searchTerms}%`)
     .join(",");
-
+    
+   const propertyType = (pathnameArray?.at(0)?.toUpperCase() as PropertyType) ||
+    PropertyType.APARTMENT
+  
   const { data, error } = searchTerms
     ? await supabase
-        .from("property")
-        .select(query)
-        .eq("state", PropertyState.ACTIVE)
-        .or(orConditions)
-        .order("created_at", { ascending: false })
+      .from("property")
+      .select(query)
+      .eq("state", PropertyState.ACTIVE)
+      .eq("type", propertyType)
+      .or(orConditions)
+      .order("created_at", { ascending: false })
     : await supabase
         .from("property")
         .select(query)
+        .eq("type", propertyType)
         .eq("state", PropertyState.ACTIVE)
         .order("created_at", { ascending: false });
 
@@ -60,12 +66,11 @@ const fetcher = async (searchTerms: string) => {
   return data;
 };
 
-export default function PropertiesResult({ userId }: { userId: string }) {
+export default function PropertiesResult({ userId, pathnameArray }: { userId: string; pathnameArray: string[] }) {
   const searchTerms = getLastSlashValueFromCurrentUrl() || "";
-
   const { data: properties } = useSWR(
     `${userId}-${searchTerms}-result-properties`,
-    () => fetcher(searchTerms),
+    () => fetcher(searchTerms, pathnameArray)
   );
 
   if (properties?.length === 0) {

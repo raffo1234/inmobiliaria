@@ -1,3 +1,4 @@
+import { PropertyType } from "@types/propertyState";
 import { create } from "zustand";
 
 type GlobalState = {
@@ -5,7 +6,9 @@ type GlobalState = {
     show: () => void;
     hide: () => void;
     setPropertyId: (id: string) => void;
+    setPropertyType: (propertyType: PropertyType) => void;
     isDisplayed: boolean;
+    propertyType: string;
 }
 
 export const useGlobalState = create<GlobalState>((set) => ({
@@ -13,7 +16,9 @@ export const useGlobalState = create<GlobalState>((set) => ({
     setPropertyId: (id) => set(() => ({ propertyId: id })),
     show: () => set(() => ({ isDisplayed: true })),
     hide: () => set(() => ({ isDisplayed: false })),
-    isDisplayed: false
+    isDisplayed: false,
+    propertyType: PropertyType.APARTMENT,
+    setPropertyType: (propertyType) => set(() => ({ propertyType }))
 }));
 
 
