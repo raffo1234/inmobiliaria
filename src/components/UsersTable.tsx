@@ -1,9 +1,22 @@
 import { supabase } from "@lib/supabase";
 import DeleteUser from "@components//DeleteUser";
 import EditUser from "@components/EditUser";
-import TableSkeleton from "@components/TableSkeleton";
-import useSWR from "swr";
 import { Icon } from "@iconify/react";
+
+type Role = {
+  id: string;
+  name: string;
+}
+
+type User = {
+  id: string;
+  name: string;
+  image_url: string;
+  username: string;
+  email: string;
+  role_id: string;
+  role: Role;
+}
 
 const fetchUsers = async () => {
   const { data, error } = await supabase
@@ -24,17 +37,10 @@ const fetchUsers = async () => {
   return data;
 };
 
-export default function UsersTable() {
-  const { data: users = [], error, isLoading } = useSWR("users", fetchUsers);
-
-  if (error) return null;
-
+export default function UsersTable({ users }: { users: User[] }) {
+  
   return (
-    <div className="max-w-[1200px] mx-auto w-full">
-      {isLoading ? (
-        <TableSkeleton cols={3} rows={3} />
-      ) : (
-        <>
+    <div className="max-w-[1200px] mx-auto w-full">  
           <h1 className="mb-6 font-semibold text-lg block">Usuarios</h1>
           <div
             className="grid gap-3"
@@ -85,8 +91,6 @@ export default function UsersTable() {
               );
             })}
           </div>
-        </>
-      )}
-    </div>
+        </div>
   );
 }

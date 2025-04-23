@@ -1,8 +1,24 @@
 ---
 import UsersTable from "@components/UsersTable";
 import Dashboard from "@layouts/Dashboard.astro";
+import { supabase } from "@lib/supabase";
+
+const { data:users } = await supabase
+    .from("user")
+    .select(
+      `
+      id,
+      image_url,
+      name,
+      username,
+      email,
+      role_id,
+      role(*)  
+      `,
+    )
+    .order("created_at", { ascending: false });
 ---
 
 <Dashboard pageTitle="Usuarios">
-  <UsersTable client:load />
+  <UsersTable client:load users={users} />
 </Dashboard>
