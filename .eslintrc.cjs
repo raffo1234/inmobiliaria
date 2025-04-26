@@ -4,6 +4,7 @@ module.exports = {
     "plugin:prettier/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:astro/recommended",
+    "prettier/react"
   ],
   plugins: ["astro"],
   rules: {

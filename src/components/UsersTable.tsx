@@ -1,4 +1,3 @@
-import { supabase } from "@lib/supabase";
 import DeleteUser from "@components//DeleteUser";
 import EditUser from "@components/EditUser";
 import { Icon } from "@iconify/react";
@@ -17,25 +16,6 @@ type User = {
   role_id: string;
   role: Role;
 }
-
-const fetchUsers = async () => {
-  const { data, error } = await supabase
-    .from("user")
-    .select(
-      `
-      id,
-      image_url,
-      name,
-      username,
-      email,
-      role_id,
-      role(*)  
-      `,
-    )
-    .order("created_at", { ascending: false });
-  if (error) throw error;
-  return data;
-};
 
 export default function UsersTable({ users }: { users: User[] }) {
   

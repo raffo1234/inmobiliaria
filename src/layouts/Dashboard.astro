@@ -6,6 +6,7 @@ import Aside from "../components/Aside";
 import ProfilePopover from "@components/ProfilePopover.astro";
 import { getSession } from "auth-astro/server";
 import { Icon } from "astro-icon/components";
+import GlobalModal from "@components/GlobalModal";
 
 const { pageTitle } = Astro.props;
 const session = await getSession(Astro.request);
@@ -78,5 +79,6 @@ app inmobiliaria, aplicación inmobiliaria, inmobiliaria online, plataforma inmo
         <slot />
       </section>
     </main>
+    <GlobalModal client:load />
   </body>
 </html>
