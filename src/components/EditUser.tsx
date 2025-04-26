@@ -94,7 +94,7 @@ export default function EditUser({ userId }: { userId: string }) {
     ) : (
       <>
         <h2 className="mb-6 font-semibold text-lg block">
-          Agregar Usuario
+          Editar Usuario
         </h2>
         <form onSubmit={handleSubmit(onSubmit)} id="editUser">
           <fieldset className="flex flex-col gap-4">
@@ -108,7 +108,7 @@ export default function EditUser({ userId }: { userId: string }) {
                 id="name"
                 {...register("name")}
                 required
-                className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
               />
             </div>
             <div>
@@ -124,7 +124,7 @@ export default function EditUser({ userId }: { userId: string }) {
                 id="username"
                 {...register("username")}
                 required
-                className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
               />
             </div>
             <div>
@@ -137,7 +137,7 @@ export default function EditUser({ userId }: { userId: string }) {
                 id="email"
                 {...register("email")}
                 required
-                className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
               />
             </div>
             <div>
@@ -150,7 +150,7 @@ export default function EditUser({ userId }: { userId: string }) {
               <select
                 id="role_id"
                 {...register("role_id")}
-                className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
               >
                 {roles?.map(({ id, name }) => {
                   return (
