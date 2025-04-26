@@ -35,7 +35,7 @@ const rolesFetcher = async () => {
 };
 
 export default function EditUser({ userId }: { userId: string }) {
-  const { setModalContent, setModalOpen } = useGlobalState()
+  const { setModalContent, setModalOpen } = useGlobalState();
   const [isUpdating, setIsUpdating] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const [open, setOpen] = useState(false);
@@ -89,101 +89,104 @@ export default function EditUser({ userId }: { userId: string }) {
   const showGlobalModal = () => {
     setModalContent(
       <>
-      {isLoading ? (
-      <FormSkeleton rows={2} />
-    ) : (
-      <>
-        <h2 className="mb-6 font-semibold text-lg block">
-          Editar Usuario
-        </h2>
-        <form onSubmit={handleSubmit(onSubmit)} id="editUser">
-          <fieldset className="flex flex-col gap-4">
-            <div>
-              <label htmlFor="name" className="inline-block mb-2 text-sm">
-                Nombre
-              </label>
-              <input
-                disabled
-                type="text"
-                id="name"
-                {...register("name")}
-                required
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="username"
-                className="inline-block mb-2 text-sm"
-              >
-                Username
-              </label>
-              <input
-                disabled
-                type="text"
-                id="username"
-                {...register("username")}
-                required
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="inline-block mb-2 text-sm">
-                Email
-              </label>
-              <input
-                disabled
-                type="email"
-                id="email"
-                {...register("email")}
-                required
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="role_id"
-                className="inline-block mb-2 text-sm"
-              >
-                Role
-              </label>
-              <select
-                id="role_id"
-                {...register("role_id")}
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
-              >
-                {roles?.map(({ id, name }) => {
-                  return (
-                    <option value={id} key={id}>
-                      {name}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-          </fieldset>
-          <footer className="mt-10 flex items-center gap-3.5 justify-end">
-            <button
-              type="button"
-              onClick={()=> setModalOpen(false)}
-              className="font-semibold disabled:border-gray-100 disabled:bg-gray-100 inline-block py-3 px-10 bg-white text-sm border border-gray-100 rounded-lg transition-colors hover:border-gray-200 duration-500 active:border-gray-300"
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              className="text-white font-semibold disabled:border-gray-100 disabled:bg-gray-100 inline-block py-3 px-10 text-sm bg-cyan-500 hover:bg-cyan-400 transition-colors duration-500 rounded-lg"
-            >
-              Guardar
-            </button>
-          </footer>
-        </form>
-      </>
-      )}
-      </>
-    )
+        {isLoading ? (
+          <FormSkeleton rows={2} />
+        ) : (
+          <>
+            <h2 className="mb-6 font-semibold text-lg block">Editar Usuario</h2>
+            <form onSubmit={handleSubmit(onSubmit)} id="editUser">
+              <fieldset className="flex flex-col gap-4">
+                <div>
+                  <label htmlFor="name" className="inline-block mb-2 text-sm">
+                    Nombre
+                  </label>
+                  <input
+                    disabled
+                    type="text"
+                    id="name"
+                    {...register("name")}
+                    required
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="username"
+                    className="inline-block mb-2 text-sm"
+                  >
+                    Username
+                  </label>
+                  <input
+                    disabled
+                    type="text"
+                    id="username"
+                    {...register("username")}
+                    required
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="inline-block mb-2 text-sm">
+                    Email
+                  </label>
+                  <input
+                    disabled
+                    type="email"
+                    id="email"
+                    {...register("email")}
+                    required
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="role_id"
+                    className="inline-block mb-2 text-sm"
+                  >
+                    Role
+                  </label>
+                  <div className="relative">
+                    <select
+                      id="role_id"
+                      {...register("role_id")}
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
+                    >
+                      {roles?.map(({ id, name }) => {
+                        return (
+                          <option value={id} key={id}>
+                            {name}
+                          </option>
+                        );
+                      })}
+                    </select>
+                    <div className="absolute top-1/2 -translate-y-1/2 right-1 pr-3 pointer-events-none bg-inherit">
+                      <Icon icon="solar:alt-arrow-down-linear" fontSize={16} />
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+              <footer className="mt-10 flex items-center gap-3.5 justify-end">
+                <button
+                  type="button"
+                  onClick={() => setModalOpen(false)}
+                  className="font-semibold disabled:border-gray-100 disabled:bg-gray-100 inline-block py-3 px-10 bg-white text-sm border border-gray-100 rounded-lg transition-colors hover:border-gray-200 duration-500 active:border-gray-300"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="text-white font-semibold disabled:border-gray-100 disabled:bg-gray-100 inline-block py-3 px-10 text-sm bg-cyan-500 hover:bg-cyan-400 transition-colors duration-500 rounded-lg"
+                >
+                  Guardar
+                </button>
+              </footer>
+            </form>
+          </>
+        )}
+      </>,
+    );
     setModalOpen(true);
-  }
+  };
 
   useEffect(() => {
     reset(user);
