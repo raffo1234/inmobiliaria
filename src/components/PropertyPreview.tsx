@@ -84,7 +84,7 @@ interface Property {
   typology: {
     id: string;
     name: string;
-  }
+  };
 }
 
 export default function PropertyPreview({
@@ -114,8 +114,10 @@ export default function PropertyPreview({
   const handleClose = () => {
     hide();
     const app = document.getElementById("app") as HTMLElement;
-    app.classList.remove("overflow-hidden");
     window.history.pushState({}, "", currentHref);
+    setTimeout(() => {
+      app.classList.remove("overflow-hidden");
+    }, 50);
   };
 
   const handleEscape = (event: KeyboardEvent) => {
@@ -152,12 +154,14 @@ export default function PropertyPreview({
     };
   }, [isDisplayed]);
 
-  return isDisplayed ? (
+  return (
     <div
       onClick={(event) => onClose(event)}
-      className="bg-black fixed z-30 top-0 cursor-pointer left-0 w-full h-full overflow-auto lg:p-6 bg-opacity-40"
+      className={`${isDisplayed ? "bg-opacity-40 visible" : "opacity-0 invisible"} bg-black fixed z-30 top-0 cursor-pointer left-0 w-full h-full overflow-auto lg:p-6 bg-opacity-40 transition-all duration-200`}
     >
-      <div className="max-w-[1816px] py-20 px-4 animate-slideUp cursor-default mx-auto relative delay-50 transform-all lg:rounded-lg bg-white min-h-lvh">
+      <div
+        className={`${isDisplayed ? "translate-y-0 opacity-100" : "translate-y-10 opacity-80"} transition-all duration-200 max-w-[1816px] py-20 px-4 animate-slideUp cursor-default mx-auto relative delay-50 transform-all lg:rounded-lg bg-white min-h-lvh`}
+      >
         <div className="mx-auto max-w-[1024px] w-full">
           <Property property={property} userId={userId} />
         </div>
@@ -169,5 +173,5 @@ export default function PropertyPreview({
         </Button>
       </div>
     </div>
-  ) : null;
+  );
 }

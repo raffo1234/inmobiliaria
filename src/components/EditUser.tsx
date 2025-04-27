@@ -149,7 +149,7 @@ export default function EditUser({ userId }: { userId: string }) {
                     <select
                       id="role_id"
                       {...register("role_id")}
-                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500 bg-white"
                     >
                       {roles?.map(({ id, name }) => {
                         return (
@@ -159,13 +159,13 @@ export default function EditUser({ userId }: { userId: string }) {
                         );
                       })}
                     </select>
-                    <div className="absolute top-1/2 -translate-y-1/2 right-1 pr-3 pointer-events-none bg-inherit">
+                    <div className="absolute top-1/2 -translate-y-1/2 right-1 pr-3 pointer-events-none bg-white">
                       <Icon icon="solar:alt-arrow-down-linear" fontSize={16} />
                     </div>
                   </div>
                 </div>
               </fieldset>
-              <footer className="mt-10 flex items-center gap-3.5 justify-end">
+              <footer className="flex items-center gap-3.5 justify-end mt-6 pt-6">
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}

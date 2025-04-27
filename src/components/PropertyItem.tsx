@@ -37,16 +37,16 @@ export default function PropertyItem({
     id: string,
   ) => {
     event.preventDefault();
+    if (isDisplayed) return;
+
     setPropertyId(id);
     show();
 
-    if (isDisplayed) return;
-
-    const newUrl = `/inmueble/${property.id}`;
-    const newState = { page: "property" };
-    const newTitle = property.title;
     const app = document.getElementById("app") as HTMLElement;
     app.classList.add("overflow-hidden");
+    const newUrl = `/inmueble/${property.id}`;
+    const newTitle = property.title;
+    const newState = { page: property.id };
     window.history.pushState(newState, newTitle, newUrl);
   };
 
