@@ -1,9 +1,7 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import PropertiesList from "@components/PropertiesList";
-import Header from "@components/Header.astro";
 import SearchForm from "@components/SearchForm";
-import Main from "@components/Main.astro";
 import HightLightSelect from "@components/HighLightSelect";
 import { supabase } from "@lib/supabase";
 import { PropertyState } from "@types/propertyState";
@@ -45,5 +43,4 @@ const { data: properties, error } = await supabase
   <SearchForm client:load />
   <HightLightSelect client:load />
   <PropertiesList properties={properties} client:load userId={userId} />
-  
 </Layout>

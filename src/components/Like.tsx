@@ -6,6 +6,7 @@ import { Icon } from "@iconify/react";
 import { signIn } from "auth-astro/client";
 import logo from "@assets/logo.png";
 import { useGlobalState } from "@lib/globalState";
+import Logo from "./Logo";
 
 const fetcherByUser = async (propertyId: string, userId: string) => {
   const { count, error } = await supabase
@@ -60,12 +61,10 @@ export default function Like({
   const showGlobalModal = () => {
     setModalContent(
       <>
-        <img
-          src={logo.src}
-          className="w-20 object-cover object-top mb-8"
-          alt="Inmobiliaria"
-        />
-        <h3 className="text-xl mb-10">
+        <div className="mb-12">
+          <Logo />
+        </div>
+        <h3 className="text-xl mb-10 w-full text-center">
           Para indicar que te gusta, inicia sesion.
         </h3>
         <button
