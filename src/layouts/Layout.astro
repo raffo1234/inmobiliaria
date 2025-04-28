@@ -1,4 +1,5 @@
 ---
+import GlobalModal from "@components/GlobalModal";
 import Header from "@components/Header.astro";
 import Main from "@components/Main.astro";
 import PropertyPreview from "@components/PropertyPreview";
@@ -46,5 +47,6 @@ const userId = Astro.locals.currentUserId;
       <slot />
     </Main>
     <PropertyPreview userId={userId} currentHref={Astro.url.href} client:load />
+    <GlobalModal client:load />
   </body>
 </html>

@@ -3,9 +3,9 @@ import { useState } from "react";
 import getLastSlashValueFromCurrentUrl from "src/utils/getLastSlashValueFromCurrentUrl";
 import useSWR, { mutate } from "swr";
 import { Icon } from "@iconify/react";
-import { Modal } from "antd";
 import { signIn } from "auth-astro/client";
 import logo from "@assets/logo.png";
+import { useGlobalState } from "@lib/globalState";
 
 const fetcherByUser = async (propertyId: string, userId: string) => {
   const { count, error } = await supabase
@@ -39,42 +39,55 @@ export default function Like({
   size?: "medium" | "small";
   hasCounter?: boolean;
 }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { setModalContent, setModalOpen } = useGlobalState();
   const [isLiking, setIsLiking] = useState(false);
   const keyByUser = `${userId}-${propertyId}-user-like`;
   const keyByProperty = `${userId}-${propertyId}-property-like`;
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const hideModal = () => {
-    setIsModalOpen(false);
-  };
 
   const {
     data: countByUser,
     isLoading: isLoadingByUser,
     mutate: mutateByUser,
-  } = useSWR(
-    keyByUser,
-    () => (userId ? fetcherByUser(propertyId, userId) : null)
+  } = useSWR(keyByUser, () =>
+    userId ? fetcherByUser(propertyId, userId) : null,
   );
 
   const { data: countByProperty, mutate: mutateByProperty } = useSWR(
     keyByProperty,
-    () => fetcherByProperty(propertyId)
+    () => fetcherByProperty(propertyId),
   );
+
+  const showGlobalModal = () => {
+    setModalContent(
+      <>
+        <img
+          src={logo.src}
+          className="w-20 object-cover object-top mb-8"
+          alt="Inmobiliaria"
+        />
+        <h3 className="text-xl mb-10">
+          Para indicar que te gusta, inicia sesion.
+        </h3>
+        <button
+          onClick={() => signIn("google")}
+          className="text-lg block w-full px-6 pb-4 pt-3 bg-black text-white rounded-full transition-colors duration-700 hover:bg-gray-800 active:bg-gray-900"
+        >
+          Iniciar Sesión
+        </button>
+      </>,
+    );
+    setModalOpen(true);
+  };
 
   const handleLike = async (propertyId: string) => {
     const lastSlashValue = getLastSlashValueFromCurrentUrl() || "";
-    
+
     if (!userId) {
-      showModal();
+      showGlobalModal();
       return;
     }
-    
-    setIsLiking(true)
+
+    setIsLiking(true);
     if (countByUser === 0) {
       await supabase.from("like").insert([
         {
@@ -84,7 +97,7 @@ export default function Like({
       ]);
       await mutateByUser();
       await mutateByProperty();
-      setIsLiking(false)
+      setIsLiking(false);
 
       if (!lastSlashValue.includes("favorito")) {
         await mutate(`${userId}-likes-properties`, null);
@@ -97,7 +110,7 @@ export default function Like({
         .eq("user_id", userId);
       await mutateByUser();
       await mutateByProperty();
-      setIsLiking(false)
+      setIsLiking(false);
 
       if (!lastSlashValue.includes("favorito")) {
         await mutate(`${userId}-likes-properties`, null);
@@ -128,29 +141,6 @@ export default function Like({
           <span className="text-xs min-w-2 block">{countByProperty}</span>
         ) : null}
       </button>
-      <Modal
-        open={isModalOpen}
-        onCancel={hideModal}
-        destroyOnClose
-        footer={null}
-      >
-        <div className="py-8 p-6">
-          <img
-            src={logo.src}
-            className="w-20 object-cover object-top mb-8"
-            alt="Inmobiliaria"
-          />
-          <h3 className="text-xl mb-10">
-            Para indicar que te gusta, inicia sesion.
-          </h3>
-          <button
-            onClick={() => signIn("google")}
-            className="text-lg block w-full px-6 pb-4 pt-3 bg-black text-white rounded-full transition-colors duration-700 hover:bg-gray-800 active:bg-gray-900"
-          >
-            Iniciar Sesión
-          </button>
-        </div>
-      </Modal>
     </>
   );
 }
