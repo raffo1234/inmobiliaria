@@ -70,7 +70,11 @@ export default function AddRole() {
             >
               Cancelar
             </button>
-            <PrimaryButton label="Agregar" isLoading={isLoading} />
+            <PrimaryButton
+              type="submit"
+              label="Agregar"
+              isLoading={isLoading}
+            />
           </div>
         </form>
       ) : (
