@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import Like from "./Like";
 import GetInTouch from "./GetInTouch";
+import PropertyImages from "./PropertyImages";
 
 const MainImage = ({ src, alt }: { src: string; alt: string }) => {
   const [loading, setLoading] = useState(false);
@@ -104,23 +105,7 @@ export default function Property({
         </div>
         <div className="lg:flex items-start gap-2">
           <div className="flex-grow lg:w-3/5 mb-2">
-            <Carousel
-              arrows
-              draggable
-              infinite={false}
-              autoplay={{ dotDuration: true }}
-              autoplaySpeed={3000}
-            >
-              <MainImage src={hero.src} alt={title} />
-              <MainImage
-                src="https://gw.alipayobjects.com/zos/antfincdn/cV16ZqzMjW/photo-1473091540282-9b846e7965e3.webp"
-                alt={title}
-              />
-              <MainImage
-                src="https://gw.alipayobjects.com/zos/antfincdn/x43I27A55%26/photo-1438109491414-7198515b166b.webp"
-                alt={title}
-              />
-            </Carousel>
+            <PropertyImages property={property} />
           </div>
           <section
             className="grid gap-2"
@@ -137,7 +122,7 @@ export default function Property({
               </div>
               <div className="text-xs text-gray-400 mb-1">{phase}</div>
               {phase === PropertyPhase.PLANOS ||
-                phase === PropertyPhase.CONSTRUCCION ? (
+              phase === PropertyPhase.CONSTRUCCION ? (
                 <div className="text-sm">
                   <span className="text-xs">Entrega:</span>{" "}
                   <span className="font-semibold">
@@ -192,18 +177,24 @@ export default function Property({
       <div className="py-20">
         <div className="relative w-full py-12">
           <div className="absolute top-1/2 -translate-y-1/2 w-full h-[2px] bg-gray-100" />
-          <a href={`/empresa/${company.id}`} title={company.name} className="left-1/2 -translate-x-1/2 absolute top-1/2 -translate-y-1/2 p-3 bg-white">
+          <a
+            href={`/empresa/${company.id}`}
+            title={company.name}
+            className="left-1/2 -translate-x-1/2 absolute top-1/2 -translate-y-1/2 p-3 bg-white"
+          >
             <img src={company.logo_url} alt={company.name} className="h-20" />
           </a>
         </div>
         <div className="flex flex-col items-center gap-2">
-          <a href={`/empresa/${company.id}`} title={company.name}>{company.name}</a>
+          <a href={`/empresa/${company.id}`} title={company.name}>
+            {company.name}
+          </a>
           <div>
-          <GetInTouch
-            propertyId={id}
-            companyName={company.name}
-            companyLogo={company.logo_url}
-            propertyTitle={property.title}
+            <GetInTouch
+              propertyId={id}
+              companyName={company.name}
+              companyLogo={company.logo_url}
+              propertyTitle={property.title}
             />
           </div>
         </div>

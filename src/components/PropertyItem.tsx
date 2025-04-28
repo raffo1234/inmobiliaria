@@ -61,7 +61,7 @@ export default function PropertyItem({
           href={`/inmueble/${id}`}
           onClick={(event) => onDisplayPropertyDetail(event, id)}
         >
-          <PropertyImages property={property} />
+          <PropertyImages property={property} quantity={1} />
         </a>
         <div className="absolute right-0 top-0 p-4 gap-2 flex items-center">
           {/* <button className="p-3 hover:text-gray-500 bg-white rounded-full transition-colors duration-700 ease-in-out">
