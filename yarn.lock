@@ -701,15 +701,10 @@
     "@eslint/core" "^0.13.0"
     levn "^0.4.1"
 
-"@fontsource-variable/cinzel@^5.2.5":
+"@fontsource-variable/inter-tight@^5.2.5":
   version "5.2.5"
-  resolved "https://registry.npmjs.org/@fontsource-variable/cinzel/-/cinzel-5.2.5.tgz"
-  integrity sha512-h3IcwaWgbCeylbOMRYUmqrEGK2jluuY0VSqFsg3vzt2DKcyBDPcirkNegho1H+qfboEZnkJo0sjfQ+URIHdaVw==
-
-"@fontsource/nixie-one@^5.1.1":
-  version "5.1.1"
-  resolved "https://registry.npmjs.org/@fontsource/nixie-one/-/nixie-one-5.1.1.tgz"
-  integrity sha512-W9DaArL3o9ftlvDI0xVgyLKnaqSsDMwuPmxjvuicYx0IYBxhSyPZsbtee5YAAZ+1hLMxbaUrZgkzyUF0NLSREg==
+  resolved "https://registry.yarnpkg.com/@fontsource-variable/inter-tight/-/inter-tight-5.2.5.tgz#dc4b173d6376ec97080bf9f6cafc4a62682cfe24"
+  integrity sha512-f7WqR3BQ7YmWT+3i1bR1mqQ1FoIDCfmwKRTENEARFRtkhhR4JPxzF+rB3T75AjZ+dTjIx/nO47LOQDLFWAwJWA==
 
 "@hookform/resolvers@^5.0.1":
   version "5.0.1"
@@ -6345,16 +6340,8 @@ string-convert@^0.2.0:
   resolved "https://registry.npmjs.org/string-convert/-/string-convert-0.2.1.tgz"
   integrity sha512-u/1tdPl4yQnPBjnVrmdLo9gtuLvELKsAoRapekWggdiQNvvvum+jYF329d84NAa660KQw7pB2n36KrIKVoXa3A==
 
-"string-width-cjs@npm:string-width@^4.2.0":
-  version "4.2.3"
-  resolved "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz"
-  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
-  dependencies:
-    emoji-regex "^8.0.0"
-    is-fullwidth-code-point "^3.0.0"
-    strip-ansi "^6.0.1"
-
-string-width@^4.1.0:
+"string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0:
+  name string-width-cjs
   version "4.2.3"
   resolved "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -6448,14 +6435,8 @@ stringify-entities@^4.0.0:
     character-entities-html4 "^2.0.0"
     character-entities-legacy "^3.0.0"
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
-  version "6.0.1"
-  resolved "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz"
-  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
-  dependencies:
-    ansi-regex "^5.0.1"
-
-strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+  name strip-ansi-cjs
   version "6.0.1"
   resolved "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==

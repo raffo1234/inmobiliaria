@@ -3,8 +3,7 @@ export default {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
     fontFamily: {
-      cinzel: ["Cinzel Variable", "sans-serif"],
-      "nixie-one": ["Nixie One", "sans-serif"],
+      "inter-tight": ["Inter Tight Variable", "sans-serif"],
     },
     extend: {
       keyframes: {
