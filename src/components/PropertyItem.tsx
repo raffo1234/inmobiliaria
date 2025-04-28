@@ -1,7 +1,7 @@
 import { Skeleton } from "antd";
-import hero from "@assets/hero.jpg";
 import Like from "./Like";
 import { useGlobalState } from "@lib/globalState";
+import PropertyImages from "./PropertyImages";
 
 interface Property {
   id: string;
@@ -61,13 +61,7 @@ export default function PropertyItem({
           href={`/inmueble/${id}`}
           onClick={(event) => onDisplayPropertyDetail(event, id)}
         >
-          <img
-            src={hero.src}
-            alt={property.title}
-            title={property.title}
-            loading="lazy"
-            className="transition-opacity w-full aspect-[5/4] object-cover rounded-lg"
-          />
+          <PropertyImages property={property} />
         </a>
         <div className="absolute right-0 top-0 p-4 gap-2 flex items-center">
           {/* <button className="p-3 hover:text-gray-500 bg-white rounded-full transition-colors duration-700 ease-in-out">
