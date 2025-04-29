@@ -12,15 +12,13 @@ export default function SearchForm({
   pathnameArray,
 }: {
   pathnameArray?: string[];
-  }) {
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [typeInput, setTypeInput] = useState<string>(
-  (pathnameArray?.at(0)?.toUpperCase() as PropertyType) ||
-      PropertyType.APARTMENT
+    (pathnameArray?.at(0)?.toUpperCase() as PropertyType) ||
+      PropertyType.APARTMENT,
   );
-  const { register, reset, handleSubmit } = useForm<Inputs>({
-    mode: "onBlur",
-  });
+  const { register, reset, handleSubmit } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (formData) => {
     const keywords = encodeURIComponent(formData.keywords);
@@ -71,7 +69,6 @@ export default function SearchForm({
                 onClick={() => {
                   setTypeInput(PropertyType.APARTMENT);
                   setIsOpen(false);
-                  
                 }}
                 className="w-full text-left px-5 py-3 hover:bg-slate-100 rounded-full"
               >
@@ -81,7 +78,6 @@ export default function SearchForm({
                 onClick={() => {
                   setTypeInput(PropertyType.HOUSE);
                   setIsOpen(false);
-                  
                 }}
                 type="button"
                 className="w-full text-left px-5 py-3 hover:bg-slate-100 rounded-full"

@@ -1,11 +1,10 @@
 import { useEffect } from "react";
 import Property from "./Property";
-import { Button } from "antd";
-import { CloseOutlined } from "@ant-design/icons";
 import { useGlobalState } from "@lib/globalState";
 import useSWR from "swr";
 import { PropertyState } from "@types/propertyState";
 import { supabase } from "@lib/supabase";
+import { Icon } from "@iconify/react";
 
 const fetcher = async (propertyId: string) => {
   const { data } = await supabase
@@ -165,12 +164,13 @@ export default function PropertyPreview({
         <div className="mx-auto max-w-[1024px] w-full">
           <Property property={property} userId={userId} />
         </div>
-        <Button
-          className="absolute right-6 top-6 rounded-full w-12 h-12"
+        <button
+          type="button"
+          className="absolute right-3 transition-colors duration-300 top-3 rounded-full p-3 hover:text-cyan-400"
           onClick={() => onClose()}
         >
-          <CloseOutlined className="text-xl" />
-        </Button>
+          <Icon icon="solar:close-circle-broken" fontSize="42" />
+        </button>
       </div>
     </div>
   );
