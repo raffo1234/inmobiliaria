@@ -42,6 +42,7 @@ const { data: properties } = await supabase
       price,
       bedroom_count,
       company_id,
+      property_image (image_url),
       user!property_user_id_fkey (
         id,
         email,
@@ -69,8 +70,12 @@ if (!id || !company) {
   <SearchForm client:load />
   <div class="mb-5">
     <div class="flex items-center gap-3.5">
-
-      <img src={company.logo_url} width="150px" class="mb-5" alt={company.name} />
+      <img
+        src={company.logo_url}
+        width="150px"
+        class="mb-5"
+        alt={company.name}
+      />
       <h1 class="text-md lg:text-2xl font-semibold mb-4">
         {company.name}
       </h1>
