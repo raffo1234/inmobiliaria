@@ -2,7 +2,7 @@
 import Layout from "@layouts/Layout.astro";
 import SearchForm from "@components/SearchForm";
 import PropertiesResult from "@components/PropertiesResult";
-import HightLightSelect from "@components/HighLightSelect";
+import HightLightSelect from "@components/HighLightSelect.astro";
 
 const userId = Astro.locals.currentUserId;
 const pathname = Astro.url.pathname;
@@ -10,7 +10,7 @@ const pathnameArray = pathname.split("/").filter((segment) => segment !== "");
 ---
 
 <Layout>
-    <SearchForm client:load pathnameArray={pathnameArray} />
-    <HightLightSelect client:load />
-    <PropertiesResult client:only userId={userId} pathnameArray={pathnameArray} />
+  <SearchForm client:load pathnameArray={pathnameArray} />
+  <HightLightSelect />
+  <PropertiesResult client:only userId={userId} pathnameArray={pathnameArray} />
 </Layout>

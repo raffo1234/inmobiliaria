@@ -2,6 +2,7 @@ import { Skeleton } from "antd";
 import Like from "./Like";
 import { useGlobalState } from "@lib/globalState";
 import PropertyImages from "./PropertyImages";
+import PropertyFirstImage from "./PropertyFirstImage";
 
 interface Property {
   id: string;
@@ -61,7 +62,7 @@ export default function PropertyItem({
           href={`/inmueble/${id}`}
           onClick={(event) => onDisplayPropertyDetail(event, id)}
         >
-          <PropertyImages property={property} quantity={1} />
+          <PropertyFirstImage property={property} />
         </a>
         <div className="absolute right-0 top-0 p-4 gap-2 flex items-center">
           {/* <button className="p-3 hover:text-gray-500 bg-white rounded-full transition-colors duration-700 ease-in-out">

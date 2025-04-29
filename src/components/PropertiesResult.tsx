@@ -43,34 +43,43 @@ const fetcher = async (searchTerms: string, pathnameArray: string[]) => {
   const orConditions = columnsToSearch
     .map((column) => `${column}.ilike.%${searchTerms}%`)
     .join(",");
-    
-   const propertyType = (pathnameArray?.at(0)?.toUpperCase() as PropertyType) ||
-    PropertyType.APARTMENT
-  
+
+  const propertyType =
+    (pathnameArray?.at(0)?.toUpperCase() as PropertyType) ||
+    PropertyType.APARTMENT;
+
   const { data, error } = searchTerms
     ? await supabase
-      .from("property")
-      .select(query)
-      .eq("state", PropertyState.ACTIVE)
-      .eq("type", propertyType)
-      .or(orConditions)
-      .order("created_at", { ascending: false })
+        .from("property")
+        .select(query)
+        .eq("state", PropertyState.ACTIVE)
+        .eq("type", propertyType)
+        .or(orConditions)
+        .order("created_at", { ascending: false })
+        .limit(4)
     : await supabase
         .from("property")
         .select(query)
         .eq("type", propertyType)
         .eq("state", PropertyState.ACTIVE)
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: false })
+        .limit(4);
 
   if (error) throw error;
   return data;
 };
 
-export default function PropertiesResult({ userId, pathnameArray }: { userId: string; pathnameArray: string[] }) {
+export default function PropertiesResult({
+  userId,
+  pathnameArray,
+}: {
+  userId: string;
+  pathnameArray: string[];
+}) {
   const searchTerms = getLastSlashValueFromCurrentUrl() || "";
   const { data: properties } = useSWR(
     `${userId}-${searchTerms}-result-properties`,
-    () => fetcher(searchTerms, pathnameArray)
+    () => fetcher(searchTerms, pathnameArray),
   );
 
   if (properties?.length === 0) {

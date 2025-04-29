@@ -2,7 +2,7 @@
 import Layout from "@layouts/Layout.astro";
 import PropertiesList from "@components/PropertiesList";
 import SearchForm from "@components/SearchForm";
-import HightLightSelect from "@components/HighLightSelect";
+import HightLightSelect from "@components/HighLightSelect.astro";
 import { supabase } from "@lib/supabase";
 import { PropertyState } from "@types/propertyState";
 
@@ -41,6 +41,6 @@ const { data: properties } = await supabase
     Encuentra tu próximo <br /> hogar
   </h2>
   <SearchForm client:load />
-  <HightLightSelect client:load />
+  <HightLightSelect />
   <PropertiesList properties={properties} client:load userId={userId} />
 </Layout>
