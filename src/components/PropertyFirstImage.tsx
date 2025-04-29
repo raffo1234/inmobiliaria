@@ -1,32 +1,13 @@
 import { Icon } from "@iconify/react";
-import { supabase } from "@lib/supabase";
-import { Carousel } from "antd";
-import useSWR from "swr";
-
-const fetcher = async (propertyId: string) => {
-  const { data, error } = await supabase
-    .from("property_image")
-    .select("image_url")
-    .eq("property_id", propertyId)
-    .limit(1)
-    .single();
-  if (error) throw error;
-  return data;
-};
 
 export default function PropertyFirstImage({
-  property,
+  src,
+  title,
 }: {
-  property: {
-    title: string;
-    id: string;
-  };
+  src: string | undefined;
+  title: string;
 }) {
-  const { data: image } = useSWR(`${property.id}-image`, () =>
-    fetcher(property.id),
-  );
-
-  if (!image)
+  if (!src)
     return (
       <div className="animate-pulse bg-gray-100 rounded-lg w-full aspect-[5/4] flex justify-center items-center">
         <Icon icon="solar:gallery-broken" fontSize={32} />
@@ -35,9 +16,9 @@ export default function PropertyFirstImage({
 
   return (
     <img
-      src={image.image_url}
-      alt={property.title}
-      title={property.title}
+      src={src}
+      alt={title}
+      title={title}
       loading="lazy"
       className="w-full aspect-[5/4] object-cover rounded-lg"
     />

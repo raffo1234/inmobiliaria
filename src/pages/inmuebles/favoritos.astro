@@ -21,6 +21,9 @@ const { data: likes } = await supabase
         user_id,
         created_at,
         location,
+        property_image (
+          image_url
+        ),
         user!property_user_id_fkey (
           id,
           email,

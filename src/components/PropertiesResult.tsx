@@ -25,6 +25,9 @@ const query = `
           description,
           user_id,
           type,
+          property_image (
+            image_url
+          ),
           user!property_user_id_fkey (
             id,
             email,

@@ -2,11 +2,27 @@ import Property from "./Property";
 import PropertyItem from "./PropertyItem";
 import PropertiesGrid from "./PropertiesGrid";
 
-type Property = {
+interface Property {
   id: string;
   title: string;
-  description: string;
-};
+  user_id: string;
+  image_url: string;
+  company: {
+    id: string;
+    name: string;
+    logo_url: string;
+  };
+  user?: {
+    id: string;
+    email: string;
+    name: string;
+    image_url: string;
+  };
+  property_image?: {
+    id: string;
+    image_url: string;
+  };
+}
 
 export default function PropertiesList({
   userId,

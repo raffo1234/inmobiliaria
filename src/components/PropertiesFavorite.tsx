@@ -6,11 +6,19 @@ import { Icon } from "@iconify/react";
 type Property = {
   id: string;
   title: string;
+  user_id: string;
+  company: {
+    id: string;
+    name: string;
+  };
   user: {
     id: string;
     name: string;
     image_url: string;
   };
+  property_image: {
+    image_url: string;
+  }[];
 };
 
 export default function PropertiesFavorite({

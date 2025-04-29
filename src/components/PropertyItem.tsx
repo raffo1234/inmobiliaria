@@ -1,7 +1,5 @@
-import { Skeleton } from "antd";
 import Like from "./Like";
 import { useGlobalState } from "@lib/globalState";
-import PropertyImages from "./PropertyImages";
 import PropertyFirstImage from "./PropertyFirstImage";
 
 interface Property {
@@ -19,16 +17,18 @@ interface Property {
     name: string;
     image_url: string;
   };
+  property_image?: {
+    id: string;
+    image_url: string;
+  }[];
 }
 
 export default function PropertyItem({
   userId,
   property,
-  isLoading,
 }: {
   userId: string;
   property: Property;
-  isLoading: boolean;
 }) {
   const { id, title, company } = property;
   const { setPropertyId, show, isDisplayed } = useGlobalState();
@@ -51,10 +51,6 @@ export default function PropertyItem({
     window.history.pushState(newState, newTitle, newUrl);
   };
 
-  if (isLoading) {
-    return <Skeleton className="xl:max-w-[422px]" />;
-  }
-
   return (
     <article>
       <div className="relative mb-1">
@@ -62,7 +58,10 @@ export default function PropertyItem({
           href={`/inmueble/${id}`}
           onClick={(event) => onDisplayPropertyDetail(event, id)}
         >
-          <PropertyFirstImage property={property} />
+          <PropertyFirstImage
+            title={property.title}
+            src={property.property_image?.at(0)?.image_url}
+          />
         </a>
         <div className="absolute right-0 top-0 p-4 gap-2 flex items-center">
           {/* <button className="p-3 hover:text-gray-500 bg-white rounded-full transition-colors duration-700 ease-in-out">
