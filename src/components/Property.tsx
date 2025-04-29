@@ -106,10 +106,10 @@ export default function Property({
               <div className="p-2 inline-block rounded-lg bg-[#F3B408] mb-1">
                 <Icon
                   icon="iconoir:bed-ready"
-                  className="text-2xl text-white"
+                  className="text-3xl text-white"
                 />
               </div>
-              <div className="text-xs text-gray-400 mb-1">{phase}</div>
+              <div className="text-sm font-semibold mb-1">{phase}</div>
               {phase === PropertyPhase.PLANOS ||
               phase === PropertyPhase.CONSTRUCCION ? (
                 <div className="text-sm">
@@ -126,32 +126,32 @@ export default function Property({
               <div className="p-2 inline-block rounded-lg bg-[#476CF6] mb-1">
                 <Icon
                   icon="lucide:bed-double"
-                  className="text-2xl text-white"
+                  className="text-3xl text-white"
                 />
               </div>
-              <div className="text-xs text-gray-400 mb-1">Dormitorios</div>
-              <div className="text-sm font-semibold">{bedroom_count}</div>
+              <div className="text-sm text-gray-400 mb-1">Dormitorios</div>
+              <div className="text-xl font-semibold">{bedroom_count}</div>
             </div>
             <div className="rounded-lg p-4 bg-[#DAF8F7]">
               <div className="p-2 inline-block rounded-lg bg-[#2FCCCC] mb-1">
                 <Icon
                   icon="lucide-lab:shower"
-                  className="text-2xl text-white"
+                  className="text-3xl text-white"
                 />
               </div>
-              <div className="text-xs text-gray-400 mb-1">Ba&ntilde;os</div>
-              <div className="text-sm font-semibold">{bathroom_count}</div>
+              <div className="text-sm text-gray-400 mb-1">Ba&ntilde;os</div>
+              <div className="text-xl font-semibold">{bathroom_count}</div>
             </div>
             <div className="rounded-lg p-4 bg-[#E5E3FF]">
               <div className="p-2 inline-block rounded-lg bg-[#8C75FF] mb-1">
                 <Icon
                   icon="solar:tag-price-linear"
-                  className="text-2xl text-white"
+                  className="text-3xl text-white"
                 />
               </div>
-              <div className="text-xs text-gray-400 mb-1">Precio</div>
-              <div className="text-sm">
-                Desde: S/. <span className="font-semibold">{price}</span>
+              <div className="text-sm text-gray-400 mb-1">Precio desde</div>
+              <div>
+                <span className="text-xl font-semibold">S/. {price}</span>
               </div>
             </div>
           </section>
