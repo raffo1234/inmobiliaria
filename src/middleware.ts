@@ -12,7 +12,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
     ) {
       return context.redirect("/");
     }
-    syncUserWithDb(context);
+    await syncUserWithDb(context);
     return next();
   } catch (error) {
     console.error("Error retrieving session in middleware:", error);

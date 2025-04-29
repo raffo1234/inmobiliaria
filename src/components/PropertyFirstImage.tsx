@@ -8,6 +8,7 @@ const fetcher = async (propertyId: string) => {
     .from("property_image")
     .select("image_url")
     .eq("property_id", propertyId)
+    .limit(1)
     .single();
   if (error) throw error;
   return data;
@@ -21,11 +22,9 @@ export default function PropertyFirstImage({
     id: string;
   };
 }) {
-  const {
-    data: image,
-    error,
-    isLoading,
-  } = useSWR(`${property.id}-image`, () => fetcher(property.id));
+  const { data: image } = useSWR(`${property.id}-image`, () =>
+    fetcher(property.id),
+  );
 
   if (!image)
     return (
