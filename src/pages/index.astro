@@ -32,7 +32,7 @@ const { data: properties } = await supabase
   )
   .eq("state", PropertyState.ACTIVE)
   .order("created_at", { ascending: false })
-  .limit(2);
+  .limit(4);
 ---
 
 <Layout>

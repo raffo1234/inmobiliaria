@@ -5,6 +5,7 @@ import { useState } from "react";
 import { supabase } from "@lib/supabase";
 import { PropertyState } from "@types/propertyState";
 import useSWR from "swr";
+import InfiniteScrollSentinel from "./InfiniteScrollSentinel";
 
 interface Property {
   id: string;
@@ -64,15 +65,19 @@ function Page({
   index,
   pageSize,
   userId,
+  setIsLoadingMore,
 }: {
   index: number;
   pageSize: number;
   userId: string;
+  setIsLoadingMore: (value: boolean) => void;
 }) {
-  const { data: properties } = useSWR(
+  const { data: properties, isLoading } = useSWR(
     `properties-${index}`,
     async () => await fetcher(index, pageSize),
   );
+
+  setIsLoadingMore(isLoading);
 
   return properties?.map((property) => (
     <PropertyItem key={property.id} userId={userId} property={property} />
@@ -86,13 +91,25 @@ export default function PropertiesList({
   userId: string;
   properties: Property[];
 }) {
-  const pageSize = 2;
+  const pageSize = 4;
   const [index, setIndex] = useState(1);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   const pages = [];
+
   for (let i = 1; i < index; i++) {
-    pages.push(<Page key={i} index={i} pageSize={pageSize} userId={userId} />);
+    pages.push(
+      <Page
+        key={i}
+        index={i}
+        pageSize={pageSize}
+        setIsLoadingMore={setIsLoadingMore}
+        userId={userId}
+      />,
+    );
   }
+
+  const showSentinel = !isLoadingMore;
 
   return (
     <>
@@ -108,7 +125,12 @@ export default function PropertiesList({
         })}
         {pages.map((page) => page)}
       </PropertiesGrid>
-      <button onClick={() => setIndex((prev) => prev + 1)}>mas ++</button>
+      {showSentinel && (
+        <InfiniteScrollSentinel
+          onElementVisible={() => setIndex((prev) => prev + 1)}
+          loading={isLoadingMore}
+        />
+      )}
     </>
   );
 }
