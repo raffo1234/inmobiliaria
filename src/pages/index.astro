@@ -8,7 +8,7 @@ import { PropertyState } from "@types/propertyState";
 
 const { currentUserId: userId } = Astro.locals;
 
-const { data: properties, error } = await supabase
+const { data: properties } = await supabase
   .from("property")
   .select(
     `
