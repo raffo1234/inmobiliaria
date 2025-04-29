@@ -2,26 +2,12 @@ import hero from "@assets/hero.jpg";
 import { useState } from "react";
 import Typologies from "./Typologies";
 import { Icon } from "@iconify/react";
-import { Carousel } from "antd";
 import { PropertyPhase } from "@types/propertyState";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import Like from "./Like";
 import GetInTouch from "./GetInTouch";
 import PropertyImages from "./PropertyImages";
-
-const MainImage = ({ src, alt }: { src: string; alt: string }) => {
-  const [loading, setLoading] = useState(false);
-  return (
-    <img
-      src={src}
-      onLoad={() => setLoading(true)}
-      alt={alt}
-      loading="lazy"
-      className={`w-full aspect-5/3 transition-opacity rounded-md duration-700 ease-in-out ${loading ? "opacity-100" : "opacity-0"}`}
-    />
-  );
-};
 
 type Typology = {
   name: string;
@@ -81,8 +67,8 @@ export default function Property({
     <>
       <div className="mx-auto max-w-[1250px] w-full mb-6">
         <div className="mb-4">
-          <h2 className="md:text-2xl text-lg font-semibold">{title}</h2>
-          {location ? <p className="text-sm mt-1">{location}</p> : null}
+          <h2 className="md:text-2xl text-lg mb-2 font-semibold">{title}</h2>
+          {location ? <p className="text-sm">{location}</p> : null}
         </div>
         <div className="flex items-center gap-3 w-full justify-between mb-4">
           <a
@@ -103,12 +89,15 @@ export default function Property({
             />
           </div>
         </div>
-        <div className="lg:flex items-start gap-2">
+        <div className="lg:flex items-start gap-3">
           <div className="flex-grow lg:w-3/5 mb-2">
-            <PropertyImages property={property} />
+            <PropertyImages
+              propertyTitle={property.title}
+              propertyId={property.id}
+            />
           </div>
           <section
-            className="grid gap-2"
+            className="grid gap-3"
             style={{
               gridTemplateColumns: "repeat(auto-fill, minmax(155px, 1fr))",
             }}

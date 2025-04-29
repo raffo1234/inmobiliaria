@@ -6,7 +6,7 @@ import useSWR from "swr";
 const fetcher = async (propertyId: string) => {
   const { data, error } = await supabase
     .from("property_image")
-    .select("*")
+    .select("id, image_url")
     .eq("property_id", propertyId)
     .order("created_at", { ascending: true });
   if (error) throw error;
@@ -14,64 +14,57 @@ const fetcher = async (propertyId: string) => {
 };
 
 export default function PropertyImages({
-  property,
-  quantity,
+  propertyId,
+  propertyTitle,
 }: {
-  property: {
-    title: string;
-    id: string;
-  };
-  quantity?: number;
+  propertyId: string;
+  propertyTitle: string;
 }) {
-  const {
-    data: images,
-    error,
-    isLoading,
-  } = useSWR(`${property.id}-images`, () => fetcher(property.id));
+  const { data: images, isLoading } = useSWR(`${propertyId}-images`, () =>
+    fetcher(propertyId),
+  );
 
-  if (images?.length === 0 || isLoading || error)
-    return (
-      <div className="animate-pulse bg-gray-100 rounded-lg w-full aspect-[5/4] flex justify-center items-center">
-        <Icon icon="solar:gallery-broken" fontSize={32} />
-      </div>
-    );
-
-  if (quantity === 1) {
-    return (
-      <img
-        src={images?.at(0).image_url}
-        alt={property.title}
-        title={property.title}
-        loading="lazy"
-        className="w-full aspect-[5/4] object-cover rounded-lg"
-      />
-    );
-  }
-
-  // const total = quantity !== 0 ? quantity : images?.length;
-
-  if (quantity === undefined || quantity > 1) {
-    return (
-      <Carousel
-        arrows
-        draggable
-        infinite={false}
-        autoplay={{ dotDuration: true }}
-        autoplaySpeed={3000}
+  return (
+    <div className="relative w-full aspect-[5/4]">
+      {images?.length === 1 ? (
+        <img
+          src={images[0].image_url}
+          alt={propertyTitle}
+          title={propertyTitle}
+          loading="lazy"
+          className="w-full aspect-[5/4] object-cover rounded-lg"
+        />
+      ) : (
+        <Carousel
+          arrows
+          draggable
+          infinite={false}
+          autoplay={{ dotDuration: true }}
+          autoplaySpeed={3000}
+        >
+          {images?.map((image, index) => {
+            return (
+              <img
+                key={index}
+                src={image.image_url}
+                alt={propertyTitle}
+                title={propertyTitle}
+                loading="lazy"
+                className="w-full aspect-[5/4] object-cover rounded-lg"
+              />
+            );
+          })}
+        </Carousel>
+      )}
+      <div
+        className={`${images?.length === 0 || isLoading ? "opacity-100" : "opacity-0"} absolute left-0 top-0 h-full transition-opacity duration-500 bg-gray-100 rounded-xl w-full aspect-[5/4] flex justify-center items-center`}
       >
-        {images?.slice(0, quantity).map((image, index) => {
-          return (
-            <img
-              key={index}
-              src={image.image_url}
-              alt={property.title}
-              title={property.title}
-              loading="lazy"
-              className="w-full aspect-[5/4] object-cover rounded-lg"
-            />
-          );
-        })}
-      </Carousel>
-    );
-  }
+        <Icon
+          icon="solar:gallery-broken"
+          fontSize={64}
+          className="text-gray-400"
+        />
+      </div>
+    </div>
+  );
 }
