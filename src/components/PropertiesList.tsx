@@ -1,7 +1,7 @@
 import Property from "./Property";
 import PropertyItem from "./PropertyItem";
 import PropertiesGrid from "./PropertiesGrid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@lib/supabase";
 import { PropertyState } from "@types/propertyState";
 import useSWR from "swr";
@@ -77,7 +77,9 @@ function Page({
     async () => await fetcher(index, pageSize),
   );
 
-  setIsLoadingMore(isLoading);
+  useEffect(() => {
+    setIsLoadingMore(isLoading);
+  }, [properties?.length]);
 
   return properties?.map((property) => (
     <PropertyItem key={property.id} userEmail={userEmail} property={property} />
@@ -94,7 +96,7 @@ export default function PropertiesList({
   const pageSize = 4;
   const [index, setIndex] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  console.log("index");
+
   const pages = [];
 
   for (let i = 1; i < index; i++) {
@@ -108,8 +110,6 @@ export default function PropertiesList({
       />,
     );
   }
-
-  const showSentinel = !isLoadingMore;
 
   return (
     <>
@@ -125,7 +125,7 @@ export default function PropertiesList({
         })}
         {pages.map((page) => page)}
       </PropertiesGrid>
-      {showSentinel && (
+      {!isLoadingMore && (
         <InfiniteScrollSentinel
           onElementVisible={() => setIndex((prev) => prev + 1)}
           loading={isLoadingMore}
