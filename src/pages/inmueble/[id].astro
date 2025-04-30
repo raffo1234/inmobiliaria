@@ -1,13 +1,13 @@
 ---
-import Header from "@components/Header.astro";
 import Layout from "../../layouts/Layout.astro";
 import { supabase } from "../../lib/supabase";
 import Property from "../../components/Property";
-import Main from "@components/Main.astro";
+import { getSession } from "auth-astro/server";
 
-const { currentUserId: userId } = Astro.locals;
-
+const session = await getSession(Astro.request);
+const userEmail = session?.user?.email;
 const id = Astro.params.id;
+
 export async function getStaticPaths() {
   const { data: properties, error } = await supabase
     .from("property")
@@ -76,5 +76,5 @@ if (!id || !property) {
 ---
 
 <Layout>
-  <Property property={property} userId={userId} client:only />
+  <Property property={property} userEmail={userEmail} client:only />
 </Layout>

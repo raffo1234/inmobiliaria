@@ -88,10 +88,10 @@ interface Property {
 
 export default function PropertyPreview({
   currentHref,
-  userId,
+  userEmail,
 }: {
   currentHref: string;
-  userId: string;
+  userEmail: string;
 }) {
   const { propertyId, hide, isDisplayed } = useGlobalState();
 
@@ -162,7 +162,7 @@ export default function PropertyPreview({
         className={`${isDisplayed ? "translate-y-0 opacity-100" : "translate-y-10 opacity-80"} transition-all duration-200 max-w-[1816px] py-20 px-4 animate-slideUp cursor-default mx-auto relative delay-50 transform-all lg:rounded-lg bg-white min-h-lvh`}
       >
         <div className="mx-auto max-w-[1024px] w-full">
-          <Property property={property} userId={userId} />
+          <Property property={property} userEmail={userEmail} />
         </div>
         <button
           type="button"

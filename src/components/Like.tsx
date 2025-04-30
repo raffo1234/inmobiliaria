@@ -1,22 +1,12 @@
 import { supabase } from "@lib/supabase";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import getLastSlashValueFromCurrentUrl from "src/utils/getLastSlashValueFromCurrentUrl";
 import useSWR, { mutate } from "swr";
 import { Icon } from "@iconify/react";
 import { signIn } from "auth-astro/client";
 import { useGlobalState } from "@lib/globalState";
 import Logo from "./Logo";
-
-const fetcherUser = async (userEmail: string) => {
-  const { data, error } = await supabase
-    .from("user")
-    .select("id")
-    .eq("email", userEmail)
-    .single();
-
-  if (error) throw error;
-  return data;
-};
+import fetcherUser, { useKeyUser } from "@lib/fetcherUser";
 
 const fetcherByUser = async (propertyId: string, userEmail: string) => {
   const { count, error } = await supabase
@@ -46,13 +36,13 @@ export default function Like({
   hasCounter = false,
 }: {
   propertyId: string;
-  userEmail?: string;
   size?: "medium" | "small";
   hasCounter?: boolean;
+  userEmail: string | undefined | null;
 }) {
   const { setModalContent, setModalOpen } = useGlobalState();
   const [isLiking, setIsLiking] = useState(false);
-  const keyUser = `${userEmail}-user`;
+  const keyUser = useKeyUser(userEmail);
   const keyByUser = `${userEmail}-${propertyId}-user-like`;
   const keyByProperty = `${userEmail}-${propertyId}-property-like`;
 
@@ -62,16 +52,17 @@ export default function Like({
 
   const {
     data: countByUser,
-    isLoading: isLoadingByUser,
     mutate: mutateByUser,
+    isLoading: isLoadingByUser,
   } = useSWR(keyByUser, () =>
     user?.id ? fetcherByUser(propertyId, user.id) : null,
   );
 
-  const { data: countByProperty, mutate: mutateByProperty } = useSWR(
-    keyByProperty,
-    () => fetcherByProperty(propertyId),
-  );
+  const {
+    data: countByProperty,
+    mutate: mutateByProperty,
+    isLoading: isLoadingByProperty,
+  } = useSWR(keyByProperty, () => fetcherByProperty(propertyId));
 
   const showGlobalModal = () => {
     setModalContent(
@@ -93,7 +84,10 @@ export default function Like({
     setModalOpen(true);
   };
 
-  const handleLike = async (propertyId: string) => {
+  const handleLike = async (
+    propertyId: string,
+    userEmail: string | null | undefined,
+  ) => {
     const lastSlashValue = getLastSlashValueFromCurrentUrl() || "";
 
     if (!userEmail) {
@@ -132,29 +126,35 @@ export default function Like({
     }
   };
 
+  useEffect(() => {
+    if (userEmail) {
+      mutateByUser();
+    }
+  }, [isLoadingUser]);
+
+  if (isLoadingUser || isLoadingByUser || isLoadingByProperty) return null;
+
   return (
-    <>
-      <button
-        onClick={() => handleLike(propertyId)}
-        className={`${size === "medium" && countByUser ? "bg-cyan-50 text-cyan-300" : "bg-gray-50 hover:text-gray-500"} 
-          ${isLoadingByUser ? "opacity-0" : "opacity-100"}          
-          transition-all p-3 rounded-full duration-500 flex gap-1 items-center`}
-      >
-        {isLiking ? (
-          <Icon
-            icon="line-md:loading-twotone-loop"
-            className={`${size === "small" ? "text-lg text-gray-500" : "text-2xl"}`}
-          />
-        ) : (
-          <Icon
-            icon="solar:heart-bold"
-            className={`${size === "small" ? "text-lg text-gray-500" : "text-2xl"}`}
-          />
-        )}
-        {hasCounter ? (
-          <span className="text-xs min-w-2 block">{countByProperty}</span>
-        ) : null}
-      </button>
-    </>
+    <button
+      onClick={() => handleLike(propertyId, userEmail)}
+      className={`${size === "medium" && countByUser ? "bg-cyan-50 text-cyan-300" : "bg-gray-50 hover:text-gray-500"} 
+          ${isLoadingByUser || isLoadingUser ? "opacity-0" : "opacity-100"}          
+          transition-all p-3 rounded-full duration-300 flex gap-1 items-center`}
+    >
+      {isLiking ? (
+        <Icon
+          icon="line-md:loading-twotone-loop"
+          className={`${size === "small" ? "text-lg text-gray-500" : "text-2xl"}`}
+        />
+      ) : (
+        <Icon
+          icon="solar:heart-bold"
+          className={`${size === "small" ? "text-lg text-gray-500" : "text-2xl"}`}
+        />
+      )}
+      {hasCounter ? (
+        <span className="text-xs min-w-2 block">{countByProperty}</span>
+      ) : null}
+    </button>
   );
 }

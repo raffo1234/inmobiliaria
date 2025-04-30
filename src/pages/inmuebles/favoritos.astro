@@ -6,8 +6,18 @@ import { SignIn } from "auth-astro/components";
 import { Icon } from "astro-icon/components";
 import { supabase } from "@lib/supabase";
 import { PropertyState } from "@types/propertyState";
+import { getSession } from "auth-astro/server";
 
-const userId = Astro.locals.currentUserId;
+const session = await getSession(Astro.request);
+const userEmail = session?.user?.email;
+
+const { data: user } = await supabase
+  .from("user")
+  .select("id")
+  .eq("email", userEmail)
+  .single();
+
+const userId = user?.id;
 
 const { data: likes } = await supabase
   .from("like")
@@ -47,8 +57,8 @@ const { data: likes } = await supabase
 <Layout>
   <SearchForm client:load />
   {
-    userId ? (
-      <PropertiesFavorite likes={likes} client:load userId={userId} />
+    userEmail ? (
+      <PropertiesFavorite likes={likes} client:load userEmail={userEmail} />
     ) : (
       <div class="max-w-md mx-auto items-center flex flex-col gap-10">
         <div class="flex justify-center w-[300px] rounded-full items-center mx-auto bg-cyan-500 aspect-square bg-opacity-5">

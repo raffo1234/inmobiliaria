@@ -3,8 +3,10 @@ import Layout from "@layouts/Layout.astro";
 import SearchForm from "@components/SearchForm";
 import PropertiesResult from "@components/PropertiesResult";
 import HightLightSelect from "@components/HighLightSelect.astro";
+import { getSession } from "auth-astro/server";
 
-const userId = Astro.locals.currentUserId;
+const session = await getSession(Astro.request);
+const userEmail = session?.user?.email;
 const pathname = Astro.url.pathname;
 const pathnameArray = pathname.split("/").filter((segment) => segment !== "");
 ---
@@ -12,5 +14,9 @@ const pathnameArray = pathname.split("/").filter((segment) => segment !== "");
 <Layout>
   <SearchForm client:load pathnameArray={pathnameArray} />
   <HightLightSelect />
-  <PropertiesResult client:only userId={userId} pathnameArray={pathnameArray} />
+  <PropertiesResult
+    client:only
+    userEmail={userEmail}
+    pathnameArray={pathnameArray}
+  />
 </Layout>

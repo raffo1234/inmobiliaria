@@ -28,7 +28,7 @@ export default function PropertyItem({
   property,
 }: {
   property: Property;
-  userEmail?: string;
+  userEmail: string | undefined | null;
 }) {
   const { id, title, company } = property;
   const { setPropertyId, show, isDisplayed } = useGlobalState();

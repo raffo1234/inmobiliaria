@@ -70,7 +70,7 @@ function Page({
   index: number;
   pageSize: number;
   setIsLoadingMore: (value: boolean) => void;
-  userEmail?: string;
+  userEmail: string | undefined | null;
 }) {
   const { data: properties, isLoading } = useSWR(
     `properties-${index}`,
@@ -88,13 +88,13 @@ export default function PropertiesList({
   userEmail,
   properties,
 }: {
-  userEmail?: string;
+  userEmail: string | undefined | null;
   properties: Property[];
 }) {
   const pageSize = 4;
   const [index, setIndex] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-
+  console.log("index");
   const pages = [];
 
   for (let i = 1; i < index; i++) {

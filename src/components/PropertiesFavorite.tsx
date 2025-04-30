@@ -22,10 +22,10 @@ type Property = {
 };
 
 export default function PropertiesFavorite({
-  userId,
+  userEmail,
   likes,
 }: {
-  userId: string;
+  userEmail: string;
   likes: { property: Property[] }[];
 }) {
   if (likes?.length === 0) {
@@ -60,7 +60,7 @@ export default function PropertiesFavorite({
           return (
             <PropertyItem
               key={property.id}
-              userId={userId}
+              userEmail={userEmail}
               property={property}
             />
           );

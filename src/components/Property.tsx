@@ -43,11 +43,11 @@ type Property = {
 };
 
 export default function Property({
-  userId,
   property,
+  userEmail,
 }: {
   property: Property | undefined;
-  userId: string;
+  userEmail: string | undefined | null;
 }) {
   if (!property) return null;
 
@@ -80,7 +80,7 @@ export default function Property({
             <span>{company.name}</span>
           </a>
           <div className="flex gap-3">
-            <Like propertyId={id} userId={userId} />
+            <Like propertyId={id} userEmail={userEmail} />
             <GetInTouch
               propertyId={id}
               companyName={company.name}
