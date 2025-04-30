@@ -7,6 +7,7 @@ import { Icon } from "astro-icon/components";
 import { supabase } from "@lib/supabase";
 import { PropertyState } from "@types/propertyState";
 import { getSession } from "auth-astro/server";
+import { favoriteQuery } from "@queries/property";
 
 const session = await getSession(Astro.request);
 const userEmail = session?.user?.email;
@@ -19,46 +20,27 @@ const { data: user } = await supabase
 
 const userId = user?.id;
 
-const { data: likes } = await supabase
+const { data: likes, error } = await supabase
   .from("like")
-  .select(
-    `
-      property(
-        id,
-        title,
-        description,
-        state,
-        user_id,
-        created_at,
-        location,
-        property_image (
-          image_url
-        ),
-        user!property_user_id_fkey (
-          id,
-          email,
-          name,
-          image_url
-        ),
-        company!property_company_id_fkey (
-          id,
-          name,
-          image_url,
-          logo_url
-        )
-      )
-    `,
-  )
+  .select(favoriteQuery)
   .eq("property.state", PropertyState.ACTIVE)
   .eq("user_id", userId)
-  .order("created_at", { ascending: false });
+  .order("created_at", { ascending: false })
+  .limit(4);
+
+console.log(error);
 ---
 
 <Layout>
   <SearchForm client:load />
   {
     userEmail ? (
-      <PropertiesFavorite likes={likes} client:load userEmail={userEmail} />
+      <PropertiesFavorite
+        likes={likes}
+        userId={userId}
+        client:load
+        userEmail={userEmail}
+      />
     ) : (
       <div class="max-w-md mx-auto items-center flex flex-col gap-10">
         <div class="flex justify-center w-[300px] rounded-full items-center mx-auto bg-cyan-500 aspect-square bg-opacity-5">

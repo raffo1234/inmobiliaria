@@ -64,7 +64,7 @@ function Page({
   userEmail: string | undefined | null;
 }) {
   const { data: properties, isLoading } = useSWR(
-    `properties-${page}`,
+    `properties-${page}-home`,
     async () => await fetcher(page, pageSize),
   );
 
