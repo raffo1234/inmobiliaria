@@ -1,4 +1,3 @@
-import { syncUserWithDb } from "@lib/auth";
 import { defineMiddleware } from "astro:middleware";
 import { getSession } from "auth-astro/server";
 
@@ -12,7 +11,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
     ) {
       return context.redirect("/");
     }
-    await syncUserWithDb(context);
+    
     return next();
   } catch (error) {
     console.error("Error retrieving session in middleware:", error);

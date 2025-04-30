@@ -64,13 +64,13 @@ const fetcher = async (
 function Page({
   index,
   pageSize,
-  userId,
+  userEmail,
   setIsLoadingMore,
 }: {
   index: number;
   pageSize: number;
-  userId: string;
   setIsLoadingMore: (value: boolean) => void;
+  userEmail?: string;
 }) {
   const { data: properties, isLoading } = useSWR(
     `properties-${index}`,
@@ -80,15 +80,15 @@ function Page({
   setIsLoadingMore(isLoading);
 
   return properties?.map((property) => (
-    <PropertyItem key={property.id} userId={userId} property={property} />
+    <PropertyItem key={property.id} userEmail={userEmail} property={property} />
   ));
 }
 
 export default function PropertiesList({
-  userId,
+  userEmail,
   properties,
 }: {
-  userId: string;
+  userEmail?: string;
   properties: Property[];
 }) {
   const pageSize = 4;
@@ -104,7 +104,7 @@ export default function PropertiesList({
         index={i}
         pageSize={pageSize}
         setIsLoadingMore={setIsLoadingMore}
-        userId={userId}
+        userEmail={userEmail}
       />,
     );
   }
@@ -118,7 +118,7 @@ export default function PropertiesList({
           return (
             <PropertyItem
               key={property.id}
-              userId={userId}
+              userEmail={userEmail}
               property={property}
             />
           );

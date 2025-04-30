@@ -5,8 +5,10 @@ import SearchForm from "@components/SearchForm";
 import HightLightSelect from "@components/HighLightSelect.astro";
 import { supabase } from "@lib/supabase";
 import { PropertyState } from "@types/propertyState";
+import { getSession } from "auth-astro/server";
 
-const { currentUserId: userId } = Astro.locals;
+const session = await getSession(Astro.request);
+const userEmail = session?.user?.email;
 
 const { data: properties } = await supabase
   .from("property")
@@ -46,5 +48,5 @@ const { data: properties } = await supabase
   </h2>
   <SearchForm client:load />
   <HightLightSelect />
-  <PropertiesList properties={properties} client:load userId={userId} />
+  <PropertiesList properties={properties} client:load userEmail={userEmail} />
 </Layout>

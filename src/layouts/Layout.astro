@@ -4,9 +4,14 @@ import Header from "@components/Header.astro";
 import Main from "@components/Main.astro";
 import PropertyPreview from "@components/PropertyPreview";
 import "@fontsource-variable/inter-tight";
+import { getSession } from "auth-astro/server";
 
 const { pageTitle } = Astro.props;
 const userId = Astro.locals.currentUserId;
+
+const session = await getSession(Astro.request);
+const user = session?.user;
+
 ---
 
 <!doctype html>

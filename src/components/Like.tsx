@@ -4,16 +4,26 @@ import getLastSlashValueFromCurrentUrl from "src/utils/getLastSlashValueFromCurr
 import useSWR, { mutate } from "swr";
 import { Icon } from "@iconify/react";
 import { signIn } from "auth-astro/client";
-import logo from "@assets/logo.png";
 import { useGlobalState } from "@lib/globalState";
 import Logo from "./Logo";
 
-const fetcherByUser = async (propertyId: string, userId: string) => {
+const fetcherUser = async (userEmail: string) => {
+  const { data, error } = await supabase
+    .from("user")
+    .select("id")
+    .eq("email", userEmail)
+    .single();
+
+  if (error) throw error;
+  return data;
+};
+
+const fetcherByUser = async (propertyId: string, userEmail: string) => {
   const { count, error } = await supabase
     .from("like")
     .select("user_id", { count: "exact" })
     .eq("property_id", propertyId)
-    .eq("user_id", userId);
+    .eq("user_id", userEmail);
 
   if (error) throw error;
   return count;
@@ -31,26 +41,31 @@ const fetcherByProperty = async (propertyId: string) => {
 
 export default function Like({
   propertyId,
-  userId,
+  userEmail,
   size = "medium",
   hasCounter = false,
 }: {
   propertyId: string;
-  userId?: string;
+  userEmail?: string;
   size?: "medium" | "small";
   hasCounter?: boolean;
 }) {
   const { setModalContent, setModalOpen } = useGlobalState();
   const [isLiking, setIsLiking] = useState(false);
-  const keyByUser = `${userId}-${propertyId}-user-like`;
-  const keyByProperty = `${userId}-${propertyId}-property-like`;
+  const keyUser = `${userEmail}-user`;
+  const keyByUser = `${userEmail}-${propertyId}-user-like`;
+  const keyByProperty = `${userEmail}-${propertyId}-property-like`;
+
+  const { data: user, isLoading: isLoadingUser } = useSWR(keyUser, () =>
+    userEmail ? fetcherUser(userEmail) : null,
+  );
 
   const {
     data: countByUser,
     isLoading: isLoadingByUser,
     mutate: mutateByUser,
   } = useSWR(keyByUser, () =>
-    userId ? fetcherByUser(propertyId, userId) : null,
+    user?.id ? fetcherByUser(propertyId, user.id) : null,
   );
 
   const { data: countByProperty, mutate: mutateByProperty } = useSWR(
@@ -81,7 +96,7 @@ export default function Like({
   const handleLike = async (propertyId: string) => {
     const lastSlashValue = getLastSlashValueFromCurrentUrl() || "";
 
-    if (!userId) {
+    if (!userEmail) {
       showGlobalModal();
       return;
     }
@@ -91,7 +106,7 @@ export default function Like({
       await supabase.from("like").insert([
         {
           property_id: propertyId,
-          user_id: userId,
+          user_id: user?.id,
         },
       ]);
       await mutateByUser();
@@ -99,20 +114,20 @@ export default function Like({
       setIsLiking(false);
 
       if (!lastSlashValue.includes("favorito")) {
-        await mutate(`${userId}-likes-properties`, null);
+        await mutate(`${user?.id}-likes-properties`, null);
       }
     } else {
       await supabase
         .from("like")
         .delete()
         .eq("property_id", propertyId)
-        .eq("user_id", userId);
+        .eq("user_id", user?.id);
       await mutateByUser();
       await mutateByProperty();
       setIsLiking(false);
 
       if (!lastSlashValue.includes("favorito")) {
-        await mutate(`${userId}-likes-properties`, null);
+        await mutate(`${user?.id}-likes-properties`, null);
       }
     }
   };

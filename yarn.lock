@@ -118,6 +118,11 @@
   resolved "https://registry.npmjs.org/@antfu/utils/-/utils-0.7.10.tgz"
   integrity sha512-+562v9k4aI80m1+VuMHehNJWLOFjBnXn3tdOitzD0il5b7smkSBal4+a3oKiQTbrwMmN/TBUMDvbdoWDehgOww==
 
+"@astro-auth/types@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@astro-auth/types/-/types-1.0.2.tgz#a33f0f3a6991d29e46d4e218e2da3e4784622c91"
+  integrity sha512-URe9Nf3UKLWYthFAV4ubnJXohJoTQZnfFntPkriXstmCV8brTE0+/77ZxumcR0CK3/7OlwYAt1HIPhF4LQWLow==
+
 "@astrojs/compiler@^2.0.0", "@astrojs/compiler@^2.11.0":
   version "2.11.0"
   resolved "https://registry.npmjs.org/@astrojs/compiler/-/compiler-2.11.0.tgz"

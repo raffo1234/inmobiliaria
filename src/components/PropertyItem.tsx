@@ -24,11 +24,11 @@ interface Property {
 }
 
 export default function PropertyItem({
-  userId,
+  userEmail,
   property,
 }: {
-  userId: string;
   property: Property;
+  userEmail?: string;
 }) {
   const { id, title, company } = property;
   const { setPropertyId, show, isDisplayed } = useGlobalState();
@@ -67,7 +67,7 @@ export default function PropertyItem({
           {/* <button className="p-3 hover:text-gray-500 bg-white rounded-full transition-colors duration-700 ease-in-out">
             <Icon icon="material-symbols:bookmark" className="text-2xl" />
           </button> */}
-          <Like propertyId={id} userId={userId} />
+          <Like propertyId={id} userEmail={userEmail} />
         </div>
       </div>
       <div className="flex items-center gap-2">
@@ -90,7 +90,12 @@ export default function PropertyItem({
             </a>
           </h2>
           <div className="flex items-center">
-            <Like propertyId={id} userId={userId} size="small" hasCounter />
+            <Like
+              propertyId={id}
+              userEmail={userEmail}
+              size="small"
+              hasCounter
+            />
           </div>
         </div>
       </div>
