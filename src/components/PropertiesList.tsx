@@ -27,6 +27,15 @@ interface Property {
   }[];
 }
 
+const fetcherAll = async () => {
+  const { count, error } = await supabase
+    .from("property")
+    .select("id", { count: "exact", head: true })
+    .eq("state", PropertyState.ACTIVE);
+  if (error) throw error;
+  return count;
+};
+
 const fetcher = async (
   index: number,
   pageSize: number,
@@ -62,19 +71,19 @@ const fetcher = async (
 };
 
 function Page({
-  index,
+  page,
   pageSize,
   userEmail,
   setIsLoadingMore,
 }: {
-  index: number;
+  page: number;
   pageSize: number;
   setIsLoadingMore: (value: boolean) => void;
   userEmail: string | undefined | null;
 }) {
   const { data: properties, isLoading } = useSWR(
-    `properties-${index}`,
-    async () => await fetcher(index, pageSize),
+    `properties-${page}`,
+    async () => await fetcher(page, pageSize),
   );
 
   useEffect(() => {
@@ -94,16 +103,17 @@ export default function PropertiesList({
   properties: Property[];
 }) {
   const pageSize = 4;
-  const [index, setIndex] = useState(1);
+  const [page, setPage] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-
+  const { data: total } = useSWR("properties-total", fetcherAll);
+  const totalPages = total ? Math.ceil((total - pageSize) / pageSize) : 0;
   const pages = [];
 
-  for (let i = 1; i < index; i++) {
+  for (let i = 1; i < page; i++) {
     pages.push(
       <Page
         key={i}
-        index={i}
+        page={i}
         pageSize={pageSize}
         setIsLoadingMore={setIsLoadingMore}
         userEmail={userEmail}
@@ -125,12 +135,12 @@ export default function PropertiesList({
         })}
         {pages.map((page) => page)}
       </PropertiesGrid>
-      {!isLoadingMore && (
+      {!isLoadingMore && page <= totalPages ? (
         <InfiniteScrollSentinel
-          onElementVisible={() => setIndex((prev) => prev + 1)}
+          onElementVisible={() => setPage((prev) => prev + 1)}
           loading={isLoadingMore}
         />
-      )}
+      ) : null}
     </>
   );
 }

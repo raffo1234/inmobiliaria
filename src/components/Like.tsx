@@ -11,7 +11,7 @@ import fetcherUser, { useKeyUser } from "@lib/fetcherUser";
 const fetcherByUser = async (propertyId: string, userEmail: string) => {
   const { count, error } = await supabase
     .from("like")
-    .select("user_id", { count: "exact" })
+    .select("user_id", { count: "exact", head: true })
     .eq("property_id", propertyId)
     .eq("user_id", userEmail);
 
@@ -22,7 +22,7 @@ const fetcherByUser = async (propertyId: string, userEmail: string) => {
 const fetcherByProperty = async (propertyId: string) => {
   const { count, error } = await supabase
     .from("like")
-    .select("property_id", { count: "exact" })
+    .select("property_id", { count: "exact", head: true })
     .eq("property_id", propertyId);
 
   if (error) throw error;
