@@ -6,6 +6,7 @@ import { supabase } from "@lib/supabase";
 import { PropertyState } from "@types/propertyState";
 import useSWR from "swr";
 import InfiniteScrollSentinel from "./InfiniteScrollSentinel";
+import { propertyQuery } from "@queries/property";
 
 interface Property {
   id: string;
@@ -42,26 +43,7 @@ const fetcher = async (
 ): Promise<Property[]> => {
   const { data, error } = await supabase
     .from("property")
-    .select(
-      `
-    id,
-    title,
-    property_image (
-      image_url
-    ),
-    user!property_user_id_fkey (
-      id,
-      email,
-      name,
-      image_url
-    ),
-    company!property_company_id_fkey (
-      id,
-      name,
-      logo_url
-    )
-  `,
-    )
+    .select(propertyQuery)
     .eq("state", PropertyState.ACTIVE)
     .order("created_at", { ascending: false })
     .range(index * pageSize, index * pageSize + pageSize - 1);
@@ -105,7 +87,7 @@ export default function PropertiesList({
   const pageSize = 4;
   const [page, setPage] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const { data: total } = useSWR("properties-total", fetcherAll);
+  const { data: total } = useSWR("total-properties-home-page", fetcherAll);
   const totalPages = total ? Math.ceil((total - pageSize) / pageSize) : 0;
   const pages = [];
 
