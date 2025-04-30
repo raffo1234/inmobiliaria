@@ -39,5 +39,5 @@ export default function InfiniteScrollSentinel({
     };
   }, [onElementVisible, loading]);
 
-  return <div ref={sentinelRef} className="-mt-10"></div>;
+  return <div ref={sentinelRef} className="-mt-20"></div>;
 }
