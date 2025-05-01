@@ -455,10 +455,11 @@ export default function AddProperty({ userId }: { userId: string }) {
                       </label>
                       <select
                         id="currency"
+                        defaultValue={PropertyCurrency.SOLES}
                         {...register("currency")}
                         className="w-full focus:z-10 px-3 py-2.5 rounded-l-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
                       >
-                        <option value={PropertyCurrency.SOLES} selected>
+                        <option value={PropertyCurrency.SOLES}>
                           S/. Soles
                         </option>
                         <option value={PropertyCurrency.DOLARES}>

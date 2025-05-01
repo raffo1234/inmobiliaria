@@ -1,10 +1,9 @@
-import { Modal } from "antd";
 import EditPropertyInformation from "./EditPropertyInformation";
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
-import { useState } from "react";
 import PropertyTypes from "./PropertyTypologies";
 import { Icon } from "@iconify/react";
+import { useGlobalState } from "@lib/globalState";
 
 export default function EditProperty({
   id,
@@ -13,14 +12,11 @@ export default function EditProperty({
   id: string;
   userId: string;
 }) {
-  const [open, setOpen] = useState(false);
+  const { setModalContent, setModalOpen } = useGlobalState();
 
-  const showModal = () => {
-    setOpen(true);
-  };
-
-  const hideModal = () => {
-    setOpen(false);
+  const showGlobalModal = () => {
+    setModalContent(<Tabs defaultActiveKey="1" items={items} />);
+    setModalOpen(true);
   };
 
   const items: TabsProps["items"] = [
@@ -31,7 +27,7 @@ export default function EditProperty({
         <EditPropertyInformation
           id={id}
           userId={userId}
-          hideModal={hideModal}
+          hideModal={() => setModalOpen(false)}
         />
       ),
     },
@@ -46,7 +42,7 @@ export default function EditProperty({
     <>
       <button
         type="button"
-        onClick={showModal}
+        onClick={showGlobalModal}
         className="w-12 h-12 flex items-center justify-center"
       >
         <Icon
@@ -54,16 +50,6 @@ export default function EditProperty({
           className="text-3xl"
         />
       </button>
-      <Modal
-        title="Edit Property"
-        open={open}
-        onCancel={hideModal}
-        width="1000px"
-        destroyOnClose
-        footer={null}
-      >
-        <Tabs defaultActiveKey="1" items={items} />
-      </Modal>
     </>
   );
 }

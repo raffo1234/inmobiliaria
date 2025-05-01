@@ -27,7 +27,7 @@ const PropertyItem = ({ id, userId }: { id: string; userId: string }) => {
       <a href={`inmueble/${id}`}>
         <img
           src={hero.src}
-          className="w-full h-[320px] object-cover object-top rounded-lg mb-4"
+          className="w-full h-full object-cover object-top rounded-lg mb-4"
           alt="Inmobiliaria"
         />
       </a>
@@ -103,7 +103,7 @@ export default function AdminPropertiesList({
     <section
       className="grid gap-8"
       style={{
-        gridTemplateColumns: "repeat(auto-fit, minmax(336px, 1fr))",
+        gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
       }}
     >
       <CheckPermission
@@ -128,12 +128,12 @@ export default function AdminPropertiesList({
       {Array.isArray(properties) &&
         properties.map((property) => {
           const { id, title, state, phase } = property;
-          if (error) console.error(error);
 
+          if (error) console.error(error);
           if (isLoading) return <Skeleton />;
 
           return (
-            <article key={id}>
+            <article key={id} className="aspect-4/3">
               <PropertyItem id={id} userId={userId} />
               <div className="flex flex-col gap-3">
                 <h3 className="flex gap-4 justify-between w-full">

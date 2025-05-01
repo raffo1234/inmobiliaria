@@ -14,7 +14,7 @@ export default function Aside({
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <>
+    <div className="flex-shrink-0">
       <button
         onClick={() => setIsOpen((prev) => !prev)}
         className={`${isOpen ? "text-cyan-500" : ""} lg:invisible z-20 visible absolute right-2 top-4 bg-white w-12 h-12 border border-gray-200 rounded-xl flex justify-center items-center`}
@@ -56,15 +56,22 @@ export default function Aside({
           </ul>
           <ul className="flex flex-col gap-1 text-sm mt-2 pt-2 border-t border-gray-100">
             <li>
-              <button onClick={() => signOut()}className="rounded-xl w-full text-left py-2 px-4 gap-3.5 flex items-center hover:bg-gray-100 hover:text-red-500">
-                <Icon icon="solar:inbox-out-linear" fontSize={17} className="-rotate-90" />
+              <button
+                onClick={() => signOut()}
+                className="rounded-xl w-full text-left py-2 px-4 gap-3.5 flex items-center hover:bg-gray-100 hover:text-red-500"
+              >
+                <Icon
+                  icon="solar:inbox-out-linear"
+                  fontSize={17}
+                  className="-rotate-90"
+                />
                 Salir
               </button>
             </li>
           </ul>
         </nav>
       </section>
-    </>
+    </div>
   );
 }
 
@@ -88,5 +95,5 @@ const pages = [
     href: "/admin/permisos",
     title: "Permisos",
     iconName: "solar:lock-keyhole-broken",
-  }
+  },
 ];
