@@ -1,9 +1,21 @@
 ---
 import AddProperty from "@components/AddProperty";
 import Dashboard from "@layouts/Dashboard.astro";
-const { currentUserId: userId } = Astro.locals;
+import { supabase } from "@lib/supabase";
+import { getSession } from "auth-astro/server";
+
+const session = await getSession(Astro.request);
+const userEmail = session?.user?.email;
+
+const { data: user } = await supabase
+  .from("user")
+  .select("id")
+  .eq("email", userEmail)
+  .single();
+
+const userId = user?.id;
 ---
 
-<Dashboard pageTitle="Add Property">
+<Dashboard pageTitle="Agregar inmueble">
   {userId ? <AddProperty userId={userId} client:load /> : null}
 </Dashboard>

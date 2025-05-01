@@ -1,12 +1,22 @@
 ---
 import AdminPropertiesList from "@components/AdminPropertiesList";
 import Dashboard from "@layouts/Dashboard.astro";
+import { supabase } from "@lib/supabase";
+import { getSession } from "auth-astro/server";
 
-const userRoleId = Astro.locals.currentUserRoleId;
-const userId = Astro.locals.currentUserId;
+const session = await getSession(Astro.request);
+const userEmail = session?.user?.email;
+
+const { data: user } = await supabase
+  .from("user")
+  .select("id, role_id")
+  .eq("email", userEmail)
+  .single();
+
+const userId = user?.id;
 ---
 
 <Dashboard pageTitle="Propiedades">
   <h1 class="mb-6 font-semibold text-lg block">Propiedades</h1>
-  <AdminPropertiesList client:load userRoleId={userRoleId} userId={userId} />
+  <AdminPropertiesList client:load userId={userId} userRoleId={user?.role_id} />
 </Dashboard>
