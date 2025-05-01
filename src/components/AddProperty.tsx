@@ -5,6 +5,7 @@ import { useState } from "react";
 import {
   PropertyCurrency,
   PropertyPhase,
+  PropertyState,
   PropertyType,
 } from "@types/propertyState";
 import { Icon } from "@iconify/react";
@@ -21,6 +22,7 @@ type Inputs = {
   price: string;
   size: string;
   currency: string;
+  state: string;
 };
 
 interface Property {
@@ -83,6 +85,78 @@ export default function AddProperty({ userId }: { userId: string }) {
             </button>
           </nav>
           <div className="flex-1 flex flex-col gap-7">
+            <div className="flex p-7 flex-col gap-4 border border-gray-100 rounded-xl bg-white">
+              <h2 className="font-semibold">Estado</h2>
+              <fieldset className="flex items-center gap-4 w-full">
+                <div className="w-1/2">
+                  <input
+                    {...register("state")}
+                    type="radio"
+                    id="state_1"
+                    value={PropertyState.DRAFT}
+                    className="peer hidden"
+                    defaultChecked
+                  />
+                  <label
+                    htmlFor="state_1"
+                    className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
+                  >
+                    <span className="flex items-center flex-col gap-1">
+                      <Icon
+                        icon="solar:document-add-broken"
+                        fontSize={24}
+                        className="block"
+                      />
+                      <span>Borrador</span>
+                    </span>
+                  </label>
+                </div>
+                <div className="w-1/2">
+                  <input
+                    {...register("state")}
+                    value={PropertyState.PENDING}
+                    type="radio"
+                    id="state_2"
+                    className="peer hidden"
+                  />
+                  <label
+                    htmlFor="state_2"
+                    className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
+                  >
+                    <span className="flex items-center flex-col gap-1">
+                      <Icon
+                        icon="solar:checklist-minimalistic-broken"
+                        fontSize={24}
+                        className="block"
+                      />
+                      <span>Pendiente</span>
+                    </span>
+                  </label>
+                </div>
+                <div className="w-1/2">
+                  <input
+                    {...register("state")}
+                    value={PropertyState.ACTIVE}
+                    type="radio"
+                    id="state_3"
+                    className="peer hidden"
+                  />
+                  <label
+                    htmlFor="state_3"
+                    className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
+                  >
+                    <span className="flex items-center flex-col gap-1">
+                      <Icon
+                        icon="solar:shield-network-broken"
+                        fontSize={24}
+                        className="block"
+                      />
+                      <span>Publicado</span>
+                    </span>
+                  </label>
+                </div>
+              </fieldset>
+            </div>
             <div className="flex p-7 flex-col gap-4 border border-gray-100 rounded-xl bg-white">
               <h2 className="font-semibold">Tipo</h2>
               <fieldset className="flex items-center gap-4 w-full">
@@ -151,7 +225,7 @@ export default function AddProperty({ userId }: { userId: string }) {
                   >
                     <span className="flex items-center flex-col gap-1">
                       <Icon
-                        icon="solar:checklist-minimalistic-broken"
+                        icon="solar:wallpaper-broken"
                         fontSize={24}
                         className="block"
                       />
@@ -195,7 +269,7 @@ export default function AddProperty({ userId }: { userId: string }) {
                   >
                     <span className="flex items-center flex-col gap-1">
                       <Icon
-                        icon="solar:check-circle-broken"
+                        icon="solar:key-square-2-outline"
                         fontSize={24}
                         className="block"
                       />
