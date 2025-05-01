@@ -14,6 +14,8 @@ type Inputs = {
   bedroom_count: number;
   bathroom_count: number;
   phase: string;
+  price: string;
+  size: string;
 };
 
 interface Property {
@@ -359,6 +361,35 @@ export default function AddProperty({ userId }: { userId: string }) {
                   </label>
                 </div>
               </fieldset>
+            </div>
+            <div className="flex p-7 flex-col gap-4 border border-gray-100 rounded-xl bg-white">
+              <h2 className="font-semibold">Detalles</h2>
+              <div className="flex gap-5 items-center">
+                <fieldset>
+                  <label htmlFor="price" className="inline-block mb-2 text-sm">
+                    Precio
+                  </label>
+                  <input
+                    type="text"
+                    id="price"
+                    {...register("price")}
+                    required
+                    className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
+                  />
+                </fieldset>
+                <fieldset>
+                  <label htmlFor="size" className="inline-block mb-2 text-sm">
+                    Tama&ntilde;o (m<sup>2</sup> )
+                  </label>
+                  <input
+                    type="number"
+                    id="size"
+                    {...register("size")}
+                    required
+                    className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
+                  />
+                </fieldset>
+              </div>
             </div>
             <div className="flex p-7 flex-col gap-4 border border-gray-100 rounded-xl bg-white">
               <h2 className="font-semibold">Information Basica</h2>
