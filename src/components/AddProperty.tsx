@@ -2,7 +2,11 @@ import { supabase } from "@lib/supabase";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { mutate } from "swr";
 import { useState } from "react";
-import { PropertyPhase, PropertyType } from "@types/propertyState";
+import {
+  PropertyCurrency,
+  PropertyPhase,
+  PropertyType,
+} from "@types/propertyState";
 import { Icon } from "@iconify/react";
 
 type Inputs = {
@@ -16,6 +20,7 @@ type Inputs = {
   phase: string;
   price: string;
   size: string;
+  currency: string;
 };
 
 interface Property {
@@ -366,16 +371,43 @@ export default function AddProperty({ userId }: { userId: string }) {
               <h2 className="font-semibold">Detalles</h2>
               <div className="flex gap-5 items-center">
                 <fieldset>
-                  <label htmlFor="price" className="inline-block mb-2 text-sm">
-                    Precio
-                  </label>
-                  <input
-                    type="text"
-                    id="price"
-                    {...register("price")}
-                    required
-                    className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
-                  />
+                  <div className="flex items-center">
+                    <div className="w-30">
+                      <label
+                        htmlFor="currency"
+                        className="inline-block mb-2 text-sm"
+                      >
+                        Moneda
+                      </label>
+                      <select
+                        id="currency"
+                        {...register("currency")}
+                        className="w-full focus:z-10 px-3 py-2.5 rounded-l-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
+                      >
+                        <option value={PropertyCurrency.SOLES} selected>
+                          S/. Soles
+                        </option>
+                        <option value={PropertyCurrency.DOLARES}>
+                          USD Dolares
+                        </option>
+                      </select>
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="price"
+                        className="inline-block mb-2 text-sm"
+                      >
+                        Precio
+                      </label>
+                      <input
+                        type="text"
+                        id="price"
+                        {...register("price")}
+                        required
+                        className="w-full -m-[1px] px-3 py-2.5 focus:z-10 rounded-r-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
+                      />
+                    </div>
+                  </div>
                 </fieldset>
                 <fieldset>
                   <label htmlFor="size" className="inline-block mb-2 text-sm">

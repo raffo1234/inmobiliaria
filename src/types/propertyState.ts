@@ -1,7 +1,7 @@
 export enum PropertyState {
   DRAFT = "BORRADOR",
   PENDING = "EN REVISIÓN",
-  ACTIVE = "PUBLICADO",  
+  ACTIVE = "PUBLICADO",
 }
 
 export enum PropertyType {
@@ -16,10 +16,15 @@ export enum PropertyPhase {
 }
 
 export enum Permissions {
-    EDITAR_INMUEBLE  = "EDITAR_INMUEBLE",
-  VER_FAVORITOS  ="VER_FAVORITOS",
+  EDITAR_INMUEBLE = "EDITAR_INMUEBLE",
+  VER_FAVORITOS = "VER_FAVORITOS",
   CREAR_INMUEBLE = "CREAR_INMUEBLE",
   DAR_ME_GUSTA = "DAR_ME_GUSTA",
   CAMBIAR_ESTADO = "CAMBIAR_ESTADO",
   ELIMINAR_INMUEBLE = "ELIMINAR_INMUEBLE",
+}
+
+export enum PropertyCurrency {
+  SOLES = "SOLES",
+  DOLARES = "DOLARES",
 }
