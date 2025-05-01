@@ -49,9 +49,15 @@ app inmobiliaria, aplicación inmobiliaria, inmobiliaria online, plataforma inmo
   </head>
   <body id="dashboard">
     <header class="border-b py-3 flex justify-between relative z-20">
-      <div class="max-w-[1360px] px-4 mx-auto w-full flex justify-between items-center">
+      <div
+        class="max-w-[1360px] px-4 mx-auto w-full flex justify-between items-center"
+      >
         <h1 class="block">
-          <a href="/" title="Inicio | Inmobiliaria" class="flex items-center gap-2 text-sm font-semibold uppercase">
+          <a
+            href="/"
+            title="Inicio | Inmobiliaria"
+            class="flex items-center gap-2 text-sm font-semibold uppercase"
+          >
             <span class="p-2 rounded-xl bg-cyan-500 block">
               <Icon name="solar:home-smile-bold" class="text-3xl text-white" />
             </span>
@@ -61,7 +67,9 @@ app inmobiliaria, aplicación inmobiliaria, inmobiliaria online, plataforma inmo
         <ProfilePopover />
       </div>
     </header>
-    <main class="flex items-start max-w-[1360px] mx-auto w-full z-10 min-h-lvh relative">
+    <main
+      class="flex items-start max-w-[1360px] mx-auto w-full z-10 min-h-lvh relative"
+    >
       {
         user && user?.name && user?.image ? (
           <Aside

@@ -8,6 +8,7 @@ import DeleteProperty from "@components/DeleteProperty";
 import { PropertyState, Permissions } from "@types/propertyState";
 import { Icon } from "@iconify/react";
 import CheckPermission from "@components/CheckPermission";
+import EditPropertyModal from "./EditPropertyModal";
 
 type Property = {
   id: string;
@@ -100,65 +101,68 @@ export default function AdminPropertiesList({
   } = useSWR("admin-properties", fetcher);
 
   return (
-    <section
-      className="grid gap-8"
-      style={{
-        gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-      }}
-    >
-      <CheckPermission
-        userRoleId={userRoleId}
-        requiredPermission={Permissions.CREAR_INMUEBLE}
+    <>
+      <section
+        className="grid gap-8"
+        style={{
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+        }}
       >
-        <a
-          href="/admin/property/add"
-          title="Agregar Inmueble"
-          className="border-dashed border border-gray-200 hover:bg-gray-50 rounded-2xl p-4 flex hover:text-cyan-500 justify-center items-center"
+        <CheckPermission
+          userRoleId={userRoleId}
+          requiredPermission={Permissions.CREAR_INMUEBLE}
         >
-          <span className="text-center">
-            <Icon
-              icon="solar:add-square-broken"
-              fontSize={24}
-              className="mx-auto mb-2"
-            />
-            <span>Agregar Inmueble</span>
-          </span>
-        </a>
-      </CheckPermission>
-      {Array.isArray(properties) &&
-        properties.map((property) => {
-          const { id, title, state, phase } = property;
+          <a
+            href="/admin/property/add"
+            title="Agregar Inmueble"
+            className="border-dashed border border-gray-200 hover:bg-gray-50 rounded-2xl p-4 flex hover:text-cyan-500 justify-center items-center"
+          >
+            <span className="text-center">
+              <Icon
+                icon="solar:add-square-broken"
+                fontSize={24}
+                className="mx-auto mb-2"
+              />
+              <span>Agregar Inmueble</span>
+            </span>
+          </a>
+        </CheckPermission>
+        {Array.isArray(properties) &&
+          properties.map((property) => {
+            const { id, title, state, phase } = property;
 
-          if (error) console.error(error);
-          if (isLoading) return <Skeleton />;
+            if (error) console.error(error);
+            if (isLoading) return <Skeleton />;
 
-          return (
-            <article key={id} className="aspect-4/3">
-              <PropertyItem id={id} userId={userId} />
-              <div className="flex flex-col gap-3">
-                <h3 className="flex gap-4 justify-between w-full">
-                  <a href={`inmueble/${id}`} className="font-semibold">
-                    {title}
-                  </a>
-                  <span className="flex items-center gap-1">
-                    <span
-                      className={`rounded border pb-[1px] text-xs px-1 mt-1 block self-start
+            return (
+              <article key={id} className="aspect-4/3">
+                <PropertyItem id={id} userId={userId} />
+                <div className="flex flex-col gap-3">
+                  <h3 className="flex gap-4 justify-between w-full">
+                    <a href={`inmueble/${id}`} className="font-semibold">
+                      {title}
+                    </a>
+                    <span className="flex items-center gap-1">
+                      <span
+                        className={`rounded border pb-[1px] text-xs px-1 mt-1 block self-start
                   ${state === PropertyState.DRAFT ? "border-gray-400 text-gray-400" : ""}
                   ${state === PropertyState.PENDING ? "border-cyan-200 text-cyan-200" : ""}
                   ${state === PropertyState.ACTIVE ? "border-green-600 bg-green-600 text-white" : ""}
                   `}
-                    >
-                      {state}
+                      >
+                        {state}
+                      </span>
+                      <span className="rounded border pb-[1px] text-xs px-1 mt-1 block self-start">
+                        {phase}
+                      </span>
                     </span>
-                    <span className="rounded border pb-[1px] text-xs px-1 mt-1 block self-start">
-                      {phase}
-                    </span>
-                  </span>
-                </h3>
-              </div>
-            </article>
-          );
-        })}
-    </section>
+                  </h3>
+                </div>
+              </article>
+            );
+          })}
+      </section>
+      <EditPropertyModal />
+    </>
   );
 }

@@ -10,7 +10,6 @@ const { pageTitle } = Astro.props;
 
 const session = await getSession(Astro.request);
 const userEmail = session?.user?.email;
-
 ---
 
 <!doctype html>
@@ -48,7 +47,11 @@ const userEmail = session?.user?.email;
     <Main>
       <slot />
     </Main>
-    <PropertyPreview userEmail={userEmail} currentHref={Astro.url.href} client:load />
+    <PropertyPreview
+      userEmail={userEmail}
+      currentHref={Astro.url.href}
+      client:load
+    />
     <GlobalModal client:load />
   </body>
 </html>

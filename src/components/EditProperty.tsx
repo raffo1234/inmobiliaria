@@ -12,12 +12,8 @@ export default function EditProperty({
   id: string;
   userId: string;
 }) {
-  const { setModalContent, setModalOpen } = useGlobalState();
-
-  const showGlobalModal = () => {
-    setModalContent(<Tabs defaultActiveKey="1" items={items} />);
-    setModalOpen(true);
-  };
+  const { setEditModalContent, setEditPropertyId, setEditModalOpen } =
+    useGlobalState();
 
   const items: TabsProps["items"] = [
     {
@@ -27,7 +23,7 @@ export default function EditProperty({
         <EditPropertyInformation
           id={id}
           userId={userId}
-          hideModal={() => setModalOpen(false)}
+          hideModal={() => setEditModalOpen(false)}
         />
       ),
     },
@@ -38,11 +34,17 @@ export default function EditProperty({
     },
   ];
 
+  const openEditView = () => {
+    setEditPropertyId(id);
+    setEditModalContent(<Tabs items={items}></Tabs>);
+    setEditModalOpen(true);
+  };
+
   return (
     <>
       <button
         type="button"
-        onClick={showGlobalModal}
+        onClick={openEditView}
         className="w-12 h-12 flex items-center justify-center"
       >
         <Icon
