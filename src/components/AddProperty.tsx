@@ -1,14 +1,16 @@
 import { supabase } from "@lib/supabase";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { mutate } from "swr";
-import Uploader from "./Uploader";
 import { useState } from "react";
+import { PropertyType } from "@types/propertyState";
+import { Icon } from "@iconify/react";
 
 type Inputs = {
   title: string;
   description: string;
   location: string;
   image: string;
+  type: string;
 };
 
 interface Property {
@@ -49,58 +51,135 @@ export default function AddProperty({ userId }: { userId: string }) {
     <>
       <h1 className="mb-8 font-semibold text-lg block">Agregar Inmueble</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col gap-4">
-          <fieldset>
-            <label htmlFor="title" className="inline-block mb-2 text-sm">
-              Titulo
-            </label>
-            <input
-              type="text"
-              id="title"
-              {...register("title")}
-              required
-              className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
-            />
-          </fieldset>
-          <fieldset>
-            <label htmlFor="description" className="inline-block mb-2 text-sm">
-              Descripcion
-            </label>
-            <input
-              type="text"
-              id="decription"
-              {...register("description")}
-              required
-              className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
-            />
-          </fieldset>
-          <fieldset>
-            <label htmlFor="location" className="inline-block mb-2 text-sm">
-              Ubicacion
-            </label>
-            <input
-              type="text"
-              id="location"
-              {...register("location")}
-              required
-              className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
-            />
-          </fieldset>
+        <div className="flex items-start gap-6">
+          <nav className="rounded-xl border border-gray-100 w-60">
+            <button
+              type="button"
+              className="bg-white px-6 py-3 text-left block border-b rounded-t-xl border-gray-100 w-full hover:bg-gray-50"
+            >
+              Informacion Basica
+            </button>
+            <button
+              type="button"
+              className="bg-white px-6 py-3 text-left block border-b border-gray-100 w-full hover:bg-gray-50 "
+            >
+              Detalles
+            </button>
+            <button
+              type="button"
+              className="bg-white px-6 py-3 text-left block w-full hover:bg-gray-50 rounded-b-xl"
+            >
+              Photos
+            </button>
+          </nav>
+          <div className="flex-1 flex flex-col gap-7">
+            <div className="flex p-7 flex-col gap-4 border border-gray-100 rounded-xl bg-white">
+              <h2 className="font-semibold">Tipo</h2>
+              <fieldset className="flex items-center gap-4 w-full">
+                <div className="w-1/2">
+                  <input
+                    {...register("type")}
+                    type="radio"
+                    id="1"
+                    value={PropertyType.APARTMENT}
+                    className="peer hidden"
+                    defaultChecked
+                  />
+                  <label
+                    htmlFor="1"
+                    className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
+                  >
+                    <span className="flex items-center flex-col gap-1">
+                      <Icon
+                        icon="solar:buildings-broken"
+                        fontSize={32}
+                        className="block"
+                      />
+                      <span>Departamento</span>
+                    </span>
+                  </label>
+                </div>
+                <div className="w-1/2">
+                  <input
+                    {...register("type")}
+                    value={PropertyType.HOUSE}
+                    type="radio"
+                    id="2"
+                    className="peer hidden"
+                  />
+                  <label
+                    htmlFor="2"
+                    className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
+                  >
+                    <span className="flex items-center flex-col gap-1">
+                      <Icon
+                        icon="solar:home-2-broken"
+                        fontSize={32}
+                        className="block"
+                      />
+                      <span>Casa</span>
+                    </span>
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+            <div className="flex p-7 flex-col gap-4 border border-gray-100 rounded-xl bg-white">
+              <h2 className="font-semibold">Information Basica</h2>
+              <fieldset>
+                <label htmlFor="title" className="inline-block mb-2 text-sm">
+                  Titulo
+                </label>
+                <input
+                  type="text"
+                  id="title"
+                  {...register("title")}
+                  required
+                  className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
+                />
+              </fieldset>
+              <fieldset>
+                <label htmlFor="location" className="inline-block mb-2 text-sm">
+                  Ubicacion
+                </label>
+                <input
+                  type="text"
+                  id="location"
+                  {...register("location")}
+                  required
+                  className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
+                />
+              </fieldset>
+              <fieldset>
+                <label
+                  htmlFor="description"
+                  className="inline-block mb-2 text-sm"
+                >
+                  Descripcion
+                </label>
+                <textarea
+                  id="decription"
+                  {...register("description")}
+                  required
+                  className="w-full px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
+                />
+              </fieldset>
+            </div>
+            <footer className="justify-end flex items-center gap-2">
+              <a
+                href="/admin/property"
+                className="font-semibold disabled:border-gray-100 disabled:bg-gray-100 inline-block py-3 px-10 bg-white text-sm border border-gray-100 rounded-lg transition-colors hover:border-gray-200 duration-500 active:border-gray-300"
+              >
+                Cancelar
+              </a>
+              <button
+                type="submit"
+                className="text-white font-semibold disabled:border-gray-100 disabled:bg-gray-100 inline-block py-3 px-10 text-sm bg-cyan-500 hover:bg-cyan-400 transition-colors duration-500 rounded-lg"
+              >
+                Agregar
+              </button>
+            </footer>
+          </div>
         </div>
-        <footer className="mt-10 flex items-center gap-2">
-          <a
-            href="/admin/property"
-            className="font-semibold disabled:border-gray-100 disabled:bg-gray-100 inline-block py-3 px-10 bg-white text-sm border border-gray-100 rounded-lg transition-colors hover:border-gray-200 duration-500 active:border-gray-300"
-          >
-            Cancelar
-          </a>
-          <button
-            type="submit"
-            className="text-white font-semibold disabled:border-gray-100 disabled:bg-gray-100 inline-block py-3 px-10 text-sm bg-cyan-500 hover:bg-cyan-400 transition-colors duration-500 rounded-lg"
-          >
-            Agregar
-          </button>
-        </footer>
       </form>
     </>
   );
