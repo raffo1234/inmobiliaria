@@ -11,6 +11,7 @@ type Inputs = {
   location: string;
   image: string;
   type: string;
+  bedroom_count: number;
 };
 
 interface Property {
@@ -119,6 +120,87 @@ export default function AddProperty({ userId }: { userId: string }) {
                       />
                       <span>Casa</span>
                     </span>
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+            <div className="flex p-7 flex-col gap-4 border border-gray-100 rounded-xl bg-white">
+              <h2 className="font-semibold">Dormitorios</h2>
+              <fieldset className="flex items-center gap-4 w-full">
+                <div className="w-1/2">
+                  <input
+                    {...register("bedroom_count")}
+                    type="radio"
+                    id="bedroom_count_1"
+                    value={1}
+                    className="peer hidden"
+                    defaultChecked
+                  />
+                  <label
+                    htmlFor="bedroom_count_1"
+                    className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
+                  >
+                    1
+                  </label>
+                </div>
+                <div className="w-1/2">
+                  <input
+                    {...register("bedroom_count")}
+                    value={2}
+                    type="radio"
+                    id="bedroom_count_2"
+                    className="peer hidden"
+                  />
+                  <label
+                    htmlFor="bedroom_count_2"
+                    className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
+                  >
+                    2
+                  </label>
+                </div>
+                <div className="w-1/2">
+                  <input
+                    {...register("bedroom_count")}
+                    value={3}
+                    type="radio"
+                    id="bedroom_count_3"
+                    className="peer hidden"
+                  />
+                  <label
+                    htmlFor="bedroom_count_3"
+                    className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
+                  >
+                    3
+                  </label>
+                </div>
+                <div className="w-1/2">
+                  <input
+                    {...register("bedroom_count")}
+                    value={4}
+                    type="radio"
+                    id="bedroom_count_4"
+                    className="peer hidden"
+                  />
+                  <label
+                    htmlFor="bedroom_count_4"
+                    className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
+                  >
+                    4
+                  </label>
+                </div>
+                <div className="w-1/2">
+                  <input
+                    {...register("bedroom_count")}
+                    value={5}
+                    type="radio"
+                    id="bedroom_count_5"
+                    className="peer hidden"
+                  />
+                  <label
+                    htmlFor="bedroom_count_5"
+                    className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
+                  >
+                    5
                   </label>
                 </div>
               </fieldset>
