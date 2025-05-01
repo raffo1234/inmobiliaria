@@ -61,10 +61,15 @@ export default function AddProperty({ userId }: { userId: string }) {
 
   return (
     <>
-      <h1 className="mb-8 font-semibold text-lg block">Agregar Inmueble</h1>
+      <div className="w-full mb-8 flex justify-between items-center">
+        <h1 className="font-semibold text-lg block">Agregar Inmueble</h1>
+        <a href="/admin/property" type="button" className="mb-4">
+          <Icon icon="solar:square-alt-arrow-left-broken" fontSize="42" />
+        </a>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex items-start gap-6">
-          <nav className="rounded-xl border border-gray-100 w-60">
+          <nav className="hidden xl:block rounded-xl border border-gray-100 w-60">
             <button
               type="button"
               className="bg-white px-6 py-3 text-left block border-b rounded-t-xl border-gray-100 w-full hover:bg-gray-50"
