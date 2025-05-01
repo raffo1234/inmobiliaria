@@ -2,7 +2,7 @@ import { supabase } from "@lib/supabase";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { mutate } from "swr";
 import { useState } from "react";
-import { PropertyType } from "@types/propertyState";
+import { PropertyPhase, PropertyType } from "@types/propertyState";
 import { Icon } from "@iconify/react";
 
 type Inputs = {
@@ -12,6 +12,8 @@ type Inputs = {
   image: string;
   type: string;
   bedroom_count: number;
+  bathroom_count: number;
+  phase: string;
 };
 
 interface Property {
@@ -81,13 +83,13 @@ export default function AddProperty({ userId }: { userId: string }) {
                   <input
                     {...register("type")}
                     type="radio"
-                    id="1"
+                    id="type_1"
                     value={PropertyType.APARTMENT}
                     className="peer hidden"
                     defaultChecked
                   />
                   <label
-                    htmlFor="1"
+                    htmlFor="type_1"
                     className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
                   >
                     <span className="flex items-center flex-col gap-1">
@@ -105,11 +107,11 @@ export default function AddProperty({ userId }: { userId: string }) {
                     {...register("type")}
                     value={PropertyType.HOUSE}
                     type="radio"
-                    id="2"
+                    id="type_2"
                     className="peer hidden"
                   />
                   <label
-                    htmlFor="2"
+                    htmlFor="type_2"
                     className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
                   >
                     <span className="flex items-center flex-col gap-1">
@@ -119,6 +121,78 @@ export default function AddProperty({ userId }: { userId: string }) {
                         className="block"
                       />
                       <span>Casa</span>
+                    </span>
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+            <div className="flex p-7 flex-col gap-4 border border-gray-100 rounded-xl bg-white">
+              <h2 className="font-semibold">Fase</h2>
+              <fieldset className="flex items-center gap-4 w-full">
+                <div className="w-1/2">
+                  <input
+                    {...register("phase")}
+                    type="radio"
+                    id="phase_1"
+                    value={PropertyPhase.PLANOS}
+                    className="peer hidden"
+                    defaultChecked
+                  />
+                  <label
+                    htmlFor="phase_1"
+                    className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
+                  >
+                    <span className="flex items-center flex-col gap-1">
+                      <Icon
+                        icon="solar:checklist-minimalistic-broken"
+                        fontSize={24}
+                        className="block"
+                      />
+                      <span>En Planos</span>
+                    </span>
+                  </label>
+                </div>
+                <div className="w-1/2">
+                  <input
+                    {...register("phase")}
+                    value={PropertyPhase.CONSTRUCCION}
+                    type="radio"
+                    id="phase_2"
+                    className="peer hidden"
+                  />
+                  <label
+                    htmlFor="phase_2"
+                    className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
+                  >
+                    <span className="flex items-center flex-col gap-1">
+                      <Icon
+                        icon="solar:chart-broken"
+                        fontSize={24}
+                        className="block"
+                      />
+                      <span>En Construccion</span>
+                    </span>
+                  </label>
+                </div>
+                <div className="w-1/2">
+                  <input
+                    {...register("phase")}
+                    value={PropertyPhase.READY}
+                    type="radio"
+                    id="phase_3"
+                    className="peer hidden"
+                  />
+                  <label
+                    htmlFor="phase_3"
+                    className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
+                  >
+                    <span className="flex items-center flex-col gap-1">
+                      <Icon
+                        icon="solar:check-circle-broken"
+                        fontSize={24}
+                        className="block"
+                      />
+                      <span>Entrega Inmediata</span>
                     </span>
                   </label>
                 </div>
@@ -198,6 +272,87 @@ export default function AddProperty({ userId }: { userId: string }) {
                   />
                   <label
                     htmlFor="bedroom_count_5"
+                    className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
+                  >
+                    5
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+            <div className="flex p-7 flex-col gap-4 border border-gray-100 rounded-xl bg-white">
+              <h2 className="font-semibold">Ba&ntilde;os</h2>
+              <fieldset className="flex items-center gap-4 w-full">
+                <div className="w-1/2">
+                  <input
+                    {...register("bathroom_count")}
+                    type="radio"
+                    id="bathroom_count_1"
+                    value={1}
+                    className="peer hidden"
+                    defaultChecked
+                  />
+                  <label
+                    htmlFor="bathroom_count_1"
+                    className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
+                  >
+                    1
+                  </label>
+                </div>
+                <div className="w-1/2">
+                  <input
+                    {...register("bathroom_count")}
+                    value={2}
+                    type="radio"
+                    id="bathroom_count_2"
+                    className="peer hidden"
+                  />
+                  <label
+                    htmlFor="bathroom_count_2"
+                    className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
+                  >
+                    2
+                  </label>
+                </div>
+                <div className="w-1/2">
+                  <input
+                    {...register("bathroom_count")}
+                    value={3}
+                    type="radio"
+                    id="bathroom_count_3"
+                    className="peer hidden"
+                  />
+                  <label
+                    htmlFor="bathroom_count_3"
+                    className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
+                  >
+                    3
+                  </label>
+                </div>
+                <div className="w-1/2">
+                  <input
+                    {...register("bathroom_count")}
+                    value={4}
+                    type="radio"
+                    id="bathroom_count_4"
+                    className="peer hidden"
+                  />
+                  <label
+                    htmlFor="bathroom_count_4"
+                    className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
+                  >
+                    4
+                  </label>
+                </div>
+                <div className="w-1/2">
+                  <input
+                    {...register("bathroom_count")}
+                    value={5}
+                    type="radio"
+                    id="bathroom_count_5"
+                    className="peer hidden"
+                  />
+                  <label
+                    htmlFor="bathroom_count_5"
                     className="flex items-center justify-center aspect-[4/2] transition-all duration-300 cursor-pointer select-none rounded-xl p-2 text-center border peer-checked:border-cyan-500 peer-checked:bg-cyan-50"
                   >
                     5
