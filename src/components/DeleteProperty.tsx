@@ -16,7 +16,7 @@ export default function DeleteProperty({ id }: { id: string }) {
   const { data: properties } = useSWR("admin-properties", fetcher);
   const onDelete = async (id: string) => {
     const confirmationMessage = confirm(
-      "Esta acción es irreversible. Esta seguro?"
+      "Esta acción es irreversible. Esta seguro?",
     );
     if (!confirmationMessage) return;
 
@@ -30,9 +30,9 @@ export default function DeleteProperty({ id }: { id: string }) {
 
       if (deletedProperty && properties) {
         await mutate(
-          "properties",
+          "admin-properties",
           properties.filter((property) => property.id !== deletedProperty.id),
-          false
+          false,
         );
       }
     } catch (error) {

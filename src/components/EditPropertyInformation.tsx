@@ -8,7 +8,7 @@ import {
   PropertyState,
   PropertyType,
 } from "@types/propertyState";
-import { Button, message } from "antd";
+import { message } from "antd";
 import FormSkeleton from "./FormSkeleton";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
@@ -346,6 +346,12 @@ export default function EditPropertyInformation({
           </nav>
           <div className="flex-1 flex flex-col gap-7">
             <div className="flex p-7 flex-col gap-4 border border-gray-100 rounded-xl bg-white">
+              <h2 className="font-semibold">Imágenes</h2>
+              <fieldset className="flex items-center gap-4 w-full">
+                <Uploader propertyId={id} />
+              </fieldset>
+            </div>
+            <div className="flex p-7 flex-col gap-4 border border-gray-100 rounded-xl bg-white">
               <h2 className="font-semibold">Estado</h2>
               <fieldset className="flex items-center gap-4 w-full">
                 <div className="w-1/2">
@@ -465,6 +471,25 @@ export default function EditPropertyInformation({
                     </span>
                   </label>
                 </div>
+              </fieldset>
+            </div>
+            <div className="flex p-7 flex-col gap-4 border border-gray-100 rounded-xl bg-white">
+              <h2 className="font-semibold">Empresa</h2>
+              <fieldset className="flex items-center gap-4 w-full">
+                <select
+                  id="company_id"
+                  {...register("company_id")}
+                  required
+                  className="w-full -m-[1px] px-3 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-4 focus:ring-cyan-100  focus:border-cyan-500"
+                >
+                  {companies?.map(({ id, name }) => {
+                    return (
+                      <option key={id} value={id}>
+                        {name}
+                      </option>
+                    );
+                  })}
+                </select>
               </fieldset>
             </div>
             <div className="flex p-7 flex-col gap-4 border border-gray-100 rounded-xl bg-white">

@@ -1,6 +1,5 @@
 import { supabase } from "@lib/supabase";
 import useSWR from "swr";
-import hero from "@assets/hero.jpg";
 import { Skeleton } from "antd";
 import { useState } from "react";
 import EditProperty from "@components/EditProperty";
@@ -9,15 +8,29 @@ import { PropertyState, Permissions } from "@types/propertyState";
 import { Icon } from "@iconify/react";
 import CheckPermission from "@components/CheckPermission";
 import EditPropertyModal from "./EditPropertyModal";
+import PropertyFirstImage from "./PropertyFirstImage";
 
 type Property = {
   id: string;
   title: string;
   state: string;
   phase: string;
+  property_image: {
+    image_url: string;
+  }[];
 };
 
-const PropertyItem = ({ id, userId }: { id: string; userId: string }) => {
+const PropertyItem = ({
+  id,
+  propertyImage,
+  userId,
+}: {
+  id: string;
+  propertyImage: {
+    image_url: string;
+  }[];
+  userId: string;
+}) => {
   const [hover, setHover] = useState(false);
   return (
     <div
@@ -25,13 +38,7 @@ const PropertyItem = ({ id, userId }: { id: string; userId: string }) => {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <a href={`inmueble/${id}`}>
-        <img
-          src={hero.src}
-          className="w-full h-full object-cover object-top rounded-lg mb-4"
-          alt="Inmobiliaria"
-        />
-      </a>
+      <PropertyFirstImage title={id} src={propertyImage?.at(0)?.image_url} />
       <span
         className={`${hover ? "opacity-100" : "opacity-0"} transition-opacity block absolute left-0 top-0 w-full h-full bg-black bg-opacity-25 rounded-lg`}
         style={{
@@ -72,6 +79,7 @@ const fetcher = async (): Promise<Property[]> => {
       state,
       phase,
       created_at,
+      property_image(image_url),
       typology (
         property_id,
         id,
@@ -115,12 +123,12 @@ export default function AdminPropertiesList({
           <a
             href="/admin/property/add"
             title="Agregar Inmueble"
-            className="border-dashed border border-gray-200 hover:bg-gray-50 rounded-2xl p-4 flex hover:text-cyan-500 justify-center items-center"
+            className="border-dashed border bg-white transition-colors duration-300 border-gray-200 hover:bg-gray-50 rounded-2xl p-4 flex hover:text-cyan-500 justify-center items-center"
           >
             <span className="text-center">
               <Icon
                 icon="solar:add-square-broken"
-                fontSize={24}
+                fontSize={32}
                 className="mx-auto mb-2"
               />
               <span>Agregar Inmueble</span>
@@ -129,14 +137,18 @@ export default function AdminPropertiesList({
         </CheckPermission>
         {Array.isArray(properties) &&
           properties.map((property) => {
-            const { id, title, state, phase } = property;
+            const { id, title, state, phase, property_image } = property;
 
             if (error) console.error(error);
             if (isLoading) return <Skeleton />;
 
             return (
-              <article key={id} className="aspect-4/3">
-                <PropertyItem id={id} userId={userId} />
+              <article key={id}>
+                <PropertyItem
+                  propertyImage={property_image}
+                  id={id}
+                  userId={userId}
+                />
                 <div className="flex flex-col gap-3">
                   <h3 className="flex gap-4 justify-between w-full">
                     <a href={`inmueble/${id}`} className="font-semibold">
