@@ -9,37 +9,28 @@ import { Icon } from "@iconify/react";
 import CheckPermission from "@components/CheckPermission";
 import EditPropertyModal from "./EditPropertyModal";
 import PropertyFirstImage from "./PropertyFirstImage";
+import { getAdminPropertiesUserKey } from "src/constants";
 
-type Property = {
+type Props = {
   id: string;
   title: string;
   state: string;
-  phase: string;
-  property_image: {
+  userId: string;
+  propertyImage: {
     image_url: string;
   }[];
 };
 
 const AdminPropertyItem = ({
   id,
-  propertyImage,
-  userId,
   title,
   state,
-  phase,
-}: {
-  id: string;
-  title: string;
-  state: string;
-  phase: string;
-  propertyImage: {
-    image_url: string;
-  }[];
-  userId: string;
-}) => {
+  userId,
+  propertyImage,
+}: Props) => {
   return (
     <article className="bg-white rounded-xl relative">
-      <PropertyFirstImage title={id} src={propertyImage?.at(0)?.image_url} />
+      <PropertyFirstImage title={title} src={propertyImage?.at(0)?.image_url} />
       <div
         className={`rounded-xl absolute right-3 top-3 text-sm py-1 px-2 
             ${state === PropertyState.DRAFT ? "bg-gray-600 text-white" : ""}
@@ -53,14 +44,14 @@ const AdminPropertyItem = ({
         <h3 className="mb-3 font-semibold line-clamp-1">{title}</h3>
         <div className="flex gap-2 justify-center">
           <EditProperty id={id} userId={userId} />
-          <DeleteProperty id={id} />
+          <DeleteProperty id={id} userId={userId} />
         </div>
       </div>
     </article>
   );
 };
 
-const fetcher = async (): Promise<Property[]> => {
+const fetcher = async (userId: string) => {
   const { data, error } = await supabase
     .from("property")
     .select(
@@ -72,18 +63,11 @@ const fetcher = async (): Promise<Property[]> => {
       state,
       phase,
       created_at,
-      property_image(image_url),
-      typology (
-        property_id,
-        id,
-        name,
-        size,
-        image
-      )
+      property_image(image_url)
     `,
     )
+    .eq("user_id", userId)
     .order("created_at", { ascending: false });
-
   if (error) throw error;
   return data;
 };
@@ -99,7 +83,8 @@ export default function AdminPropertiesList({
     data: properties,
     error,
     isLoading,
-  } = useSWR("admin-properties", fetcher);
+  } = useSWR(getAdminPropertiesUserKey(userId), () => fetcher(userId));
+  if (isLoading || error) return null;
 
   return (
     <>
@@ -128,25 +113,20 @@ export default function AdminPropertiesList({
             </span>
           </a>
         </CheckPermission>
-        {Array.isArray(properties) &&
-          properties.map((property) => {
-            const { id, title, state, phase, property_image } = property;
+        {properties?.map((property) => {
+          const { id, title, state, property_image } = property;
 
-            if (error) console.error(error);
-            if (isLoading) return <Skeleton />;
-
-            return (
-              <AdminPropertyItem
-                key={id}
-                propertyImage={property_image}
-                id={id}
-                userId={userId}
-                title={title}
-                state={state}
-                phase={phase}
-              />
-            );
-          })}
+          return (
+            <AdminPropertyItem
+              key={id}
+              id={id}
+              propertyImage={property_image}
+              userId={userId}
+              title={title}
+              state={state}
+            />
+          );
+        })}
       </section>
       <EditPropertyModal />
     </>

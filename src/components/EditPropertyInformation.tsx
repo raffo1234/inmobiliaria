@@ -14,6 +14,7 @@ import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import Uploader from "./Uploader";
 import { Icon } from "@iconify/react";
+import { getAdminPropertiesUserKey } from "src/constants";
 
 type Inputs = {
   title: string;
@@ -36,7 +37,7 @@ type Inputs = {
 async function fetcher(id: string) {
   const { data, error } = await supabase
     .from("property")
-    .select()
+    .select("*")
     .eq("id", id)
     .single();
   if (error) throw error;
@@ -90,11 +91,11 @@ export default function EditPropertyInformation({
         .select()
         .single();
       await mutate(id, updatedData);
-      await mutate("admin-properties");
+      await mutate(getAdminPropertiesUserKey(userId));
       success();
-      hideModal();
     } catch {
       console.error(error);
+    } finally {
       hideModal();
     }
   };

@@ -1,19 +1,15 @@
 import { Icon } from "@iconify/react";
 import { supabase } from "@lib/supabase";
-import useSWR, { mutate } from "swr";
+import { getAdminPropertiesUserKey } from "src/constants";
+import { mutate } from "swr";
 
-type Property = {
+export default function DeleteProperty({
+  id,
+  userId,
+}: {
   id: string;
-};
-
-async function fetcher(): Promise<Property[]> {
-  const { data, error } = await supabase.from("property").select();
-  if (error) throw error;
-  return data;
-}
-
-export default function DeleteProperty({ id }: { id: string }) {
-  const { data: properties } = useSWR("admin-properties", fetcher);
+  userId: string;
+}) {
   const onDelete = async (id: string) => {
     const confirmationMessage = confirm(
       "Esta acción es irreversible. Esta seguro?",
@@ -28,12 +24,8 @@ export default function DeleteProperty({ id }: { id: string }) {
         .select("id")
         .single();
 
-      if (deletedProperty && properties) {
-        await mutate(
-          "admin-properties",
-          properties.filter((property) => property.id !== deletedProperty.id),
-          false,
-        );
+      if (deletedProperty) {
+        await mutate(getAdminPropertiesUserKey(userId));
       }
     } catch (error) {
       console.error(`Error eliminando este item: ${error}`);

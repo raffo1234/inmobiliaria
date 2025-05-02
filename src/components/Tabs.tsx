@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 
 export default function Tabs({
   items,
@@ -32,7 +32,9 @@ export default function Tabs({
       </nav>
       <article className="py-6 z-20 border-t border-gray-200 -mt-[1px]">
         {items.map(({ children }, index) => {
-          return index === tabActive ? children : null;
+          return index === tabActive ? (
+            <Fragment key={index}>{children}</Fragment>
+          ) : null;
         })}
       </article>
     </>
