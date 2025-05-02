@@ -85,7 +85,11 @@ export default function PropertyItem({
         </a>
         <div className="flex items-center justify-between w-full gap-4">
           <h2>
-            <a title={title} href={`/inmueble/${id}`} className="font-semibold">
+            <a
+              title={title}
+              href={`/inmueble/${id}`}
+              className="font-semibold line-clamp-1"
+            >
               {title}
             </a>
           </h2>
