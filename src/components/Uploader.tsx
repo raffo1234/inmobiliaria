@@ -1,8 +1,9 @@
 import { supabase } from "@lib/supabase";
-import React, { useState, type ChangeEvent } from "react";
+import React, { useCallback, useState, type ChangeEvent } from "react";
 import { v4 as uuidv4 } from "uuid";
 import PrimaryButton from "./PrimaryButton";
 import { Icon } from "@iconify/react";
+import { useDropzone } from "react-dropzone";
 
 interface ImageUploaderProps {
   propertyId: string;
@@ -21,6 +22,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0] || null;
+
     setFile(selectedFile);
     setError(null);
     setMessage(null);
@@ -86,10 +88,24 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
     }
   };
 
+  const onDrop = useCallback((acceptedFiles) => {
+    setFile(acceptedFiles[0] || null);
+    setError(null);
+    setMessage(null);
+  }, []);
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      "image/*": [],
+    },
+    maxFiles: 1,
+  });
+
   return (
     <>
-      <label
-        htmlFor="dropzone-file"
+      <div
+        {...getRootProps()}
+        // htmlFor="dropzone-file"
         className="flex flex-col group items-center justify-center py-9 w-full border border-gray-300 border-dashed rounded-2xl cursor-pointer bg-gray-50 "
       >
         <Icon
@@ -100,6 +116,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
         <h2 className="text-gray-400 text-sm mb-1">PNG, JPG, menor a 100KB</h2>
         <h4 className="font-semibold">Arrastra y suelta tu archivo aquí</h4>
         <input
+          {...getInputProps()}
           id="dropzone-file"
           accept="image/*"
           onChange={handleFileChange}
@@ -107,7 +124,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
           type="file"
           className="hidden"
         />
-      </label>
+      </div>
 
       {file && <p>Selecionar imagen: {file.name}</p>}
       <PrimaryButton
