@@ -20,50 +20,43 @@ type Property = {
   }[];
 };
 
-const PropertyItem = ({
+const AdminPropertyItem = ({
   id,
   propertyImage,
   userId,
+  title,
+  state,
+  phase,
 }: {
   id: string;
+  title: string;
+  state: string;
+  phase: string;
   propertyImage: {
     image_url: string;
   }[];
   userId: string;
 }) => {
-  const [hover, setHover] = useState(false);
   return (
-    <div
-      className="relative"
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    >
+    <article className="bg-white rounded-xl relative">
       <PropertyFirstImage title={id} src={propertyImage?.at(0)?.image_url} />
-      <span
-        className={`${hover ? "opacity-100" : "opacity-0"} transition-opacity block absolute left-0 top-0 w-full h-full bg-black bg-opacity-25 rounded-lg`}
-        style={{
-          background:
-            "linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 40%)",
-        }}
+      <div
+        className={`rounded-xl absolute right-3 top-3 text-sm py-1 px-2 
+            ${state === PropertyState.DRAFT ? "bg-gray-600 text-white" : ""}
+            ${state === PropertyState.PENDING ? "bg-cyan-600 text-white" : ""}
+            ${state === PropertyState.ACTIVE ? "bg-green-600 text-white" : ""}
+            `}
       >
-        <div className="absolute bottom-0 left-0 w-full flex gap-1 text-white justify-between p-2">
-          <a
-            href={`../inmueble/${id}`}
-            target="_blank"
-            className="flex items-center justify-center w-12 h-12 mt-[1px]"
-          >
-            <Icon
-              icon="material-symbols-light:arrow-outward-rounded"
-              className="text-4xl"
-            />
-          </a>
-          <div className="flex gap-1 item-center">
-            <EditProperty id={id} userId={userId} />
-            <DeleteProperty id={id} />
-          </div>
+        {state}
+      </div>
+      <div className="border-x px-4 border-b rounded-b-xl -mt-3 pt-6 pb-4 border-gray-100">
+        <h3 className="mb-3 font-semibold line-clamp-1">{title}</h3>
+        <div className="flex gap-2 justify-center">
+          <EditProperty id={id} userId={userId} />
+          <DeleteProperty id={id} />
         </div>
-      </span>
-    </div>
+      </div>
+    </article>
   );
 };
 
@@ -143,34 +136,15 @@ export default function AdminPropertiesList({
             if (isLoading) return <Skeleton />;
 
             return (
-              <article key={id}>
-                <PropertyItem
-                  propertyImage={property_image}
-                  id={id}
-                  userId={userId}
-                />
-                <div className="flex flex-col gap-3">
-                  <h3 className="flex gap-4 justify-between w-full">
-                    <a href={`inmueble/${id}`} className="font-semibold">
-                      {title}
-                    </a>
-                    <span className="flex items-center gap-1">
-                      <span
-                        className={`rounded border pb-[1px] text-xs px-1 mt-1 block self-start
-                  ${state === PropertyState.DRAFT ? "border-gray-400 text-gray-400" : ""}
-                  ${state === PropertyState.PENDING ? "border-cyan-200 text-cyan-200" : ""}
-                  ${state === PropertyState.ACTIVE ? "border-green-600 bg-green-600 text-white" : ""}
-                  `}
-                      >
-                        {state}
-                      </span>
-                      <span className="rounded border pb-[1px] text-xs px-1 mt-1 block self-start">
-                        {phase}
-                      </span>
-                    </span>
-                  </h3>
-                </div>
-              </article>
+              <AdminPropertyItem
+                key={id}
+                propertyImage={property_image}
+                id={id}
+                userId={userId}
+                title={title}
+                state={state}
+                phase={phase}
+              />
             );
           })}
       </section>

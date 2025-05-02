@@ -44,12 +44,9 @@ export default function DeleteProperty({ id }: { id: string }) {
     <button
       onClick={() => onDelete(id)}
       type="button"
-      className="w-12 h-12 flex items-center justify-center"
+      className="w-11 h-11 rounded-full border-gray-100 border text-red-500 flex items-center justify-center"
     >
-      <Icon
-        icon="material-symbols-light:delete-outline"
-        className="text-3xl text-red-500"
-      />
+      <Icon icon="solar:trash-bin-minimalistic-broken" fontSize={24} />
     </button>
   );
 }

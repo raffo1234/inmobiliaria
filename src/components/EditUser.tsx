@@ -58,10 +58,6 @@ export default function EditUser({ userId }: { userId: string }) {
     }, [user]),
   });
 
-  const showModal = () => {
-    setOpen(true);
-  };
-
   const hideModal = () => {
     setModalOpen(false);
   };

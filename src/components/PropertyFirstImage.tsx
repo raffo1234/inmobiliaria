@@ -9,7 +9,7 @@ export default function PropertyFirstImage({
 }) {
   if (!src)
     return (
-      <div className="animate-pulse bg-gray-100 rounded-lg w-full aspect-[5/4] flex justify-center items-center">
+      <div className="animate-pulse bg-gray-100 rounded-xl w-full aspect-[5/4] flex justify-center items-center">
         <Icon icon="solar:gallery-broken" fontSize={32} />
       </div>
     );
@@ -20,7 +20,7 @@ export default function PropertyFirstImage({
       alt={title}
       title={title}
       loading="lazy"
-      className="w-full aspect-[5/4] object-cover rounded-lg"
+      className="w-full aspect-[5/4] object-cover rounded-xl bg-gray-100"
     />
   );
 }

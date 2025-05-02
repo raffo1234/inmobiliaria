@@ -1,9 +1,8 @@
 import EditPropertyInformation from "./EditPropertyInformation";
-import { Tabs } from "antd";
-import type { TabsProps } from "antd";
 import PropertyTypes from "./PropertyTypologies";
 import { Icon } from "@iconify/react";
 import { useGlobalState } from "@lib/globalState";
+import Tabs from "./Tabs";
 
 export default function EditProperty({
   id,
@@ -15,9 +14,8 @@ export default function EditProperty({
   const { setEditModalContent, setEditPropertyId, setEditModalOpen } =
     useGlobalState();
 
-  const items: TabsProps["items"] = [
+  const items = [
     {
-      key: "1",
       label: "General",
       children: (
         <EditPropertyInformation
@@ -28,7 +26,6 @@ export default function EditProperty({
       ),
     },
     {
-      key: "2",
       label: "Tipologias",
       children: <PropertyTypes propertyId={id} />,
     },
@@ -36,22 +33,17 @@ export default function EditProperty({
 
   const openEditView = () => {
     setEditPropertyId(id);
-    setEditModalContent(<Tabs items={items}></Tabs>);
+    setEditModalContent(<Tabs items={items} />);
     setEditModalOpen(true);
   };
 
   return (
-    <>
-      <button
-        type="button"
-        onClick={openEditView}
-        className="w-12 h-12 flex items-center justify-center"
-      >
-        <Icon
-          icon="material-symbols-light:edit-square-outline-rounded"
-          className="text-3xl"
-        />
-      </button>
-    </>
+    <button
+      type="button"
+      onClick={openEditView}
+      className="rounded-full w-11 h-11 border-gray-100 hover:border-gray-200 transition-colors duration-500 border flex items-center justify-center"
+    >
+      <Icon icon="solar:clapperboard-edit-broken" fontSize={24} />
+    </button>
   );
 }
