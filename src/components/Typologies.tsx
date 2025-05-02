@@ -67,7 +67,7 @@ function Typology({ typology }: { typology: Typology }) {
         <div
           className="grid gap-1 rounded-md"
           style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))",
           }}
         >
           <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md">
@@ -105,14 +105,12 @@ function Typology({ typology }: { typology: Typology }) {
 
 export default function Typologies({ propertyId }: { propertyId: string }) {
   const { data: typologies = [] } = useSWR(`${propertyId}-typologies`, () =>
-    fetcher(propertyId)
+    fetcher(propertyId),
   );
 
   return typologies.length > 0 ? (
     <>
-      <h3 className="mb-6 text-xl font-semibold">
-        Encuentra tu modelo ideal:
-      </h3>
+      <h3 className="mb-6 text-xl font-semibold">Encuentra tu modelo ideal:</h3>
       <TypologiesGrid>
         {typologies.map((typology) => {
           return <Typology key={typology.id} typology={typology} />;

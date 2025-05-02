@@ -91,7 +91,7 @@ export default function AdminPropertiesList({
       <section
         className="grid gap-8"
         style={{
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
         }}
       >
         <CheckPermission

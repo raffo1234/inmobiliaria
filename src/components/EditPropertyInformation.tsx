@@ -15,6 +15,7 @@ import { es } from "date-fns/locale";
 import Uploader from "./Uploader";
 import { Icon } from "@iconify/react";
 import { getAdminPropertiesUserKey } from "src/constants";
+import PropertyImagesEdition from "./PropertyImagesEdition";
 
 type Inputs = {
   title: string;
@@ -37,7 +38,7 @@ type Inputs = {
 async function fetcher(id: string) {
   const { data, error } = await supabase
     .from("property")
-    .select("*")
+    .select("*, property_image(image_url)")
     .eq("id", id)
     .single();
   if (error) throw error;
@@ -66,7 +67,7 @@ export default function EditPropertyInformation({
   const { data: companies } = useSWR(`${userId}-companies`, () =>
     fetcherCompany(userId),
   );
-  const { data, error, isLoading } = useSWR(id, () => fetcher(id));
+  const { data, error, isLoading, mutate } = useSWR(id, () => fetcher(id));
 
   const { reset, register, handleSubmit } = useForm<Inputs>({
     mode: "onBlur",
@@ -84,13 +85,13 @@ export default function EditPropertyInformation({
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const { data: updatedData, error } = await supabase
+      await supabase
         .from("property")
         .update(data)
         .eq("id", id)
         .select()
         .single();
-      await mutate(id, updatedData);
+      await mutate();
       await mutate(getAdminPropertiesUserKey(userId));
       success();
     } catch {
@@ -98,6 +99,10 @@ export default function EditPropertyInformation({
     } finally {
       hideModal();
     }
+  };
+
+  const mutatePropertyImages = () => {
+    mutate();
   };
 
   useEffect(() => {
@@ -135,10 +140,15 @@ export default function EditPropertyInformation({
           </nav>
           <div className="flex-1 flex flex-col gap-7">
             <div className="flex p-7 flex-col gap-4 border border-gray-100 rounded-xl bg-white">
+              <h2 className="font-semibold">Subir Imágenes</h2>
+              <Uploader
+                propertyId={id}
+                onUploadSuccess={mutatePropertyImages}
+              />
+            </div>
+            <div className="flex p-7 flex-col gap-4 border border-gray-100 rounded-xl bg-white">
               <h2 className="font-semibold">Imágenes</h2>
-              <fieldset className="flex items-center gap-4 w-full">
-                <Uploader propertyId={id} />
-              </fieldset>
+              <PropertyImagesEdition propertyImages={data.property_image} />
             </div>
             <div className="flex p-7 flex-col gap-4 border border-gray-100 rounded-xl bg-white">
               <h2 className="font-semibold">Estado</h2>

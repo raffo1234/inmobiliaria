@@ -2,10 +2,11 @@ import { supabase } from "@lib/supabase";
 import React, { useState, type ChangeEvent } from "react";
 import { v4 as uuidv4 } from "uuid";
 import PrimaryButton from "./PrimaryButton";
+import { Icon } from "@iconify/react";
 
 interface ImageUploaderProps {
-  propertyId: string; // The ID of the property to associate the image with
-  onUploadSuccess?: (imageUrl: string) => void; // Callback after successful upload and DB update
+  propertyId: string;
+  onUploadSuccess?: (imageUrl: string) => void;
 }
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({
@@ -21,8 +22,8 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0] || null;
     setFile(selectedFile);
-    setError(null); // Clear previous error
-    setMessage(null); // Clear previous message
+    setError(null);
+    setMessage(null);
   };
 
   const handleUpload = async () => {
@@ -86,33 +87,46 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
   };
 
   return (
-    <div className="image-uploader-container">
-      <h3>Agregar Image: {propertyId}</h3>
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleFileChange}
-        disabled={uploading}
-      />
+    <>
+      <label
+        htmlFor="dropzone-file"
+        className="flex flex-col group items-center justify-center py-9 w-full border border-gray-300 border-dashed rounded-2xl cursor-pointer bg-gray-50 "
+      >
+        <Icon
+          icon="solar:cloud-upload-broken"
+          className="text-gray-700 mb-3 group-hover:text-cyan-400 transition-colors duration-300"
+          fontSize={42}
+        />
+        <h2 className="text-gray-400 text-sm mb-1">PNG, JPG, menor a 100KB</h2>
+        <h4 className="font-semibold">Arrastra y suelta tu archivo aquí</h4>
+        <input
+          id="dropzone-file"
+          accept="image/*"
+          onChange={handleFileChange}
+          disabled={uploading}
+          type="file"
+          className="hidden"
+        />
+      </label>
+
       {file && <p>Selecionar imagen: {file.name}</p>}
       <PrimaryButton
         type="button"
         disabled={uploading || !file}
         onClick={handleUpload}
-        label={uploading ? "Uploading..." : "Upload Image"}
+        label={uploading ? "Cargando..." : "Cargar Imagen"}
       />
       {error && <p className="error-message">Error: {error}</p>}
       {message && <p className="success-message">Success: {message}</p>}
 
-      {/* Optional: Display a preview of the selected file */}
       {file && !message && !error && (
         <img
           src={URL.createObjectURL(file)}
-          alt="Selected file preview"
+          alt="Imagen Seleccionada"
           style={{ maxWidth: "200px", marginTop: "10px" }}
         />
       )}
-    </div>
+    </>
   );
 };
 
